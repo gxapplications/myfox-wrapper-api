@@ -1,0 +1,40 @@
+{
+  "private": true,
+  "name": "myfox-wrapper-api",
+  "version": "0.0.1",
+  "description": "API wrapper (through official API, with more features and tools) for MyFox domotics",
+  "author": "Xavier Gouley <gxapplications@gmail.com>",
+  "contributors": [
+  ],
+  "license": "MIT",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gxapplications/myfox-wrapper-api"
+  },
+  "bugs": {
+    "url": "https://github.com/gxapplications/myfox-wrapper-api/issues"
+  },
+  "homepage": "https://github.com/gxapplications/myfox-wrapper-api",
+  "keywords": [
+    "myfox",
+    "domotics",
+    "api"
+  ],
+  "engines": {
+    "node": ">= 5.0.0"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+  },
+  "directories": {
+    "doc": "./doc",
+    "lib": "./lib"
+  },
+  "config": {
+  }
+}
