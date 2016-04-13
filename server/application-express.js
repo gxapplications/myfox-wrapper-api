@@ -4,6 +4,7 @@ import express from 'express';
 import { join as joinPaths } from 'path';
 import bodyParser from 'body-parser';
 import methodOverride from 'method-override';
+import morgan from 'morgan';
 import expressControllerV1 from './controller-express-v1';
 
 // application
