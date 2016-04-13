@@ -1,0 +1,11 @@
+{
+  "glob": [
+    "lib/**/*.js",
+    "server/*.js",
+    "*.js",
+
+    "nodemon.json"
+  ],
+  "github": false,
+  "strip": "--no-strip"
+}

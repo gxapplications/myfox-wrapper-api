@@ -8,7 +8,14 @@
   ],
   "license": "MIT",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "cross-env NODE_ENV=test mocha",
+    "doc": "rimraf doc && groc && nyc --reporter=lcov npm test && rimraf .nyc_output",
+    "lint": "standard --verbose | snazzy",
+    "validate": "npm test && npm ls",
+    "dev:start": "nodemon server.js",
+    "dev:debug": "iron-node server.js",
+    "dev:test": "npm run test -- --watch"
   },
   "main": "lib/index.js",
   "repository": {
@@ -25,11 +32,51 @@
     "api"
   ],
   "engines": {
-    "node": ">= 5.0.0"
+    "node": ">= 5.0.0",
+    "npm": ">= 3.8.0"
   },
+  "babel": {
+    "presets": [
+      "es2015",
+      "stage-2"
+    ]
+  },
+  "standard": {
+    "env": {
+      "node": true,
+      "mocha": true
+    },
+    "parser": "babel-eslint",
+    "ignore": [
+      "/doc/"
+    ]
+  },
+  "pre-commit": [
+    "lint",
+    "test"
+  ],
   "dependencies": {
+    "babel-core": "^6.4.5",
+    "babel-eslint": "^6.0.0",
+    "babel-loader": "^6.2.2",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-stage-2": "^6.5.0",
+    "body-parser": "^1.10.0",
+    "colors": "^1.0.3",
+    "cross-env": "^1.0.7",
+    "express": "^4.10.4",
+    "method-override": "^2.3.0",
+    "morgan": "^1.5.0",
+    "rimraf": "^2.5.2",
+    "standard": "^6.0.1"
   },
   "devDependencies": {
+    "groc": "^0.8.0",
+    "iron-node": "^2.2.16",
+    "mocha": "^2.4.5",
+    "nodemon": "^1.9.1",
+    "nyc": "^6.1.1",
+    "precommit-hook": "^3.0.0"
   },
   "directories": {
     "doc": "./doc",
