@@ -55,6 +55,11 @@
     "lint",
     "test"
   ],
+  "nyc": {
+    "lines": 99,
+    "check-coverage": false,
+    "report-dir": "./doc/coverage"
+  },
   "dependencies": {
     "babel-core": "^6.4.5",
     "babel-eslint": "^6.0.0",
