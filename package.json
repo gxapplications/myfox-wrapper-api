@@ -4,8 +4,7 @@
   "version": "0.0.1",
   "description": "API wrapper (through official API, with more features and tools) for MyFox domotics",
   "author": "Xavier Gouley <gxapplications@gmail.com>",
-  "contributors": [
-  ],
+  "contributors": [],
   "license": "MIT",
   "scripts": {
     "start": "node server.js",
@@ -69,6 +68,7 @@
     "colors": "^1.0.3",
     "cross-env": "^1.0.7",
     "express": "^4.10.4",
+    "joi": "^8.0.5",
     "method-override": "^2.3.0",
     "morgan": "^1.5.0",
     "rimraf": "^2.5.2",
@@ -87,6 +87,5 @@
     "doc": "./doc",
     "lib": "./lib"
   },
-  "config": {
-  }
+  "config": {}
 }
