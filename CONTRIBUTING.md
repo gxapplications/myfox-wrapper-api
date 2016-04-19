@@ -14,4 +14,4 @@ Code changes are welcome and should follow the guidelines below.
 * Fix the issue ensuring that your code follows the [style guide TODO].
 * Add tests for your new code ensuring that you have 100% code coverage (we can help you reach 100% but will not merge without it).
     * Run `npm test` to generate a report of test and its coverage [TODO]
-* [Pull requests](http://help.github.com/send-pull-requests/) should be made to the [master branch](https://github.com/gxapplications/myfox-wrapper-api/tree/master).
+* [Pull requests](http://help.github.com/articles/using-pull-requests/) should be made to the [master branch](https://github.com/gxapplications/myfox-wrapper-api/tree/master).
