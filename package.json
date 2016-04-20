@@ -76,6 +76,7 @@
     "standard": "^6.0.1"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
     "groc": "^0.8.0",
     "iron-node": "^2.2.16",
     "mocha": "^2.4.5",
