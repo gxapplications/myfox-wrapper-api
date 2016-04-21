@@ -1,11 +1,9 @@
-'use strict';
-
-import { expect } from 'chai';
+'use strict'
 
 describe('express application', () => {
-    it('todo');
-});
+  it('todo')
+})
 
 describe('express controller', () => {
-    it('todo');
-});
+  it('todo')
+})

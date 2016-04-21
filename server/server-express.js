@@ -1,11 +1,11 @@
-'use strict';
+'use strict'
 
-import { createServer } from 'http';
-import 'colors';
+import { createServer } from 'http'
+import 'colors'
 
-import application from './application-express';
+import application from './application-express'
 
-const server = createServer(application);
+const server = createServer(application)
 server.listen(application.get('port'), () => {
-    console.log('✔ Server listening on port'.green, String(application.get('port')).cyan);
-});
+  console.log('✔ Server listening on port'.green, String(application.get('port')).cyan)
+})
