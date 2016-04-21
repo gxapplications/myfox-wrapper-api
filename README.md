@@ -3,8 +3,9 @@
 An API wrapper to MyFox API to add easy usable features & tools, written in NodeJS.
 
 [![Build Status](https://secure.travis-ci.org/gxapplications/myfox-wrapper-api.png)](http://travis-ci.org/gxapplications/myfox-wrapper-api)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
-[coverage; npm versions and downloads, like in https://raw.githubusercontent.com/expressjs/express/master/Readme.md TODO]
+[npm versions and downloads from NPM - TODO]
 
 ## What
 This API wrapper will serve you full control over a Myfox service (alarm and domotics), calling several features through official Rest APIs, and/or through official html website (parsing data retrieved by a curl robot), and will add many features (mainly precoded macro features).

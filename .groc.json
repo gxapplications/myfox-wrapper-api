@@ -7,5 +7,6 @@
     "nodemon.json"
   ],
   "github": false,
+  "out": "./doc/groc",
   "strip": "--no-strip"
 }
