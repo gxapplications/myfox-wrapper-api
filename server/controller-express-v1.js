@@ -14,4 +14,9 @@ router.get('/test/:vari', function test (request, reply, next) {
   reply.send('test: ' + request.params.vari)
 })
 
+// Tea pot test route. To keep for test purpose.
+router.get('/', function test (request, reply, next) {
+  reply.status(418).send('Hello world!')
+})
+
 export default router
