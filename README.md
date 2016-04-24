@@ -12,6 +12,7 @@ _An API wrapper to MyFox API to add easy usable features & tools, written in Nod
 [npm versions and downloads from NPM - TODO]
 </div>
 
+
 ## What
 This API wrapper will serve you full control over a Myfox service (alarm and domotics), calling several features through official Rest APIs, and/or through official html website (parsing data retrieved by a curl robot), and will add many features (mainly precoded macro features).
 
