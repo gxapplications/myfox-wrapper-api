@@ -27,5 +27,20 @@ describe('Express application', () => {
         done(err)
       })
   })
-  it('Can call assets through the root route') // /logo.png must work!
+  it('Can call assets through the root route', (done) => {
+    const agent = request.agent(expressApp)
+    agent.get('/logo.png')
+      .expect(200)
+      .end((err) => {
+        done(err)
+      })
+  })
+  it('Returns 404 for unknown route', (done) => {
+    const agent = request.agent(expressApp)
+    agent.get('/yay!')
+      .expect(404)
+      .end((err) => {
+        done(err)
+      })
+    })
 })

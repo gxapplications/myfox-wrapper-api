@@ -70,25 +70,26 @@ describe('wrapper-api library options during instantiation', () => {
 describe('wrapper-api library auto-authentication system', () => {
   // Build a mock class that extends common-api to test auto-authentication system.
   class MyfoxWrapperApiMock4failures extends MyfoxWrapperApiCommon {
-    authenticate(authData, callback) {
+    authenticate (authData, callback) {
       authData = authData || {}
       this.authenticateCounter = (this.authenticateCounter || 0) + 1
       authData.counter = this.authenticateCounter
       // will succeed only the 5th time
-      callback((this.authenticateCounter>4)?null:'Failed#'+this.authenticateCounter, authData)
+      callback((this.authenticateCounter > 4) ? null : 'Failed#' + this.authenticateCounter, authData)
     }
-    callDistant(url, method, queryParams, headers, payload, resolve, reject, reAuthenticate) {
+    callDistant (url, method, queryParams, headers, payload, resolve, reject, reAuthenticate) {
       resolve(this.authenticateCounter)
     }
   }
   class MyfoxWrapperApiMockNofailure extends MyfoxWrapperApiCommon {
-    authenticate(authData, callback) {
+    authenticate (authData, callback) {
       authData = authData || {}
       this.authenticateCounter = (this.authenticateCounter || 0) + 1
       authData.counter = this.authenticateCounter
+      // will succeed the first time
       callback(null, authData)
     }
-    callDistant(url, method, queryParams, headers, payload, resolve, reject, reAuthenticate) {
+    callDistant (url, method, queryParams, headers, payload, resolve, reject, reAuthenticate) {
       resolve(this.authenticateCounter)
     }
   }
@@ -108,7 +109,7 @@ describe('wrapper-api library auto-authentication system', () => {
     apiMock.callApi('/test/2', null, null, null, null).then(() => {
       done('Should not reach this one')
     }).catch((err) => {
-      expect(err).to.equal('Failed#'+apiMock.authenticateCounter)
+      expect(err).to.equal('Failed#' + apiMock.authenticateCounter)
       done()
     })
   })
@@ -123,7 +124,43 @@ describe('wrapper-api library auto-authentication system', () => {
     })
   })
 
-  it('Will not re-auth if authValidity is rightly true')
-  it('Will not direclty re-auth if authValidity is wrongly true')
-  it('Will directly re-auth if authValidity is false')
+  it('Will not re-auth if authValidity is rightly true', (done) => {
+    const apiMock = new MyfoxWrapperApiMockNofailure()
+    apiMock.callApi('/test/4a', null, null, null, null).then((result) => {
+      expect(result).to.equal(apiMock.authenticateCounter)
+      expect(result).to.equal(1)
+
+        // directly call again within validity period.
+      apiMock.callApi('/test/4b', null, null, null, null).then((result) => {
+        expect(result).to.equal(apiMock.authenticateCounter)
+        expect(result).to.equal(1) // does not auth again.
+        done()
+      }).catch((err) => {
+        done(err)
+      })
+    }).catch((err) => {
+      done(err)
+    })
+  })
+  it('Will directly re-auth if authValidity is false', (done) => {
+    const apiMock = new MyfoxWrapperApiMockNofailure({authValidity: 1})
+    apiMock.callApi('/test/5a', null, null, null, null).then((result) => {
+      expect(result).to.equal(apiMock.authenticateCounter)
+      expect(result).to.equal(1)
+
+      // sleep just 1.1s, to ensure validity is false after first auth.
+      setTimeout(() => {
+          apiMock.callApi('/test/5b', null, null, null, null).then((result) => {
+              expect(result).to.equal(apiMock.authenticateCounter)
+              expect(result).to.equal(2) // auth one more time, because validity is just 1s here.
+              done()
+          }).catch((err) => {
+              done(err)
+          })
+      }, 1100);
+    }).catch((err) => {
+      done(err)
+    })
+  })
+
 })
