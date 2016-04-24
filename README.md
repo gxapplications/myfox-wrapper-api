@@ -1,4 +1,3 @@
-<div align="center">
 ![myfox-wrapper-logo](https://raw.githubusercontent.com/gxapplications/myfox-wrapper-api/master/lib/assets/logo.png)
 
 _An API wrapper to MyFox API to add easy usable features & tools, written in NodeJS._
@@ -10,7 +9,6 @@ _An API wrapper to MyFox API to add easy usable features & tools, written in Nod
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
 [npm versions and downloads from NPM - TODO]
-</div>
 
 
 ## What
