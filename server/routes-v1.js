@@ -25,11 +25,11 @@ const routes = {
         },
         'get': {
             'express': (req, res, api) => {
-                const call = api.callApi('/home/' + api.authenticatedData.siteId, 'get', {}, {}, {})
-                call.then((result) => {
+                api.callHome(api.authenticatedData.siteId, (err, result) =>{
+                    if (err) {
+                        return res.send(err).code(500).end()
+                    }
                     res.send('/home succeed!').end()
-                }).catch((err) => {
-                    res.send(err).code(500).end()
                 })
             }
         }

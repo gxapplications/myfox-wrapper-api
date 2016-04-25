@@ -1,6 +1,6 @@
 ![myfox-wrapper-logo](https://raw.githubusercontent.com/gxapplications/myfox-wrapper-api/master/lib/assets/logo.png)
 
-_An API wrapper to MyFox API to add easy usable features & tools, written in NodeJS._
+_An API layer to Myfox services to add easy usable features & tools, written in NodeJS._
 
 **This repository is for now empty. A first version will come in several weeks.**
 
@@ -12,19 +12,22 @@ _An API wrapper to MyFox API to add easy usable features & tools, written in Nod
 
 
 ## What
-This API wrapper will serve you full control over a Myfox service (alarm and domotics), calling several features through official Rest APIs, and/or through official html website (parsing data retrieved by a curl robot), and will add many features (mainly precoded macro features).
+This API layer will serve you full control over a Myfox service (alarm and domotics), calling basic features through official html website (parsing data retrieved by a curl robot), and will add many features (mainly precoded macro features).
 
-#### Why to use Rest API?
-Because it is the official one, and it's stable. But it does not allow everything... (like editing a scenario for example)
+#### Why to not use Rest API?
+Because the Myfox Rest API is the official one. If you want to use it, then, use it directly. But it does not allow everything (like editing a scenario for example!)...
+And I cannot extend the official API due to license limitations from Myfox side.
 
 #### Why to use html robot/parser to use Myfox services?
-Through the official HTML website, we can do really much more than from the existing rest API (editing scenarii). But this wrapper can be easily broken if the website evolves.
+Through the official HTML website, we can do really much more than from the existing Rest API (editing scenarii, see much more information).
+But this layer can be easily broken if the website evolves. This is the counter side of the idea.
 
 #### So, what to do if I want advantages from both ways?
-Use both! This wrapper can switch from one to the other depending on:
+Well, for now, you cannot with this project. Maybe later, I will plan to have dual channel calls (a part through HTML website and another part through Rest API),
+but I need the rights from Myfox to do it, to finally have:
 - the availability of the Myfox service (website or Rest API up of down), 
 - the stability of the website (evolutions will have to be reported here),
-- the policy you indicate (HTML only, HTML first, Rest first, Rest only)
+- the custom policy you indicate (HTML only, HTML first, Rest first, Rest only)
 
 (Please see the Quick Start guide below, or the [Wiki Documentation](https://github.com/gxapplications/myfox-wrapper-api/wiki/Start-from-here!) to understand the strategy of the system)
 
