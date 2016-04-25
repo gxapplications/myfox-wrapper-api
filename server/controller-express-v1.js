@@ -3,13 +3,14 @@
 import { Router } from 'express'
 import Api from '../lib/index'
 import routes from './routes-v1'
+import config from 'config'
 
 // These const are instantiated once at init,
 // to keep the same instance of these objects for all requests.
 // This is mandatory to share authenticated session.
 // But from this point, we must always ensure an instance will handle calls for only one Myfox account!
 const router = new Router()
-const api = Api()
+const api = Api(config.get('server.myfox'))
 
 for (var routeName in routes) {
   let routeParams = routes[routeName]

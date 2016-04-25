@@ -1,9 +1,10 @@
 'use strict'
 
 const routes = {
-    'testAction': {
+    'testLocal': {
         'path': {
-            'express': '/test/:variable'
+            'express': '/test/:variable',
+            'hapi': '/test/{variable}'
         },
         'pre': {
             'express': (req, res, api, next) => {
@@ -14,12 +15,26 @@ const routes = {
         'get': {
             'express': (req, res, api, next) => {
                 // call next() only if not finished (go to next route matching request)
-                api.callScenario('123', () => {})
-                res.send('test: ' + req.params.variable).end()
+                res.send('Hello ' + req.params.variable).end()
+            }
+        }
+    },
+    'test': {
+        'path': {
+            'express': '/home'
+        },
+        'get': {
+            'express': (req, res, api) => {
+                const call = api.callApi('/home/' + api.authenticatedData.siteId, 'get', {}, {}, {})
+                call.then((result) => {
+                    res.send('/home succeed!').end()
+                }).catch((err) => {
+                    res.send(err).code(500).end()
+                })
             }
         }
     }
 }
-// TODO: quand fera hapi, si expres et hapi ont la meme syntaxe dans la route, ou les handlers, alors on met en commun en sautant un étage dans le tableau (testAction.get = function direct)
+// TODO: quand fera hapi, si express et hapi ont la meme syntaxe dans la route, ou les handlers, alors on met en commun en sautant un étage dans le tableau (testAction.get = function direct)
 
 export default routes
