@@ -19,34 +19,34 @@ for (var routeName in routes) {
   // pre-action middleware
   if (routeParams.pre !== null && routeParams.pre !== undefined) {
     route = route.all((req, res, next) => {
-        (routeParams.pre.express || routeParams.pre)(req, res, api, next)
+      (routeParams.pre.express || routeParams.pre)(req, res, api, next)
     })
   }
 
   // HTTP methods
   if (routeParams.get !== null && routeParams.get !== undefined) {
     route = route.get((req, res, next) => {
-        (routeParams.get.express || routeParams.get)(req, res, api, next)
+      (routeParams.get.express || routeParams.get)(req, res, api, next)
     })
   }
   if (routeParams.post !== null && routeParams.post !== undefined) {
     route = route.post((req, res, next) => {
-        (routeParams.post.express || routeParams.post)(req, res, api, next)
+      (routeParams.post.express || routeParams.post)(req, res, api, next)
     })
   }
   if (routeParams.patch !== null && routeParams.patch !== undefined) {
     route = route.patch((req, res, next) => {
-        (routeParams.patch.express || routeParams.patch)(req, res, api, next)
+      (routeParams.patch.express || routeParams.patch)(req, res, api, next)
     })
   }
   if (routeParams.put !== null && routeParams.put !== undefined) {
     route = route.put((req, res, next) => {
-        (routeParams.put.express || routeParams.put)(req, res, api, next)
+      (routeParams.put.express || routeParams.put)(req, res, api, next)
     })
   }
   if (routeParams.delete !== null && routeParams.delete !== undefined) {
     route = route.delete((req, res, next) => {
-        (routeParams.delete.express || routeParams.delete)(req, res, api, next)
+      (routeParams.delete.express || routeParams.delete)(req, res, api, next)
     })
   }
 }
