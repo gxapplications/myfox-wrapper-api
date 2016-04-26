@@ -162,17 +162,16 @@ describe('wrapper-api library auto-authentication system', () => {
 
       // sleep just 1.1s, to ensure validity is false after first auth.
       setTimeout(() => {
-          apiMock.callApi('/test/5b', null, null, null, null).then((result) => {
-              expect(result).to.equal(apiMock.authenticateCounter)
-              expect(result).to.equal(2) // auth one more time, because validity is just 1s here.
-              done()
-          }).catch((err) => {
-              done(err)
-          })
-      }, 1100);
+        apiMock.callApi('/test/5b', null, null, null, null).then((result) => {
+          expect(result).to.equal(apiMock.authenticateCounter)
+          expect(result).to.equal(2) // auth one more time, because validity is just 1s here.
+          done()
+        }).catch((err) => {
+          done(err)
+        })
+      }, 1100)
     }).catch((err) => {
       done(err)
     })
   })
-
 })

@@ -42,5 +42,5 @@ describe('Express application', () => {
       .end((err) => {
         done(err)
       })
-    })
+  })
 })
