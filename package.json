@@ -60,6 +60,7 @@
     "report-dir": "./doc/coverage"
   },
   "dependencies": {
+    "JSONStream": "^1.1.1",
     "babel-core": "^6.4.5",
     "babel-eslint": "^6.0.0",
     "babel-preset-es2015": "^6.3.13",
@@ -80,6 +81,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "groc": "^0.8.0",
+    "http-proxy": "^1.13.2",
     "iron-node": "^2.2.16",
     "mocha": "^2.4.5",
     "nodemon": "^1.9.1",

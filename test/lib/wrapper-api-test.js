@@ -89,7 +89,7 @@ describe('wrapper-api library auto-authentication system', () => {
       // will succeed only the 5th time
       callback((this.authenticateCounter > 4) ? null : 'Failed#' + this.authenticateCounter, authData)
     }
-    callDistant (url, method, queryParams, headers, payload, resolve, reject, reAuthenticate) {
+    callDistant (url, method, queryParams, headers, payload, streamParser, resolve, reject, reAuthenticate) {
       resolve(this.authenticateCounter)
     }
   }
@@ -101,14 +101,14 @@ describe('wrapper-api library auto-authentication system', () => {
       // will succeed the first time
       callback(null, authData)
     }
-    callDistant (url, method, queryParams, headers, payload, resolve, reject, reAuthenticate) {
+    callDistant (url, method, queryParams, headers, payload, streamParser, resolve, reject, reAuthenticate) {
       resolve(this.authenticateCounter)
     }
   }
 
   it('Can be turned off from options at instantiation', (done) => {
     const apiMock = new MyfoxWrapperApiMock4failures({autoAuthentication: false, myfoxSiteIds: [1]})
-    apiMock.callApi('/test/1', null, null, null, null).then((result) => {
+    apiMock.callApi('/test/1', null, null, null, null, null).then((result) => {
       expect(result).to.equal(apiMock.authenticateCounter)
       expect(result).to.be.undefined
       done()
@@ -118,7 +118,7 @@ describe('wrapper-api library auto-authentication system', () => {
   })
   it('Will retry until autoAuthRetryCredits reached and then fails', (done) => {
     const apiMock = new MyfoxWrapperApiMock4failures({autoAuthRetryCredits: 3, myfoxSiteIds: [1]})
-    apiMock.callApi('/test/2', null, null, null, null).then(() => {
+    apiMock.callApi('/test/2', null, null, null, null, null).then(() => {
       done('Should not reach this one')
     }).catch((err) => {
       expect(err).to.equal('Failed#' + apiMock.authenticateCounter)
@@ -127,7 +127,7 @@ describe('wrapper-api library auto-authentication system', () => {
   })
   it('Will succeed after many failures as the mock should do', (done) => {
     const apiMock = new MyfoxWrapperApiMock4failures({autoAuthRetryCredits: 8, myfoxSiteIds: [1]})
-    apiMock.callApi('/test/3', null, null, null, null).then((result) => {
+    apiMock.callApi('/test/3', null, null, null, null, null).then((result) => {
       expect(result).to.equal(apiMock.authenticateCounter)
       expect(result).to.equal(5)
       done()

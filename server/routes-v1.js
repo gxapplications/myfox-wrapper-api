@@ -25,11 +25,12 @@ const routes = {
     },
     'get': {
       'express': (req, res, api) => {
-        api.callHome(api.authenticatedData.siteId, (err, result) => {
+        // TODO !5: example to do
+        api.callHome((err, result) => {
           if (err) {
-            return res.send(err).code(500).end()
+            return res.send(err)
           }
-          res.send('/home succeed!').end()
+          res.send(result)
         })
       }
     }
