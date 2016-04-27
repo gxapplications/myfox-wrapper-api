@@ -13,8 +13,9 @@
     "lint": "standard --verbose | snazzy",
     "validate": "npm ling && npm test && npm ls",
     "dev:start": "nodemon server.js",
-    "dev:debug": "iron-node server.js",
-    "dev:test": "npm run test -- --watch"
+    "dev:test": "npm run test -- --watch",
+    "debug:start": "iron-node server.js",
+    "debug:test": "cross-env NODE_ENV=test iron-node node_modules/mocha/bin/_mocha"
   },
   "main": "lib/index.js",
   "repository": {
@@ -81,7 +82,6 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "groc": "^0.8.0",
-    "http-proxy": "^1.13.2",
     "iron-node": "^2.2.16",
     "mocha": "^2.4.5",
     "nodemon": "^1.9.1",

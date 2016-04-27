@@ -25,10 +25,10 @@ const routes = {
     },
     'get': {
       'express': (req, res, api) => {
-        // TODO !5: example to do
+        // TODO !6: example to do
         api.callHome((err, result) => {
           if (err) {
-            return res.send(err)
+            return res.status(err.status).send(err.toString())
           }
           res.send(result)
         })
