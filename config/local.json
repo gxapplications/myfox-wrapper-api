@@ -3,5 +3,12 @@
     "myfox": {
       "myfoxSiteIds": [1234]
     }
+  },
+  "html": {
+    "myfox": {
+      "protocol": "http",
+      "hostname": "localhost",
+      "port": 8001
+    }
   }
 }

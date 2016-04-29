@@ -5,6 +5,9 @@ import Api from '../lib/index'
 import routes from './routes-v1'
 import config from 'config'
 
+// TODO !2: utiliser https://github.com/flatiron/prompt pour obtenir les CREDENTIALS {username: "", password: ""} et les injecter dans Api(options, CREDENTIALS)
+// si le gars repond rien en prompt shell (vide et vide) alors on n'injecte rien (undefined ou null)
+
 // These const are instantiated once at init,
 // to keep the same instance of these objects for all requests.
 // This is mandatory to share authenticated session.

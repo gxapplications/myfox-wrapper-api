@@ -121,7 +121,7 @@ describe('wrapper-api library auto-authentication system', () => {
     apiMock.callApi('/test/2', null, null, null, null, null).then(() => {
       done('Should not reach this one')
     }).catch((err) => {
-      expect(err).to.equal('Failed#' + apiMock.authenticateCounter)
+      expect(err.previous).to.equal('Failed#' + apiMock.authenticateCounter)
       done()
     })
   })
