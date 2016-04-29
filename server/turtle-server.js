@@ -6,17 +6,17 @@ const express = require('express')
 const application = express()
 application.all('/*', (req, res, next) => {
   setTimeout(() => {
-    res.write('<html><head></head><body><a>tag A<br/></a>')
+    res.write('<html><head><title>... Page not found</title></head><body><a>tag A<br/></a>')
     res.flushHeaders()
-  }, 2000)
+  }, 1000)
   setTimeout(() => {
     res.write('<span>tag span</span><br/>')
     res.flushHeaders()
-  }, 4000)
+  }, 2000)
   setTimeout(() => {
     res.write('<b>tag B</b><br/>')
     res.flushHeaders()
-  }, 6000)
+  }, 5000)
   setTimeout(() => {
     res.write('<span>tag span 2</span><br/></body></html>')
     res.end()
