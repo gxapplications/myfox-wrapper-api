@@ -45,20 +45,31 @@ npm install --save myfox-wrapper-api
 
 _To contribute to the myfox-wrapper-api project as a developer, you should clone the repository, and follow the [CONTRIBUTING.md](CONTRIBUTING.md) document._
 
-###### To try the API with a built-in server, just change your current directory to the root of the project/dependency, and run:
+###### To try the API with a built-in server, just change your current directory to the root of the dependency, and run:
 ```bash
 npm start
 ```
+
+At boot time, the server will ask you username and password that you want to use to connect to Myfox services.
+This credentials are kept in memory only (not stored anywhere) and lost at server stop.
+That means one server instance can serve only 1 Myfox account at runtime!
 
 This instance will deliver a swagger.json file (auto-generated) to expose the API, that you can use with an external Swagger server, or via the built-in Swagger server:
 ``
 TODO
 ``
 
----
+TODO:
+The default built-in server is made over hapi. There is an express server for example/test purpose only (do not use directly because the I/O data format is not checked and then not protected against attacks). 
 
-`TODO` express example given
+_________
+## Use the build-in server in production
+
 `TODO` use the server for production purposes, how and what limitations (only one account per server!)
+
+_________
+## Use this project as a library
+
 `TODO` direct use as library (not the included server, so how to dev)
 
 _________
