@@ -15,3 +15,5 @@ Code changes are welcome and should follow the guidelines below.
 * Add tests for your new code ensuring that you have 100% code coverage (we can help you reach 100% but will not merge without it).
     * Run `npm test` to generate a report of test and its coverage [TODO]
 * [Pull requests](http://help.github.com/articles/using-pull-requests/) should be made to the [master branch](https://github.com/gxapplications/myfox-wrapper-api/tree/master).
+
+[Current code coverage can be found here](http://gxapplications.github.io/myfox-wrapper-api/coverage/lcov-report/)

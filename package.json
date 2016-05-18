@@ -9,7 +9,8 @@
   "scripts": {
     "start": "node server.js",
     "test": "cross-env NODE_ENV=test mocha",
-    "doc": "rimraf doc && groc && nyc --reporter=lcov npm test && rimraf .nyc_output",
+    "doc": "rimraf doc && groc && cross-env NODE_ENV=test nyc --require babel-core/register --reporter=lcov mocha && rimraf .nyc_output",
+    "doc:publish": "npm run doc && gh-pages -d doc",
     "lint": "standard --verbose | snazzy",
     "validate": "npm ling && npm test && npm ls",
     "dev:start": "nodemon server.js",
@@ -56,9 +57,13 @@
     "test"
   ],
   "nyc": {
-    "lines": 99,
-    "check-coverage": false,
-    "report-dir": "./doc/coverage"
+    "lines": 40,
+    "check-coverage": true,
+    "report-dir": "./doc/coverage",
+    "include": [
+      "lib/**",
+      "server/**"
+    ]
   },
   "dependencies": {
     "JSONStream": "^1.1.1",
@@ -70,8 +75,10 @@
     "chalk": "^1.1.3",
     "colors": "^1.0.3",
     "config": "^1.20.1",
+    "copyfiles": "^0.2.1",
     "cross-env": "^1.0.7",
     "express": "^4.10.4",
+    "gh-pages": "^0.11.0",
     "joi": "^8.0.5",
     "method-override": "^2.3.0",
     "morgan": "^1.5.0",

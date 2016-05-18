@@ -29,14 +29,14 @@ but I need the rights from Myfox to do it, to finally have:
 - the stability of the website (evolutions will have to be reported here),
 - the custom policy you indicate (HTML only, HTML first, Rest first, Rest only)
 
-(Please see the Quick Start guide below, or the [Wiki Documentation](https://github.com/gxapplications/myfox-wrapper-api/wiki/Start-from-here!) to understand the strategy of the system)
+(Please see the Quick Start guide below, or the [Wiki Documentation](https://github.com/gxapplications/myfox-wrapper-api/wiki) to understand the strategy of the system)
 
 #### And for the bonus, we add macro features!
 To let you control Myfox services in time (e.g.: schedule a scenario call 60 minutes after another scenario call, with programmable conditions to cancel a scheduled task; planify changes in a scenario configuration depending on day time, like maximum and minimum temperatures in a complex scenario; ...)
 
 _________
 ## Quick Start guide
-(For a full install guide, please go to the [Wiki home page](https://github.com/gxapplications/myfox-wrapper-api/wiki/Start-from-here!))
+(For a full install guide, please go to the [Wiki home page](https://github.com/gxapplications/myfox-wrapper-api/wiki))
 
 ###### To use myfox-wrapper-api as a library or stand-alone API server in your own project, just install it as dependency:
 ```bash
@@ -71,6 +71,14 @@ _________
 ## Use this project as a library
 
 `TODO` direct use as library (not the included server, so how to dev)
+
+_________
+## Read the documentations now
+
+- If you like Groc and literal coding concept: [Groc documentation](http://gxapplications.github.io/myfox-wrapper-api/groc/)
+- If you prefer jsdoc: `TODO`
+- If you need more information: [Wiki home page](https://github.com/gxapplications/myfox-wrapper-api/wiki)
+- To follow Test improvements: [Code coverage](http://gxapplications.github.io/myfox-wrapper-api/coverage/lcov-report/)
 
 _________
 ## License

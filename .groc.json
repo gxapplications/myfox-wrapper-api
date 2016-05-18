@@ -2,11 +2,10 @@
   "glob": [
     "lib/**/*.js",
     "server/*.js",
-    "*.js",
-
-    "nodemon.json"
+    "README.md"
   ],
   "github": false,
   "out": "./doc/groc",
-  "strip": "--no-strip"
+  "strip": "--no-strip",
+  "index": "README.md"
 }
