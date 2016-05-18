@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for lib\html-api.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">lib/</a> html-api.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">21.88% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>7/32</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/17</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">28.57% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>2/7</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">21.88% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>7/32</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict'
+&nbsp;
+import JsonStream from 'JSONStream'
+import config from 'config'
+&nbsp;
+import MyfoxWrapperApiCommon from './common-api'
+import { httpsRequest } from './html-parsers'
+&nbsp;
+// Html parsers
+import homeParser from './html-parsers/home'
+&nbsp;
+class MyfoxWrapperApiHtml extends MyfoxWrapperApiCommon {
+&nbsp;
+  /**
+   * Call Myfox authentication process (login form filled in POST method).
+   * Do not use this method directly to login to Myfox services: the auth will not be stored.
+   * @param {object} authData Authentication data that comes from previous authentication.
+   * @param {function} callback To use when the authentication is done (fail or success), with parameters: (err, authData)
+   */
+  authenticate (authData, callback) <span class="cstat-no" title="statement not covered" ></span>{
+<span class="cstat-no" title="statement not covered" >    const validSiteIds = t</span>his.options.myfoxSiteIds || []
+&nbsp;
+    // Call https://myfox.me/login', POST, payload={'username', 'password'}
+    // Receive {'code': "KO"} OR {rdt: ["https://myfox.me/home/XXXX", 0]}
+    httpsRequest(
+      'POST',
+      config.get('html.myfox.paths.login'),
+      JsonStream.parse('rdt').on('data', <span class="fstat-no" title="function not covered" >(data) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        try {</span>
+<span class="cstat-no" title="statement not covered" >          const siteId = data[0].split('/').pop()</span>
+<span class="cstat-no" title="statement not covered" ></span>          if (validSiteIds.indexOf(siteId) === -1) {
+<span class="cstat-no" title="statement not covered" >            console.error(`Authenticated with a forbidden siteId (${siteId}). Please check your configuration (server.myfox.myfoxSiteIds)`)</span>
+<span class="cstat-no" title="statement not covered" >            const error = new Error('Forbidden siteId. The server is restricted to a list of siteIds and your does not match one of them.')</span>
+<span class="cstat-no" title="statement not covered" >            error.status = 449</span>
+<span class="cstat-no" title="statement not covered" >            return callback(error)</span>
+          }
+<span class="cstat-no" title="statement not covered" >          return callback(null, data)</span>
+        } catch (err) {
+<span class="cstat-no" title="statement not covered" >          err.status = 500</span>
+<span class="cstat-no" title="statement not covered" >          return callback(err)</span>
+        }
+      }),
+<span class="fstat-no" title="function not covered" >      (err) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        callback(err || 'Login failed.')</span>
+      },
+      {},
+      {'username': this.accountCredentials.username, 'password': this.accountCredentials.password}
+      // FIXME !3: super.accountCredentials.xxx si ils existent, sinon on peut pas (error a renvoyer au client ?)
+    )
+  }
+&nbsp;
+  /**
+   * Call Myfox interface with the action/query.
+   * Do not use this method directly to call Myfox services. Prefer use this.callApi(url, method, queryParams, headers, payload)
+   * @param {string} url The HTTP(s) URL to call
+   * @param {string} method The HTTP method (get, post, patch, put, delete)
+   * @param {object} queryParams An object to serialize into the query string
+   * @param {object} headers An object to push into the request headers
+   * @param {object} payload An object to serialize as the request payload
+   * @param {object} streamParser a stream parser to pipe on the distant response stream
+   * @param {function} resolve The callback to use if the call succeeds (with data as unique parameter)
+   * @param {function} reject The callback to use if the call fails (with the error as unique parameter)
+   * @param {function} reAuthenticate The callback to use if the call received a 403 error, to force a new loop with an authentication process. May be null ! In this case, throw an error.
+   */
+  callDistant (url, method, queryParams, headers, payload, streamParser, resolve, reject, reAuthenticate) {
+<span class="cstat-no" title="statement not covered" >    httpsRequest(</span>
+      method,
+      url,
+      streamParser,
+<span class="fstat-no" title="function not covered" >      (err, fullData) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" ></span>        if (err) {
+<span class="cstat-no" title="statement not covered" ></span>          if (err.status === null || err.status === undefined) {
+<span class="cstat-no" title="statement not covered" >            err.status = 500</span>
+          }
+<span class="cstat-no" title="statement not covered" ></span>          if (err.status === 403 &amp;&amp; reAuthenticate !== null &amp;&amp; reAuthenticate !== undefined) {
+<span class="cstat-no" title="statement not covered" >            return reAuthenticate()</span>
+          }
+<span class="cstat-no" title="statement not covered" >          return reject(err)</span>
+        }
+<span class="cstat-no" title="statement not covered" >        resolve(fullData)</span>
+      },
+      queryParams,
+      payload,
+      headers
+    )
+  }
+&nbsp;
+  callHome (callback) {
+<span class="cstat-no" title="statement not covered" >    console.info('Routing - callHome:', 'GET', '/home')</span>
+<span class="cstat-no" title="statement not covered" >    super.callApi('/home', 'GET', homeParser, {}, {}, {})</span>
+      .then(<span class="fstat-no" title="function not covered" >() =&gt; {</span>
+        // TODO !6: example to do and to doc
+<span class="cstat-no" title="statement not covered" >        callback(null, homeParser.myVar)</span>
+      })
+      .catch(<span class="fstat-no" title="function not covered" >(err) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        callback(err)</span>
+      })
+  }
+}
+&nbsp;
+// exports
+export default function myfoxWrapperApiHtml (options, fallbackApi) {
+  return new MyfoxWrapperApiHtml(options, fallbackApi)
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu May 19 2016 00:22:53 GMT+0200 (Paris, Madrid (heure d’été))
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

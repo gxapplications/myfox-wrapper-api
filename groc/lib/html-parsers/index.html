@@ -1,0 +1,106 @@
+<!DOCTYPE html><html lang="en"><head><title>lib\html-parsers\index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="lib\html-parsers\index"><meta name="groc-project-path" content="lib\html-parsers\index.js"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path">lib\html-parsers\index.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-pi">'use strict'</span>
+
+<span class="hljs-keyword">import</span> config <span class="hljs-keyword">from</span> <span class="hljs-string">'config'</span>
+<span class="hljs-keyword">import</span> http <span class="hljs-keyword">from</span> <span class="hljs-string">'http'</span>
+<span class="hljs-keyword">import</span> https <span class="hljs-keyword">from</span> <span class="hljs-string">'https'</span>
+<span class="hljs-keyword">import</span> querystring <span class="hljs-keyword">from</span> <span class="hljs-string">'querystring'</span>
+<span class="hljs-keyword">import</span> { notFound200 } <span class="hljs-keyword">from</span> <span class="hljs-string">'./false-error-codes'</span></div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>TODO !0: TU
+Helper to send an HTTP request to Myfox services, and parse response stream
+You will use this to analyze Myfox HTML response from an HTTP query,
+and to avoid parsing general events like errors, authentication problems, etc...</p>
+<p>Parameters:</p>
+<ul>
+<li><p><strong>method must be a string.</strong><br/>(The HTTP method, in upper case (GET, POST, PUT, PATCH, DELETE, ...))</p>
+</li>
+<li><p><strong>path must be a string.</strong><br/>(The URL path part (without query string and host parts), like &#39;/home/1234&#39; )</p>
+</li>
+<li><p><strong>streamParser must be an object.</strong><br/>(a stream parser to pipe on the distant response stream)</p>
+</li>
+<li><p><strong>callback must be a function.</strong><br/>(The callback function to call after parsing (will take (err, data) as arguments))</p>
+</li>
+<li><p><strong>queryParams must be an object.</strong><br/>(An object to serialize into the query string)</p>
+</li>
+<li><p><strong>payload must be an object.</strong><br/>(An object to serialize as the request payload)</p>
+</li>
+<li><p><strong>headers must be an object.</strong><br/>(An object to push into the request headers)</p>
+</li>
+</ul></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">httpsRequest</span> (<span class="hljs-params">method, path, streamParser, callback, queryParams, payload, headers</span>) </span>{</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>POST / PUT / PATCH cases</p></div></div><div class="code"><div class="wrapper">  <span class="hljs-keyword">if</span> (payload) {
+    payload = <span class="hljs-built_in">JSON</span>.stringify(payload)
+  }
+  <span class="hljs-keyword">const</span> postHeaders = (payload &amp;&amp; (method === <span class="hljs-string">'POST'</span> || method === <span class="hljs-string">'PUT'</span> || method === <span class="hljs-string">'PATCH'</span>)) ? {
+    <span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'application/x-www-form-urlencoded'</span>,
+    <span class="hljs-string">'Content-Length'</span>: payload.length
+  } : {}</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Query parameters to path</p></div></div><div class="code"><div class="wrapper">  <span class="hljs-keyword">if</span> (queryParams &amp;&amp; queryParams !== {}) {
+    queryParams = querystring.stringify(queryParams)
+    path = path + <span class="hljs-string">'?'</span> + queryParams
+  }
+
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">const</span> requestData = {
+      hostname: config.get(<span class="hljs-string">'html.myfox.hostname'</span>),
+      port: config.get(<span class="hljs-string">'html.myfox.port'</span>),
+      path: path,
+      headers: <span class="hljs-built_in">Object</span>.assign(postHeaders, config.get(<span class="hljs-string">'html.myfox.headers'</span>), headers),
+      method: method
+    }
+
+    <span class="hljs-keyword">let</span> req = ((config.get(<span class="hljs-string">'html.myfox.protocol'</span>) === <span class="hljs-string">'http'</span>) ? http : https).request(requestData, (res) =&gt; {</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>If HTTP error case, no need to parse the body</p></div></div><div class="code"><div class="wrapper">      <span class="hljs-keyword">if</span> (res.statusCode &gt;= <span class="hljs-number">400</span>) {
+        <span class="hljs-keyword">const</span> error = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Error status code returned by Myfox.'</span>)
+        error.status = res.statusCode
+        <span class="hljs-keyword">return</span> callback(error)
+      }</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>If false HTTP codes, fix them</p></div></div><div class="code"><div class="wrapper">      <span class="hljs-keyword">if</span> (res.statusCode === <span class="hljs-number">302</span> &amp;&amp; res.headers.location === config.get(<span class="hljs-string">'html.myfox.redirectForbidden'</span>)) {
+        <span class="hljs-keyword">const</span> error = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Myfox redirected to / because of forbidden access.'</span>)
+        error.status = <span class="hljs-number">403</span>
+        <span class="hljs-keyword">return</span> callback(error)
+      }
+      res.pipe(notFound200) <span class="hljs-comment">// Change 'Page not found' code 200 by 404</span>
+      notFound200.on(<span class="hljs-string">'error'</span>, callback)</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>From here we start to analyze the content of the data. Keep it in a buffer anyway.</p></div></div><div class="code"><div class="wrapper">      res.setEncoding(<span class="hljs-string">'utf8'</span>)
+      <span class="hljs-keyword">let</span> buffer = <span class="hljs-string">''</span>
+      res.on(<span class="hljs-string">'data'</span>, (chunk) =&gt; {
+        buffer += chunk
+      })
+
+      res.pipe(codeKo200) <span class="hljs-comment">// Change code KO with 200 by 400 and fetch the message</span>
+      codeKo200.on(<span class="hljs-string">'error'</span>, () =&gt; {</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>TODO !1: manage this {&quot;code&quot;:&quot;KO&quot;,&quot;msg&quot;:[[&quot;Identification failed for the following reason: Too many connection attempts.&quot;,&quot;error&quot;]]}
+ici on doit donc chopper msg ! via un autre parser ? du genre res.pipe(JSONStream.parse(&#39;msg&#39;).on(...)) ?</p></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>TODO !1: tester ! c douteux !</p></div></div><div class="code"><div class="wrapper">      })
+
+      <span class="hljs-keyword">if</span> (streamParser !== <span class="hljs-literal">null</span> &amp;&amp; streamParser !== <span class="hljs-literal">undefined</span>) {</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>There is a streamParser. &#39;end&#39; event won&#39;t return data (parser must catch data needed).</p></div></div><div class="code"><div class="wrapper">        res.pipe(streamParser)
+        res.on(<span class="hljs-string">'end'</span>, callback)
+      } <span class="hljs-keyword">else</span> {</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>There is no streamParser, so all bufferized data will be returned at the &#39;end&#39; event.</p></div></div><div class="code"><div class="wrapper">        res.on(<span class="hljs-string">'end'</span>, () =&gt; {
+          callback(<span class="hljs-literal">null</span>, buffer)
+        })
+      }
+    })
+
+    <span class="hljs-keyword">if</span> (streamParser !== <span class="hljs-literal">null</span> &amp;&amp; streamParser !== <span class="hljs-literal">undefined</span>) {
+      streamParser.on(<span class="hljs-string">'error'</span>, callback)
+    }
+    req.on(<span class="hljs-string">'error'</span>, callback)
+
+    <span class="hljs-keyword">if</span> (payload &amp;&amp; (method === <span class="hljs-string">'POST'</span> || method === <span class="hljs-string">'PUT'</span> || method === <span class="hljs-string">'PATCH'</span>)) {
+      req.write(payload)
+    }
+    req.end()
+  } <span class="hljs-keyword">catch</span> (err) {
+    <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'requestData() encounter exception parsing Myfox response.'</span>, err)
+    <span class="hljs-keyword">if</span> (err.status === <span class="hljs-literal">null</span> || err.status === <span class="hljs-literal">undefined</span>) {
+      err.status = <span class="hljs-number">500</span>
+    }
+    callback(err)
+  }
+}</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>TODO !0: doc et TU</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">trumpetInnerText</span> (<span class="hljs-params">callback</span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">element</span>) </span>{
+    <span class="hljs-keyword">let</span> buffer = <span class="hljs-string">''</span>
+    <span class="hljs-keyword">const</span> stream = element.createReadStream()
+    stream.setEncoding(<span class="hljs-string">'utf8'</span>)
+    stream.on(<span class="hljs-string">'data'</span>, (chunk) =&gt; {
+      buffer += chunk
+    })
+    stream.on(<span class="hljs-string">'end'</span>, () =&gt; {
+      callback(buffer)
+    })
+    stream.on(<span class="hljs-string">'error'</span>, (err) =&gt; {
+      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(err)
+    })
+  }
+}</div></div></div></div></body></html>

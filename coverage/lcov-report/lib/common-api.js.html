@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for lib\common-api.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">lib/</a> common-api.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">82.61% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>38/46</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">68.75% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>11/16</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">75% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>6/8</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">82.22% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>37/45</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">23×</span>
+<span class="cline-any cline-yes">23×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">23×</span>
+<span class="cline-any cline-yes">23×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">23×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">23×</span>
+<span class="cline-any cline-yes">23×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">39×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">35×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict'
+&nbsp;
+import Joi from 'joi'
+&nbsp;
+/**
+ * Uses the fallback API wrapper if available, else raises a 'Not Implemented' exception.
+ * Keep this function private: Not exported with the class.
+ * As we use 'this' in the function, you MUST always call it with a bind:
+ * _notImplemented.bind(&lt;object_as_this&gt;)(...)
+ * 
+ * @method  _notImplemented
+ * @param   {string}  functionName           The method name that is not implemented yet.
+ * @param   {mixed}   params                 The list of the parameters given to the original method (rest notation).
+ * @throws  {Error}   If there is no fallback API set during the API wrapper instanciation.
+ */
+const _notImplemented = <span class="fstat-no" title="function not covered" >function (functionName, ...params) {</span>
+<span class="cstat-no" title="statement not covered" ></span>  if (this.fallbackApi !== null &amp;&amp; this.fallbackApi !== undefined) {
+<span class="cstat-no" title="statement not covered" >    this.fallbackApi[functionName](params)</span>
+  } else {
+<span class="cstat-no" title="statement not covered" >    throw new Error('Feature not implemented in this wrapper.')</span>
+  }
+}
+&nbsp;
+/**
+ * Parent class that contains the method list to implement on the subclasses, and common methods.
+ * The constructor must never be squizzed even by a subclass: parameters validation is done here.
+ */
+class MyfoxWrapperApiCommon {
+&nbsp;
+  // Construction parts
+&nbsp;
+  /**
+   * TODO: DOC
+   */
+  constructor (options, fallbackApi, accountCredentials) {
+    this.options = Object.assign({}, MyfoxWrapperApiCommon.defaultOptions(), options)
+    Joi.assert(this.options, MyfoxWrapperApiCommon.optionsSchema())
+&nbsp;
+    this.accountCredentials = accountCredentials
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (this.accountCredentials !== null &amp;&amp; this.accountCredentials !== undefined) {
+<span class="cstat-no" title="statement not covered" >      Joi.assert(this.accountCredentials, MyfoxWrapperApiCommon.accountCredentialsSchema())</span>
+    }
+&nbsp;
+    this.fallbackApi = fallbackApi
+&nbsp;
+    this.authenticatedUntil = new Date()
+    this.authenticatedData = null
+  }
+&nbsp;
+  /**
+   * TODO: DOC
+   */
+  static defaultOptions () {
+    return {
+      apiStrategy: 'custom',
+      autoAuthentication: true,
+      autoAuthRetryCredits: 1, // 2 calls maximum means 1 retry
+      authValidity: 120, // 2 minutes
+      myfoxSiteIds: [] // must be overriden by your siteIds (most often just one...)
+    }
+  }
+&nbsp;
+  /**
+   * TODO: DOC
+   */
+  static optionsSchema () {
+    return Joi.object({
+      apiStrategy: Joi.string().required().valid(['htmlOnly', 'htmlFirst', 'restFirst', 'restOnly', 'custom']),
+      autoAuthentication: Joi.boolean().required(),
+      autoAuthRetryCredits: Joi.number().integer().min(0).max(10).required(),
+      authValidity: Joi.number().integer().min(1).max(86400).required(), // 10 seconds to 24hrs
+      myfoxSiteIds: Joi.array().items(Joi.number().integer().min(1)).min(1).required() // at least 1 number
+    })
+  }
+&nbsp;
+  /**
+   * TODO: DOC
+   */
+  static accountCredentialsSchema () {
+    return Joi.object({
+      username: Joi.string().required(),
+      password: Joi.string().required()
+    })
+  }
+&nbsp;
+  // MyFox distant caller and auto-authentification system
+&nbsp;
+  /**
+   * Call this when you need to call distant Myfox services.
+   * This method will manage authentication layer.
+   * 
+   * @method  callApi
+   * @param   {string}  url          The HTTP(s) URL to call
+   * @param   {string}  method       The HTTP method in uppercase (GET, POST, PATCH, PUT, DELETE, etc...)
+   * @param   {object}  streamParser A stream parser to pipe on the distant response stream
+   * @param   {object}  queryParams  An object to serialize into the query string
+   * @param   {object}  headers      An object to push into the request headers
+   * @param   {object}  payload      An object to serialize as the request payload
+   * @return  {Promise}              A promise for asynchronous behavior
+   */
+  callApi (url, method, streamParser, queryParams, headers, payload) {
+    // No auth needed, handled manually. Just call the service.
+    if (this.options.autoAuthentication === false) {
+      return new Promise((resolve, reject) =&gt; {
+        this.callDistant(url, method, queryParams, headers, payload, streamParser, resolve, reject, null)
+      })
+    }
+&nbsp;
+    // Try to authenticate function
+    let tryToAuthenticate
+    tryToAuthenticate = (retryCredits, callDistant, streamParser, resolve, reject) =&gt; {
+      this.authenticate(this.authenticatedData, (err, authData) =&gt; {
+        if (err) {
+          if (retryCredits &gt; 0) { // retry one more time
+            console.warn('Authentication failed. Retrying ' + retryCredits + ' times left.')
+            return tryToAuthenticate(retryCredits - 1, callDistant, streamParser, resolve, reject)
+          } else {
+            console.warn('Authentication failed. No retry credits left.')
+            const error = new Error('Authentication failed.')
+            error.status = 403
+            error.previous = err
+            return reject(error)
+          }
+        } else {
+          this.authenticatedUntil.setTime(new Date().getTime() + (this.options.authValidity * 1000))
+          this.authenticatedData = authData
+          return callDistant(url, method, queryParams, headers, payload, streamParser, resolve, reject, null)
+        }
+      })
+    }
+    return new Promise((resolve, reject) =&gt; {
+      let authCredits = this.options.autoAuthRetryCredits
+      // For sure, we need to auth before calling service
+      if (!this.isMaybeAuthenticated()) {
+        tryToAuthenticate(authCredits, this.callDistant.bind(this), streamParser, resolve, reject)
+      } else {
+        // Maybe we are still authenticated. Try service and see... if fails auth and try again once.
+        this.callDistant(url, method, queryParams, headers, payload, streamParser, resolve, reject, <span class="fstat-no" title="function not covered" >() =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >          tryToAuthenticate(authCredits, this.callDistant.bind(this), streamParser, resolve, reject)</span>
+        })
+      }
+    })
+  }
+&nbsp;
+  isMaybeAuthenticated () {
+    const now = new Date()
+    return this.authenticatedUntil &gt; now
+  }
+&nbsp;
+  // Wrapper API methods
+&nbsp;
+  /**
+   * Call Myfox authentication process.
+   * This method must be overridden in the extended api implementation.
+   * 
+   * @param   {object}     authData Authentication data that comes from previous authentication.
+   * @param   {function}   callback To use when the authentication is done (fail or success), with parameters: (err, authData)
+   */
+  authenticate (authData, callback) {
+<span class="cstat-no" title="statement not covered" >    throw new Error('Feature not implemented in this wrapper.')</span>
+  }
+&nbsp;
+  /**
+   * Call Myfox interface with the action/query.
+   * This method must be overridden in the extended api implementation.
+   * Do not use this method directly to call Myfox services. Prefer use this.callApi(url, method, queryParams, headers, payload)
+   * 
+   * @param   {string}   url            The HTTP(s) URL to call
+   * @param   {string}   method         The HTTP method in uppercase (GET, POST, PATCH, PUT, DELETE, etc...)
+   * @param   {object}   queryParams    An object to serialize into the query string
+   * @param   {object}   headers        An object to push into the request headers
+   * @param   {object}   payload        An object to serialize as the request payload
+   * @param   {object}   streamParser   A stream parser to pipe on the distant response stream
+   * @param   {function} resolve        The callback to use if the call succeeds (with data as unique parameter)
+   * @param   {function} reject         The callback to use if the call fails (with the error as unique parameter)
+   * @param   {function} reAuthenticate The callback to use if the call received a 403 error, to force a new loop with an authentication process. May be null ! In this case, throw an error.
+   */
+  callDistant (url, method, queryParams, headers, payload, streamParser, resolve, reject, reAuthenticate) {
+<span class="cstat-no" title="statement not covered" >    throw new Error('Feature not implemented in this wrapper.')</span>
+  }
+&nbsp;
+  callHome (callback) {
+<span class="cstat-no" title="statement not covered" >    _notImplemented.bind(this)('callHome', callback)</span>
+  }
+}
+&nbsp;
+export default MyfoxWrapperApiCommon
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu May 19 2016 00:22:53 GMT+0200 (Paris, Madrid (heure d’été))
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

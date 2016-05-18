@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for lib\html-parsers\index.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">all files</a> / <a href="index.html">lib/html-parsers/</a> index.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">14.04% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>8/57</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/38</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">10% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>1/10</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">15.38% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>8/52</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict'
+&nbsp;
+import config from 'config'
+import http from 'http'
+import https from 'https'
+import querystring from 'querystring'
+import { notFound200 } from './false-error-codes'
+&nbsp;
+// TODO !0: TU
+/**
+ * Helper to send an HTTP request to Myfox services, and parse response stream
+ * You will use this to analyze Myfox HTML response from an HTTP query,
+ * and to avoid parsing general events like errors, authentication problems, etc...
+ * @param {string} method The HTTP method, in upper case (GET, POST, PUT, PATCH, DELETE, ...)
+ * @param {string} path The URL path part (without query string and host parts), like '/home/1234' 
+ * @param {object} streamParser a stream parser to pipe on the distant response stream
+ * @param {function} callback The callback function to call after parsing (will take (err, data) as arguments)
+ * @param {object} queryParams An object to serialize into the query string
+ * @param {object} payload An object to serialize as the request payload
+ * @param {object} headers An object to push into the request headers
+ */
+export <span class="fstat-no" title="function not covered" >function httpsRequest (method, path, streamParser, callback, queryParams, payload, headers) <span class="cstat-no" title="statement not covered" >{</span></span>
+  // POST / PUT / PATCH cases
+<span class="cstat-no" title="statement not covered" ></span>  if (payload) {
+<span class="cstat-no" title="statement not covered" >    payload = JSON.stringify(payload)</span>
+  }
+<span class="cstat-no" title="statement not covered" >  const postHeaders = (</span>payload &amp;&amp; (method === 'POST' || method === 'PUT' || method === 'PATCH')) ? {
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'Content-Length': payload.length
+  } : {}
+&nbsp;
+  // Query parameters to path
+  if (queryParams &amp;&amp; queryParams !== {}) {
+<span class="cstat-no" title="statement not covered" >    queryParams = querystring.stringify(queryParams)</span>
+<span class="cstat-no" title="statement not covered" >    path = path + '?' + queryParams</span>
+  }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  try {</span>
+<span class="cstat-no" title="statement not covered" >    const requestData = {</span>
+      hostname: config.get('html.myfox.hostname'),
+      port: config.get('html.myfox.port'),
+      path: path,
+      headers: Object.assign(postHeaders, config.get('html.myfox.headers'), headers),
+      method: method
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    let req = ((config.get('html.myfox.protocol') === 'http') ? http : https).request(requestData, <span class="fstat-no" title="function not covered" >(res) =&gt; <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span>{</span></span></span></span>
+      // If HTTP error case, no need to parse the body
+<span class="cstat-no" title="statement not covered" ></span>      if (res.statusCode &gt;= 400) {
+<span class="cstat-no" title="statement not covered" >        const error = new Error('Error status code returned by Myfox.')</span>
+<span class="cstat-no" title="statement not covered" >        error.status = res.statusCode</span>
+<span class="cstat-no" title="statement not covered" >        return callback(error)</span>
+      }
+&nbsp;
+      // If false HTTP codes, fix them
+      if (res.statusCode === 302 &amp;&amp; res.headers.location === config.get('html.myfox.redirectForbidden')) {
+<span class="cstat-no" title="statement not covered" >        const error = new Error('Myfox redirected to / because of forbidden access.')</span>
+<span class="cstat-no" title="statement not covered" >        error.status = 403</span>
+<span class="cstat-no" title="statement not covered" >        return callback(error)</span>
+      }
+<span class="cstat-no" title="statement not covered" >      res.pipe(notFound200) // Change 'Page not found' code 200 by 404</span>
+      notFound200.on('error', callback)
+&nbsp;
+      // From here we start to analyze the content of the data. Keep it in a buffer anyway.
+      res.setEncoding('utf8')
+<span class="cstat-no" title="statement not covered" >      let buffer = ''</span>
+<span class="cstat-no" title="statement not covered" >      res.on('data', <span class="fstat-no" title="function not covered" >(chunk) =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >        buffer += chunk</span>
+      })
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      res.pipe(codeKo200) // Change code KO with 200 by 400 and fetch the message</span>
+      codeKo200.on('error', <span class="fstat-no" title="function not covered" >() =&gt; {</span>
+          // TODO !1: manage this {"code":"KO","msg":[["Identification failed for the following reason: Too many connection attempts.","error"]]}
+          // ici on doit donc chopper msg ! via un autre parser ? du genre res.pipe(JSONStream.parse('msg').on(...)) ?
+&nbsp;
+          // TODO !1: tester ! c douteux !
+      })
+&nbsp;
+<span class="cstat-no" title="statement not covered" ></span>      if (streamParser !== null &amp;&amp; streamParser !== undefined) {
+        // There is a streamParser. 'end' event won't return data (parser must catch data needed).
+<span class="cstat-no" title="statement not covered" >        res.pipe(streamParser)</span>
+<span class="cstat-no" title="statement not covered" >        res.on('end', callback)</span>
+      } else {
+        // There is no streamParser, so all bufferized data will be returned at the 'end' event.
+<span class="cstat-no" title="statement not covered" >        res.on('end', <span class="fstat-no" title="function not covered" >() =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >          callback(null, buffer)</span>
+        })
+      }
+    })
+&nbsp;
+<span class="cstat-no" title="statement not covered" ></span>    if (streamParser !== null &amp;&amp; streamParser !== undefined) {
+<span class="cstat-no" title="statement not covered" >      streamParser.on('error', callback)</span>
+    }
+<span class="cstat-no" title="statement not covered" >    req.on('error', callback)</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" ></span>    if (payload &amp;&amp; (method === 'POST' || method === 'PUT' || method === 'PATCH')) {
+<span class="cstat-no" title="statement not covered" >      req.write(payload)</span>
+    }
+<span class="cstat-no" title="statement not covered" >    req.end()</span>
+  } catch (err) {
+<span class="cstat-no" title="statement not covered" >    console.error('requestData() encounter exception parsing Myfox response.', err)</span>
+<span class="cstat-no" title="statement not covered" ></span>    if (err.status === null || err.status === undefined) {
+<span class="cstat-no" title="statement not covered" >      err.status = 500</span>
+    }
+<span class="cstat-no" title="statement not covered" >    callback(err)</span>
+  }
+}
+&nbsp;
+// TODO !0: doc et TU
+export function trumpetInnerText (callback) {
+  return <span class="fstat-no" title="function not covered" >function (element) {</span>
+<span class="cstat-no" title="statement not covered" >    let buffer = ''</span>
+<span class="cstat-no" title="statement not covered" >    const stream = element.createReadStream()</span>
+<span class="cstat-no" title="statement not covered" >    stream.setEncoding('utf8')</span>
+<span class="cstat-no" title="statement not covered" >    stream.on('data', <span class="fstat-no" title="function not covered" >(chunk) =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >      buffer += chunk</span>
+    })
+<span class="cstat-no" title="statement not covered" >    stream.on('end', <span class="fstat-no" title="function not covered" >() =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >      callback(buffer)</span>
+    })
+<span class="cstat-no" title="statement not covered" >    stream.on('error', <span class="fstat-no" title="function not covered" >(err) =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >      throw new Error(err)</span>
+    })
+  }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu May 19 2016 00:22:53 GMT+0200 (Paris, Madrid (heure d’été))
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

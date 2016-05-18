@@ -1,0 +1,98 @@
+<!DOCTYPE html><html lang="en"><head><title>lib\html-api</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="lib\html-api"><meta name="groc-project-path" content="lib\html-api.js"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">lib\html-api.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-pi">'use strict'</span>
+
+<span class="hljs-keyword">import</span> JsonStream <span class="hljs-keyword">from</span> <span class="hljs-string">'JSONStream'</span>
+<span class="hljs-keyword">import</span> config <span class="hljs-keyword">from</span> <span class="hljs-string">'config'</span>
+
+<span class="hljs-keyword">import</span> MyfoxWrapperApiCommon <span class="hljs-keyword">from</span> <span class="hljs-string">'./common-api'</span>
+<span class="hljs-keyword">import</span> { httpsRequest } <span class="hljs-keyword">from</span> <span class="hljs-string">'./html-parsers'</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Html parsers</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">import</span> homeParser <span class="hljs-keyword">from</span> <span class="hljs-string">'./html-parsers/home'</span>
+
+class MyfoxWrapperApiHtml extends MyfoxWrapperApiCommon {</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Call Myfox authentication process (login form filled in POST method).
+Do not use this method directly to login to Myfox services: the auth will not be stored.</p>
+<p>Parameters:</p>
+<ul>
+<li><p><strong>authData must be an object.</strong><br/>(Authentication data that comes from previous authentication.)</p>
+</li>
+<li><p><strong>callback must be a function.</strong><br/>(To use when the authentication is done (fail or success), with parameters: (err, authData))</p>
+</li>
+</ul></div></div><div class="code"><div class="wrapper">  authenticate (authData, callback) {
+    <span class="hljs-keyword">const</span> validSiteIds = <span class="hljs-keyword">this</span>.options.myfoxSiteIds || []</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Call <a href="https://myfox.me/login">https://myfox.me/login</a>&#39;, POST, payload={&#39;username&#39;, &#39;password&#39;}
+Receive {&#39;code&#39;: &quot;KO&quot;} OR {rdt: [&quot;<a href="https://myfox.me/home/XXXX">https://myfox.me/home/XXXX</a>&quot;, 0]}</p></div></div><div class="code"><div class="wrapper">    httpsRequest(
+      <span class="hljs-string">'POST'</span>,
+      config.get(<span class="hljs-string">'html.myfox.paths.login'</span>),
+      JsonStream.parse(<span class="hljs-string">'rdt'</span>).on(<span class="hljs-string">'data'</span>, (data) =&gt; {
+        <span class="hljs-keyword">try</span> {
+          <span class="hljs-keyword">const</span> siteId = data[<span class="hljs-number">0</span>].split(<span class="hljs-string">'/'</span>).pop()
+          <span class="hljs-keyword">if</span> (validSiteIds.indexOf(siteId) === -<span class="hljs-number">1</span>) {
+            <span class="hljs-built_in">console</span>.error(<span class="hljs-string">`Authenticated with a forbidden siteId (<span class="hljs-subst">${siteId}</span>). Please check your configuration (server.myfox.myfoxSiteIds)`</span>)
+            <span class="hljs-keyword">const</span> error = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Forbidden siteId. The server is restricted to a list of siteIds and your does not match one of them.'</span>)
+            error.status = <span class="hljs-number">449</span>
+            <span class="hljs-keyword">return</span> callback(error)
+          }
+          <span class="hljs-keyword">return</span> callback(<span class="hljs-literal">null</span>, data)
+        } <span class="hljs-keyword">catch</span> (err) {
+          err.status = <span class="hljs-number">500</span>
+          <span class="hljs-keyword">return</span> callback(err)
+        }
+      }),
+      (err) =&gt; {
+        callback(err || <span class="hljs-string">'Login failed.'</span>)
+      },
+      {},
+      {<span class="hljs-string">'username'</span>: <span class="hljs-keyword">this</span>.accountCredentials.username, <span class="hljs-string">'password'</span>: <span class="hljs-keyword">this</span>.accountCredentials.password}</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>FIXME !3: super.accountCredentials.xxx si ils existent, sinon on peut pas (error a renvoyer au client ?)</p></div></div><div class="code"><div class="wrapper">    )
+  }</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Call Myfox interface with the action/query.
+Do not use this method directly to call Myfox services. Prefer use this.callApi(url, method, queryParams, headers, payload)</p>
+<p>Parameters:</p>
+<ul>
+<li><p><strong>url must be a string.</strong><br/>(The HTTP(s) URL to call)</p>
+</li>
+<li><p><strong>method must be a string.</strong><br/>(The HTTP method (get, post, patch, put, delete))</p>
+</li>
+<li><p><strong>queryParams must be an object.</strong><br/>(An object to serialize into the query string)</p>
+</li>
+<li><p><strong>headers must be an object.</strong><br/>(An object to push into the request headers)</p>
+</li>
+<li><p><strong>payload must be an object.</strong><br/>(An object to serialize as the request payload)</p>
+</li>
+<li><p><strong>streamParser must be an object.</strong><br/>(a stream parser to pipe on the distant response stream)</p>
+</li>
+<li><p><strong>resolve must be a function.</strong><br/>(The callback to use if the call succeeds (with data as unique parameter))</p>
+</li>
+<li><p><strong>reject must be a function.</strong><br/>(The callback to use if the call fails (with the error as unique parameter))</p>
+</li>
+<li><p><strong>reAuthenticate must be a function.</strong><br/>(The callback to use if the call received a 403 error, to force a new loop with an authentication process. May be null ! In this case, throw an error.)</p>
+</li>
+</ul></div></div><div class="code"><div class="wrapper">  callDistant (url, method, queryParams, headers, payload, streamParser, resolve, reject, reAuthenticate) {
+    httpsRequest(
+      method,
+      url,
+      streamParser,
+      (err, fullData) =&gt; {
+        <span class="hljs-keyword">if</span> (err) {
+          <span class="hljs-keyword">if</span> (err.status === <span class="hljs-literal">null</span> || err.status === <span class="hljs-literal">undefined</span>) {
+            err.status = <span class="hljs-number">500</span>
+          }
+          <span class="hljs-keyword">if</span> (err.status === <span class="hljs-number">403</span> &amp;&amp; reAuthenticate !== <span class="hljs-literal">null</span> &amp;&amp; reAuthenticate !== <span class="hljs-literal">undefined</span>) {
+            <span class="hljs-keyword">return</span> reAuthenticate()
+          }
+          <span class="hljs-keyword">return</span> reject(err)
+        }
+        resolve(fullData)
+      },
+      queryParams,
+      payload,
+      headers
+    )
+  }
+
+  callHome (callback) {
+    <span class="hljs-built_in">console</span>.info(<span class="hljs-string">'Routing - callHome:'</span>, <span class="hljs-string">'GET'</span>, <span class="hljs-string">'/home'</span>)
+    <span class="hljs-keyword">super</span>.callApi(<span class="hljs-string">'/home'</span>, <span class="hljs-string">'GET'</span>, homeParser, {}, {}, {})
+      .then(() =&gt; {</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>TODO !6: example to do and to doc</p></div></div><div class="code"><div class="wrapper">        callback(<span class="hljs-literal">null</span>, homeParser.myVar)
+      })
+      .catch((err) =&gt; {
+        callback(err)
+      })
+  }
+}</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>exports</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">myfoxWrapperApiHtml</span> (<span class="hljs-params">options, fallbackApi</span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> MyfoxWrapperApiHtml(options, fallbackApi)
+}</div></div></div></div></body></html>

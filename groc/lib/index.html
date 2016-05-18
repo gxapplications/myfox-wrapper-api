@@ -1,0 +1,45 @@
+<!DOCTYPE html><html lang="en"><head><title>lib\index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="lib\index"><meta name="groc-project-path" content="lib\index.js"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">lib\index.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-pi">'use strict'</span>
+
+<span class="hljs-keyword">import</span> Joi <span class="hljs-keyword">from</span> <span class="hljs-string">'joi'</span>
+<span class="hljs-keyword">import</span> RestApi <span class="hljs-keyword">from</span> <span class="hljs-string">'./rest-api'</span>
+<span class="hljs-keyword">import</span> HtmlApi <span class="hljs-keyword">from</span> <span class="hljs-string">'./html-api'</span>
+<span class="hljs-keyword">import</span> MyfoxWrapperApiCommon <span class="hljs-keyword">from</span> <span class="hljs-string">'./common-api'</span></div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p><span class='doc-section-header'>Method myfoxWrapperApi</span></p>
+<p>Generate an Api class instance depending on the wanted strategy.
+XXX: The strategies are not fully implemented yet. Please use htmlOnly for now.</p>
+<p>Strategies:</p>
+<ul>
+<li>htmlOnly: only HTML API wrapper is given. You can call only methods provided by the HTML Api version.</li>
+<li>htmlFirst: The HTML wrapper is followd by the Rest one, to use as fallback if the called method is not implemented in the HTML version.</li>
+<li>restFirst: The Rest wrapper is followed by the HTML one, to use as fallback if the called method is not implemented in the Reste version.</li>
+<li>restOnly: only Rest API wrapper is given. You can call only methods provided by the Rest Api version.
+The htmlFirst is the default strategy.</li>
+</ul>
+<p>Parameters:</p>
+<ul>
+<li><p><strong>options must be an object.</strong><br/>(The options to configure the API wrapper. Please see MyfoxWrapperApiCommon.optionsSchema() for the valid format.)</p>
+</li>
+<li><p><strong>accountCredentials must be an object.</strong><br/>(The credentials to allow API wrapper to authenticate on the Myfox API side. Only one account is allowed per API wrapper instance!)</p>
+</li>
+</ul>
+<p><strong>Returns a MyfoxWrapperApiCommon</strong><br/>(The instance of API wrapper. Subclass depending on the given strategy.)</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">const</span> myfoxWrapperApi = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">options, accountCredentials</span>) </span>{</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>merge default options given in MyfoxWrapperApiCommon; override strategy; and apply custom options</p></div></div><div class="code"><div class="wrapper">  options = <span class="hljs-built_in">Object</span>.assign({}, MyfoxWrapperApiCommon.defaultOptions(), {apiStrategy: <span class="hljs-string">'htmlFirst'</span>}, options)
+  Joi.assert(options, MyfoxWrapperApiCommon.optionsSchema())
+  <span class="hljs-keyword">if</span> (accountCredentials !== <span class="hljs-literal">null</span> &amp;&amp; accountCredentials !== <span class="hljs-literal">undefined</span>) {
+    Joi.assert(accountCredentials, MyfoxWrapperApiCommon.accountCredentialsSchema())
+  }
+
+  <span class="hljs-keyword">switch</span> (options.apiStrategy) {
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'htmlOnly'</span>:
+      <span class="hljs-keyword">return</span> HtmlApi(options, <span class="hljs-literal">null</span>, accountCredentials)
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'htmlFirst'</span>:
+      <span class="hljs-keyword">return</span> HtmlApi(options, RestApi(options, <span class="hljs-literal">null</span>, accountCredentials), accountCredentials)
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'restFirst'</span>:
+      <span class="hljs-keyword">return</span> RestApi(options, HtmlApi(options, <span class="hljs-literal">null</span>, accountCredentials), accountCredentials)
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'restOnly'</span>:
+      <span class="hljs-keyword">return</span> RestApi(options, <span class="hljs-literal">null</span>, accountCredentials)
+    <span class="hljs-keyword">default</span>:
+      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'apiStrategy option inconsistent.'</span>)
+  }
+}</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>allow indirect access to specific wrappers</p></div></div><div class="code"><div class="wrapper">myfoxWrapperApi.rest = RestApi
+myfoxWrapperApi.html = HtmlApi</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>exports</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> myfoxWrapperApi</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>allow direct access to specific wrappers
+only default exports from rest &amp; html are re-exported.</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">export</span> { <span class="hljs-keyword">default</span> <span class="hljs-keyword">as</span> Rest } from <span class="hljs-string">'./rest-api'</span>
+<span class="hljs-keyword">export</span> { <span class="hljs-keyword">default</span> <span class="hljs-keyword">as</span> Html } from <span class="hljs-string">'./html-api'</span></div></div></div></div></body></html>

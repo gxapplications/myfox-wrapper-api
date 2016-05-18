@@ -1,0 +1,14 @@
+<!DOCTYPE html><html lang="en"><head><title>server\server-express</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="server\server-express"><meta name="groc-project-path" content="server\server-express.js"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">server\server-express.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-pi">'use strict'</span>
+
+<span class="hljs-keyword">import</span> { createServer } <span class="hljs-keyword">from</span> <span class="hljs-string">'http'</span>
+<span class="hljs-keyword">import</span> <span class="hljs-string">'colors'</span>
+
+<span class="hljs-keyword">import</span> application <span class="hljs-keyword">from</span> <span class="hljs-string">'./application-express'</span>
+
+const server = createServer(application)
+server.listen(application.get(<span class="hljs-string">'port'</span>), () =&gt; {
+  console.log(<span class="hljs-string">'WARNING: The express server version here is for example purposes only.'</span>.red)
+  console.log(<span class="hljs-string">'The API it provides is not protected against malformed/malicious requests.'</span>.yellow)
+  console.log(<span class="hljs-string">'To have a Swagger interface, please use the hapi server version (see /server.js).'</span>.green)
+  console.log(<span class="hljs-string">'✔ Server listening on port'</span>.green, String(application.get(<span class="hljs-string">'port'</span>)).cyan)
+})</div></div></div></div></body></html>

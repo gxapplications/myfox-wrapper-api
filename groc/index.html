@@ -1,0 +1,49 @@
+<!DOCTYPE html><html lang="en"><head><title>index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content=""><meta name="groc-document-path" content="index"><meta name="groc-project-path" content="README.md"><link rel="stylesheet" type="text/css" media="all" href="assets/style.css"><script type="text/javascript" src="assets/behavior.js"></script><body><div id="meta"><div class="file-path">README.md</div></div><div id="document"><div class="segment"><div class="comments "><div class="wrapper"><p><img src="https://raw.githubusercontent.com/gxapplications/myfox-wrapper-api/master/lib/assets/logo.png" alt="myfox-wrapper-logo"></p>
+<p><em>An API layer to Myfox services to add easy usable features &amp; tools, written in NodeJS.</em></p>
+<p><strong>This repository is for now empty. A first version will come in several weeks.</strong></p>
+<p><a href="http://travis-ci.org/gxapplications/myfox-wrapper-api"><img src="https://secure.travis-ci.org/gxapplications/myfox-wrapper-api.png" alt="Build Status"></a>
+<a href="http://standardjs.com/"><img src="https://img.shields.io/badge/code%20style-standard-brightgreen.svg" alt="js-standard-style"></a></p>
+<p>[npm versions and downloads from NPM - TODO]</p>
+<h2 id="what">What</h2>
+<p>This API layer will serve you full control over a Myfox service (alarm and domotics), calling basic features through official html website (parsing data retrieved by a curl robot), and will add many features (mainly precoded macro features).</p>
+<h4 id="why-to-not-use-rest-api">Why to not use Rest API?</h4>
+<p>Because the Myfox Rest API is the official one. If you want to use it, then, use it directly. But it does not allow everything (like editing a scenario for example!)...
+And I cannot extend the official API due to license limitations from Myfox side.</p>
+<h4 id="why-to-use-html-robotparser-to-use-myfox-services">Why to use html robot/parser to use Myfox services?</h4>
+<p>Through the official HTML website, we can do really much more than from the existing Rest API (editing scenarii, see much more information).
+But this layer can be easily broken if the website evolves. This is the counter side of the idea.</p>
+<h4 id="so-what-to-do-if-i-want-advantages-from-both-ways">So, what to do if I want advantages from both ways?</h4>
+<p>Well, for now, you cannot with this project. Maybe later, I will plan to have dual channel calls (a part through HTML website and another part through Rest API),
+but I need the rights from Myfox to do it, to finally have:</p>
+<ul>
+<li>the availability of the Myfox service (website or Rest API up of down), </li>
+<li>the stability of the website (evolutions will have to be reported here),</li>
+<li>the custom policy you indicate (HTML only, HTML first, Rest first, Rest only)</li>
+</ul>
+<p>(Please see the Quick Start guide below, or the <a href="https://github.com/gxapplications/myfox-wrapper-api/wiki/Start-from-here!">Wiki Documentation</a> to understand the strategy of the system)</p>
+<h4 id="and-for-the-bonus-we-add-macro-features">And for the bonus, we add macro features!</h4>
+<p>To let you control Myfox services in time (e.g.: schedule a scenario call 60 minutes after another scenario call, with programmable conditions to cancel a scheduled task; planify changes in a scenario configuration depending on day time, like maximum and minimum temperatures in a complex scenario; ...)</p>
+<hr>
+<h2 id="quick-start-guide">Quick Start guide</h2>
+<p>(For a full install guide, please go to the <a href="https://github.com/gxapplications/myfox-wrapper-api/wiki/Start-from-here!">Wiki home page</a>)</p>
+<h6 id="to-use-myfox-wrapper-api-as-a-library-or-stand-alone-api-server-in-your-own-project-just-install-it-as-dependency">To use myfox-wrapper-api as a library or stand-alone API server in your own project, just install it as dependency:</h6>
+<pre><code class="lang-bash">npm install --save myfox-wrapper-api</code></pre>
+<p><em>To contribute to the myfox-wrapper-api project as a developer, you should clone the repository, and follow the <a href="CONTRIBUTING.md">CONTRIBUTING.md</a> document.</em></p>
+<h6 id="to-try-the-api-with-a-built-in-server-just-change-your-current-directory-to-the-root-of-the-dependency-and-run">To try the API with a built-in server, just change your current directory to the root of the dependency, and run:</h6>
+<pre><code class="lang-bash">npm start</code></pre>
+<p>At boot time, the server will ask you username and password that you want to use to connect to Myfox services.
+This credentials are kept in memory only (not stored anywhere) and lost at server stop.
+That means one server instance can serve only 1 Myfox account at runtime!</p>
+<p>This instance will deliver a swagger.json file (auto-generated) to expose the API, that you can use with an external Swagger server, or via the built-in Swagger server:
+<code>TODO</code></p>
+<p>TODO:
+The default built-in server is made over hapi. There is an express server for example/test purpose only (do not use directly because the I/O data format is not checked and then not protected against attacks). </p>
+<hr>
+<h2 id="use-the-build-in-server-in-production">Use the build-in server in production</h2>
+<p><code>TODO</code> use the server for production purposes, how and what limitations (only one account per server!)</p>
+<hr>
+<h2 id="use-this-project-as-a-library">Use this project as a library</h2>
+<p><code>TODO</code> direct use as library (not the included server, so how to dev)</p>
+<hr>
+<h2 id="license">License</h2>
+<p><a href="LICENSE">MIT license</a></p></div></div></div></div></body></html>
