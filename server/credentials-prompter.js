@@ -1,9 +1,14 @@
 'use strict'
 
+import 'colors'
 import optimist from 'optimist'
 import readlineSync from 'readline-sync'
 
 export default function prompter() {
+  if (process.env.NODE_ENV === 'test') {
+      return {username: 'test@test.com', password: 'test'}
+  }
+
   let username = null, password = null
 
   if (optimist.argv.username !== null && optimist.argv.username !== undefined) {
