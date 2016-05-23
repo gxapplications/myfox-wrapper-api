@@ -48,7 +48,7 @@ or this if you cannot classify your commit in a category:
 -   **[*]** : An improvement. On an existing feature.
 -   **[+]** : A new feature. This type is quite important for visibility.
 -   **[~]** : A feature deprecation. When a feature has to be removed in several version. Most often in the next major version.
--   **[#]** : A technical change that does not impact the software features, but that impact developers' way to work (scripts to deploy npm/docker/...). Reserved to the owners of the repository, thanks :)
+-   **[#]** : A technical change that does not impact the software features, but that impact developers' way to work (scripts to deploy npm and others). Reserved to the owners of the repository, thanks :)
 
 If you think your commit _could_ match more than one type, then you _should_ split your commit in two commit to keep each one atomistic.
 
