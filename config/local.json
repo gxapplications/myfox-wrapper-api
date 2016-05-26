@@ -1,6 +1,7 @@
 {
   "server": {
     "myfox": {
+      "autoAuthRetryCredits": 0,
       "myfoxSiteIds": [1234]
     }
   }
