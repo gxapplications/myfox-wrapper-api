@@ -5,6 +5,7 @@ import optimist from 'optimist'
 import readlineSync from 'readline-sync'
 
 export default function prompter () {
+  // For automated testing, do not ask questions!
   if (process.env.NODE_ENV === 'test') {
     return {username: 'test@test.com', password: 'test'}
   }
