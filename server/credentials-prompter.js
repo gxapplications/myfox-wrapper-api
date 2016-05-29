@@ -4,12 +4,14 @@ import 'colors'
 import optimist from 'optimist'
 import readlineSync from 'readline-sync'
 
-export default function prompter() {
+export default function prompter () {
+  // For automated testing, do not ask questions!
   if (process.env.NODE_ENV === 'test') {
-      return {username: 'test@test.com', password: 'test'}
+    return {username: 'test@test.com', password: 'test'}
   }
 
-  let username = null, password = null
+  let username = null
+  let password = null
 
   if (optimist.argv.username !== null && optimist.argv.username !== undefined) {
     username = optimist.argv.username
@@ -19,8 +21,8 @@ export default function prompter() {
   }
 
   // All data already given
-  if (username !== null && username.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/)
-        && password !== null) {
+  if (username !== null && username.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/) &&
+        password !== null) {
     return {username: username, password: password}
   }
 

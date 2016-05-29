@@ -2,7 +2,6 @@ npm-debug.log
 .jshint*
 
 /node_modules
-/coverage
 /doc
 
 .idea
