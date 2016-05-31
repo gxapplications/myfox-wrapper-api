@@ -76,7 +76,7 @@ _________
 ## Read the documentations now
 
 - If you like Groc and literal coding concept: [Groc documentation](http://gxapplications.github.io/myfox-wrapper-api/groc/)
-- If you prefer jsdoc: `TODO`
+- If you prefer jsdoc: [jsdoc documentation](https://htmlpreview.github.io/?https://github.com/gxapplications/myfox-wrapper-api/blob/gh-pages/jsdoc/myfox-wrapper-api/0.0.1/index.html)
 - If you need more information: [Wiki home page](https://github.com/gxapplications/myfox-wrapper-api/wiki)
 - To follow Test improvements: [Code coverage](http://gxapplications.github.io/myfox-wrapper-api/coverage/lcov-report/)
 
