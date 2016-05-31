@@ -1,6 +1,8 @@
 <!DOCTYPE html><html lang="en"><head><title>lib\common-api</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="lib\common-api"><meta name="groc-project-path" content="lib\common-api.js"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">lib\common-api.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-pi">'use strict'</span>
 
-<span class="hljs-keyword">import</span> Joi <span class="hljs-keyword">from</span> <span class="hljs-string">'joi'</span></div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p><span class='doc-section-header'>Method _notImplemented</span></p>
+<span class="hljs-keyword">import</span> Joi <span class="hljs-keyword">from</span> <span class="hljs-string">'joi'</span>
+
+<span class="hljs-keyword">import</span> persistentState <span class="hljs-keyword">from</span> <span class="hljs-string">'./persistent-state'</span></div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p><span class='doc-section-header'>Method _notImplemented</span></p>
 <p>Uses the fallback API wrapper if available, else raises a &#39;Not Implemented&#39; exception.
 Keep this function private: Not exported with the class.
 As we use &#39;this&#39; in the function, you MUST always call it with a bind:
@@ -19,7 +21,35 @@ _notImplemented.bind(<object_as_this>)(...)</p>
     <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Feature not implemented in this wrapper.'</span>)
   }
 }</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Parent class that contains the method list to implement on the subclasses, and common methods.
-The constructor must never be squizzed even by a subclass: parameters validation is done here.</p></div></div><div class="code"><div class="wrapper"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyfoxWrapperApiCommon</span> </span>{</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Construction parts</p></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>TODO: DOC</p></div></div><div class="code"><div class="wrapper">  constructor (options, fallbackApi, accountCredentials) {
+The constructor must never be squizzed even by a subclass: parameters validation is done here.</p></div></div><div class="code"><div class="wrapper"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyfoxWrapperApiCommon</span> </span>{</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Construction parts</p></div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Common constructor called by subclasses.</p>
+<p>Parameters:</p>
+<ul>
+<li><p><strong>options must be an object.</strong><br/>(The options to build the wrapper. Will be merged with default values (see below).)</p>
+<ul>
+<li><p><strong>options.apiStrategy is optional and must be a string.</strong><br/>(The strategy adopted to fallback on another wrapper if the method does not exists. One of the following values: [&#39;htmlOnly&#39;, &#39;htmlFirst&#39;, &#39;restFirst&#39;, &#39;restOnly&#39;, &#39;custom&#39;].)</p>
+</li>
+<li><p><strong>options.autoAuthentication is optional and must be a boolean.</strong><br/>(To automate or not the authentication process (between the wrapper and Myfox services).)</p>
+</li>
+<li><p><strong>options.autoAuthRetryCredits is optional and must be an integer.</strong><br/>(The amount of tries to authenticate against Myfox services [0-10]. Warning: too many attempts can blacklist your IP.)</p>
+</li>
+<li><p><strong>options.authValidity is optional and must be an integer.</strong><br/>(The amount of seconds a Myfox session SHOULD live [1-86400].)</p>
+</li>
+<li><p><strong>options.myfoxSiteIds is optional and must be an Array of integers.</strong><br/>(The list of site IDs (linked to the same user account) allowed to be used by the wrapper.)</p>
+</li>
+</ul>
+</li>
+<li><p><strong>fallbackApi is optional and must be a MyfoxWrapperApiCommon.</strong><br/>(Another instance of wrapper to use as fallback if the called method does not exists.)</p>
+</li>
+<li><p><strong>accountCredentials is optional and must be an object.</strong><br/>(The Myfox account credentials)</p>
+<ul>
+<li><p><strong>accountCredentials.username is optional and must be a string.</strong><br/>(The username (the email used to login on the Myfox interface).)</p>
+</li>
+<li><p><strong>accountCredentials.password is optional and must be a string.</strong><br/>(The password (used to login on the Myfox interface). Stored nowhere except on this dynamic class instance.)</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Returns a MyfoxWrapperApiCommon</strong><br/>(The instance to use as wrapper or as fallback wrapper inside another one.)</p></div></div><div class="code"><div class="wrapper">  constructor (options, fallbackApi, accountCredentials) {
     <span class="hljs-keyword">this</span>.options = <span class="hljs-built_in">Object</span>.assign({}, MyfoxWrapperApiCommon.defaultOptions(), options)
     Joi.assert(<span class="hljs-keyword">this</span>.options, MyfoxWrapperApiCommon.optionsSchema())
 
@@ -28,11 +58,15 @@ The constructor must never be squizzed even by a subclass: parameters validation
       Joi.assert(<span class="hljs-keyword">this</span>.accountCredentials, MyfoxWrapperApiCommon.accountCredentialsSchema())
     }
 
-    <span class="hljs-keyword">this</span>.fallbackApi = fallbackApi
-
-    <span class="hljs-keyword">this</span>.authenticatedUntil = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>()
+    <span class="hljs-keyword">this</span>.fallbackApi = fallbackApi</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>auth data, statefull</p></div></div><div class="code"><div class="wrapper">    <span class="hljs-keyword">this</span>.authenticatedUntil = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>()
     <span class="hljs-keyword">this</span>.authenticatedData = <span class="hljs-literal">null</span>
-  }</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>TODO: DOC</p></div></div><div class="code"><div class="wrapper">  static defaultOptions () {
+    <span class="hljs-keyword">this</span>.authenticatedSiteId = <span class="hljs-literal">null</span>
+    <span class="hljs-keyword">this</span>.cookieJar = {}</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>persistent states are event triggerers and registers listeners. Statefull</p></div></div><div class="code"><div class="wrapper">    <span class="hljs-keyword">this</span>.persistentStates = {
+      status: persistentState(<span class="hljs-string">'status'</span>),
+      alarm: persistentState(<span class="hljs-string">'alarm'</span>)
+    }
+  }</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Default options merged into options given to the constructor.
+See details on the documented constructor.</p></div></div><div class="code"><div class="wrapper">  static defaultOptions () {
     <span class="hljs-keyword">return</span> {
       apiStrategy: <span class="hljs-string">'custom'</span>,
       autoAuthentication: <span class="hljs-literal">true</span>,
@@ -40,7 +74,8 @@ The constructor must never be squizzed even by a subclass: parameters validation
       authValidity: <span class="hljs-number">120</span>, <span class="hljs-comment">// 2 minutes</span>
       myfoxSiteIds: [] <span class="hljs-comment">// must be overriden by your siteIds (most often just one...)</span>
     }
-  }</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>TODO: DOC</p></div></div><div class="code"><div class="wrapper">  static optionsSchema () {
+  }</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Options format validator.
+See details on the documented constructor.</p></div></div><div class="code"><div class="wrapper">  static optionsSchema () {
     <span class="hljs-keyword">return</span> Joi.object({
       apiStrategy: Joi.string().required().valid([<span class="hljs-string">'htmlOnly'</span>, <span class="hljs-string">'htmlFirst'</span>, <span class="hljs-string">'restFirst'</span>, <span class="hljs-string">'restOnly'</span>, <span class="hljs-string">'custom'</span>]),
       autoAuthentication: Joi.boolean().required(),
@@ -48,7 +83,8 @@ The constructor must never be squizzed even by a subclass: parameters validation
       authValidity: Joi.number().integer().min(<span class="hljs-number">1</span>).max(<span class="hljs-number">86400</span>).required(), <span class="hljs-comment">// 10 seconds to 24hrs</span>
       myfoxSiteIds: Joi.array().items(Joi.number().integer().min(<span class="hljs-number">1</span>)).min(<span class="hljs-number">1</span>).required() <span class="hljs-comment">// at least 1 number</span>
     })
-  }</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>TODO: DOC</p></div></div><div class="code"><div class="wrapper">  static accountCredentialsSchema () {
+  }</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Account credentials format validator.
+See details on the documented constructor.</p></div></div><div class="code"><div class="wrapper">  static accountCredentialsSchema () {
     <span class="hljs-keyword">return</span> Joi.object({
       username: Joi.string().required(),
       password: Joi.string().required()
@@ -72,34 +108,39 @@ This method will manage authentication layer.</p>
 </li>
 </ul>
 <p><strong>Returns a Promise</strong><br/>(A promise for asynchronous behavior)</p></div></div><div class="code"><div class="wrapper">  callApi (url, method, streamParser, queryParams, headers, payload) {</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>No auth needed, handled manually. Just call the service.</p></div></div><div class="code"><div class="wrapper">    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.options.autoAuthentication === <span class="hljs-literal">false</span>) {
+      <span class="hljs-built_in">console</span>.info(<span class="hljs-string">'Authentication should be made manually.'</span>)
       <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>((resolve, reject) =&gt; {
         <span class="hljs-keyword">this</span>.callDistant(url, method, queryParams, headers, payload, streamParser, resolve, reject, <span class="hljs-literal">null</span>)
       })
     }</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Try to authenticate function</p></div></div><div class="code"><div class="wrapper">    <span class="hljs-keyword">let</span> tryToAuthenticate
     tryToAuthenticate = (retryCredits, callDistant, streamParser, resolve, reject) =&gt; {
-      <span class="hljs-keyword">this</span>.authenticate(<span class="hljs-keyword">this</span>.authenticatedData, (err, authData) =&gt; {
+      <span class="hljs-keyword">this</span>.authenticate(<span class="hljs-keyword">this</span>.authenticatedData, (err, authData, defaultSiteId) =&gt; {
         <span class="hljs-keyword">if</span> (err) {
           <span class="hljs-keyword">if</span> (retryCredits &gt; <span class="hljs-number">0</span>) { <span class="hljs-comment">// retry one more time</span>
             <span class="hljs-built_in">console</span>.warn(<span class="hljs-string">'Authentication failed. Retrying '</span> + retryCredits + <span class="hljs-string">' times left.'</span>)
-            <span class="hljs-keyword">return</span> tryToAuthenticate(retryCredits - <span class="hljs-number">1</span>, callDistant, streamParser, resolve, reject)
+            retryCredits--
+            <span class="hljs-keyword">return</span> tryToAuthenticate(retryCredits, callDistant, streamParser, resolve, reject)
           } <span class="hljs-keyword">else</span> {
-            <span class="hljs-built_in">console</span>.warn(<span class="hljs-string">'Authentication failed. No retry credits left.'</span>)
-            <span class="hljs-keyword">const</span> error = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Authentication failed.'</span>)
+            <span class="hljs-keyword">const</span> error = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Authentication failed. No retry credits left.'</span>)
             error.status = <span class="hljs-number">403</span>
             error.previous = err
             <span class="hljs-keyword">return</span> reject(error)
           }
         } <span class="hljs-keyword">else</span> {
+          <span class="hljs-built_in">console</span>.info(<span class="hljs-string">'Authenticated against Myfox services at '</span> + <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>().getTime())
           <span class="hljs-keyword">this</span>.authenticatedUntil.setTime(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>().getTime() + (<span class="hljs-keyword">this</span>.options.authValidity * <span class="hljs-number">1000</span>))
           <span class="hljs-keyword">this</span>.authenticatedData = authData
+          <span class="hljs-keyword">this</span>.authenticatedSiteId = defaultSiteId
           <span class="hljs-keyword">return</span> callDistant(url, method, queryParams, headers, payload, streamParser, resolve, reject, <span class="hljs-literal">null</span>)
         }
       })
     }
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>((resolve, reject) =&gt; {
       <span class="hljs-keyword">let</span> authCredits = <span class="hljs-keyword">this</span>.options.autoAuthRetryCredits</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>For sure, we need to auth before calling service</p></div></div><div class="code"><div class="wrapper">      <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.isMaybeAuthenticated()) {
+        <span class="hljs-built_in">console</span>.info(<span class="hljs-string">'(RE)Authentication needed.'</span>)
         tryToAuthenticate(authCredits, <span class="hljs-keyword">this</span>.callDistant.bind(<span class="hljs-keyword">this</span>), streamParser, resolve, reject)
-      } <span class="hljs-keyword">else</span> {</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Maybe we are still authenticated. Try service and see... if fails auth and try again once.</p></div></div><div class="code"><div class="wrapper">        <span class="hljs-keyword">this</span>.callDistant(url, method, queryParams, headers, payload, streamParser, resolve, reject, () =&gt; {
+      } <span class="hljs-keyword">else</span> {
+        <span class="hljs-built_in">console</span>.info(<span class="hljs-string">'Authentication should not be needed...'</span>)</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Maybe we are still authenticated. Try service and see... if fails auth and try again once.</p></div></div><div class="code"><div class="wrapper">        <span class="hljs-keyword">this</span>.callDistant(url, method, queryParams, headers, payload, streamParser, resolve, reject, () =&gt; {
           tryToAuthenticate(authCredits, <span class="hljs-keyword">this</span>.callDistant.bind(<span class="hljs-keyword">this</span>), streamParser, resolve, reject)
         })
       }
@@ -124,7 +165,7 @@ This method must be overridden in the extended api implementation.
 Do not use this method directly to call Myfox services. Prefer use this.callApi(url, method, queryParams, headers, payload)</p>
 <p>Parameters:</p>
 <ul>
-<li><p><strong>url must be a string.</strong><br/>(The HTTP(s) URL to call)</p>
+<li><p><strong>url must be a string.</strong><br/>(The HTTP(s) URL to call. This url will be parsed in subclasses to replace {siteId} by its value)</p>
 </li>
 <li><p><strong>method must be a string.</strong><br/>(The HTTP method in uppercase (GET, POST, PATCH, PUT, DELETE, etc...))</p>
 </li>
@@ -144,9 +185,33 @@ Do not use this method directly to call Myfox services. Prefer use this.callApi(
 </li>
 </ul></div></div><div class="code"><div class="wrapper">  callDistant (url, method, queryParams, headers, payload, streamParser, resolve, reject, reAuthenticate) {
     <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Feature not implemented in this wrapper.'</span>)
-  }
-
-  callHome (callback) {
+  }</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Adds a listener to a persistent state, given a state label.
+The listener is a function, that will be called with the following arguments:</p>
+<ul>
+<li>state label</li>
+<li>new state value,</li>
+<li>previous state value,</li>
+<li>a timestamp (creation date of the event)</li>
+</ul>
+<p>Parameters:</p>
+<ul>
+<li><p><strong>label must be a string.</strong><br/>(The unique label that identifies a persistent state)</p>
+</li>
+<li><p><strong>listener must be a function.</strong><br/>(The listener function to call if the state changes.)</p>
+</li>
+</ul>
+<p><strong>Returns a boolean</strong><br/>(True if the listener is added, false if already registered.)</p></div></div><div class="code"><div class="wrapper">  addStateListener (label, listener) {
+    <span class="hljs-keyword">let</span> state = <span class="hljs-keyword">this</span>.persistentStates[<span class="hljs-string">'label'</span>]
+    <span class="hljs-keyword">if</span> (state === <span class="hljs-literal">null</span> || state === <span class="hljs-literal">undefined</span>) {
+      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">`The state label <span class="hljs-subst">${label}</span> does not exists`</span>)
+    }
+    <span class="hljs-keyword">return</span> state.addListener(listener)
+  }</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Calls main page (/home) to retrieve data like alarm level, box status, default site info, and other subparts.
+This call is made for HTML wrapper. Rest wrapper does not provides this call.</p>
+<p>Parameters:</p>
+<ul>
+<li><strong>callback must be a function.</strong><br/>(The function to call with all data retrieved through /home.)</li>
+</ul></div></div><div class="code"><div class="wrapper">  callHome (callback) {
     _notImplemented.bind(<span class="hljs-keyword">this</span>)(<span class="hljs-string">'callHome'</span>, callback)
   }
 }

@@ -2,23 +2,29 @@
 
 <span class="hljs-keyword">import</span> trumpet <span class="hljs-keyword">from</span> <span class="hljs-string">'trumpet'</span>
 <span class="hljs-keyword">import</span> { trumpetInnerText } <span class="hljs-keyword">from</span> <span class="hljs-string">'./index'</span>
-<span class="hljs-keyword">import</span> JsonStream <span class="hljs-keyword">from</span> <span class="hljs-string">'JSONStream'</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Myfox page not found is a code 200... must fix it!</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">const</span> notFound200 = trumpet()
-notFound200.select(<span class="hljs-string">'head title'</span>, trumpetInnerText((data) =&gt; {
-  notFound200.status = <span class="hljs-number">200</span>
-  <span class="hljs-keyword">if</span> (data.indexOf(<span class="hljs-string">'Page not found'</span>) !== -<span class="hljs-number">1</span>) {
-    notFound200.status = <span class="hljs-number">404</span>
-    <span class="hljs-keyword">const</span> error = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Page not found case returned by Myfox.'</span>)
-    error.status = <span class="hljs-number">404</span>
-    <span class="hljs-keyword">return</span> notFound200.emit(<span class="hljs-string">'error'</span>, error)
-  }
-}))</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Myfox code KO is a code 200... must fix it and return error messages.</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">const</span> codeKo200 = JsonStream.parse(<span class="hljs-string">'code'</span>)
-codeKo200.on(<span class="hljs-string">'data'</span>, (data) =&gt; {
-  <span class="hljs-keyword">if</span> (data === <span class="hljs-string">'KO'</span>) {
-    <span class="hljs-keyword">const</span> error = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Code KO returned by Myfopx.'</span>)
-    error.status = <span class="hljs-number">400</span>
-    <span class="hljs-keyword">return</span> codeKo200.emit(<span class="hljs-string">'error'</span>, error)
-  }
-})
+<span class="hljs-keyword">import</span> JsonStream <span class="hljs-keyword">from</span> <span class="hljs-string">'JSONStream'</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Myfox page not found is a code 200... must fix it!</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">const</span> notFound200 = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> parser = trumpet()
+  parser.select(<span class="hljs-string">'head title'</span>, trumpetInnerText((data) =&gt; {
+    parser.status = <span class="hljs-number">200</span>
+    <span class="hljs-keyword">if</span> (data.indexOf(<span class="hljs-string">'Page not found'</span>) !== -<span class="hljs-number">1</span>) {
+      parser.status = <span class="hljs-number">404</span>
+      <span class="hljs-keyword">const</span> error = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Page not found case returned by Myfox.'</span>)
+      error.status = <span class="hljs-number">404</span>
+      <span class="hljs-keyword">return</span> parser.emit(<span class="hljs-string">'error'</span>, error)
+    }
+  }))
+  <span class="hljs-keyword">return</span> parser
+}</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Myfox code KO is a code 200... must fix it and return error messages.</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">const</span> codeKo200 = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> parser = JsonStream.parse(<span class="hljs-string">'code'</span>)
+  parser.on(<span class="hljs-string">'data'</span>, (data) =&gt; {
+    <span class="hljs-keyword">if</span> (data === <span class="hljs-string">'KO'</span>) {
+      <span class="hljs-keyword">const</span> error = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Code KO returned by Myfox.'</span>)
+      error.status = <span class="hljs-number">400</span>
+      <span class="hljs-keyword">return</span> parser.emit(<span class="hljs-string">'error'</span>, error)
+    }
+  })
+  <span class="hljs-keyword">return</span> parser
+}
 
 <span class="hljs-keyword">export</span> { notFound200 <span class="hljs-keyword">as</span> notFound200 }
 <span class="hljs-keyword">export</span> { codeKo200 <span class="hljs-keyword">as</span> codeKo200 }</div></div></div></div></body></html>

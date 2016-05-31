@@ -111,6 +111,14 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
           "type": "heading",
           "data": {
             "level": 2,
+            "title": "Read the documentations now",
+            "slug": "read-the-documentations-now"
+          },
+          "depth": 2
+        }, {
+          "type": "heading",
+          "data": {
+            "level": 2,
             "title": "License",
             "slug": "license"
           },
@@ -252,6 +260,26 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "targetPath": "lib\\index",
             "pageTitle": "lib\\index",
             "title": "index"
+          },
+          "depth": 2,
+          "outline": []
+        }, {
+          "type": "file",
+          "data": {
+            "language": {
+              "nameMatchers": [".js"],
+              "pygmentsLexer": "javascript",
+              "multiLineComment": ["/*", "*", "*/"],
+              "singleLineComment": ["//"],
+              "ignorePrefix": "}",
+              "foldPrefix": "^",
+              "name": "JavaScript"
+            },
+            "sourcePath": "d:\\node\\myfox-wrapper-api\\lib\\persistent-state.js",
+            "projectPath": "lib\\persistent-state.js",
+            "targetPath": "lib\\persistent-state",
+            "pageTitle": "lib\\persistent-state",
+            "title": "persistent-state"
           },
           "depth": 2,
           "outline": []
