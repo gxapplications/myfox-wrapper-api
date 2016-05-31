@@ -25,7 +25,6 @@ const routes = {
     },
     'get': {
       'express': (req, res, api) => {
-        // TODO !6: example to do
         api.callHome((err, result) => {
           if (err) {
             return res.status(err.status).send(err.toString())
