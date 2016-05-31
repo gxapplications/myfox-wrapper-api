@@ -4,6 +4,7 @@
 import { expect } from 'chai'
 import trumpet from 'trumpet'
 import fs from 'fs'
+import path from 'path'
 
 import { trumpetInnerText } from '../../../lib/html-parsers/index'
 
@@ -19,20 +20,21 @@ describe('HTML parsers tools', () => {
       done()
     })
 
-    const tr = trumpet();
+    const tr = trumpet()
     tr.select('#test1', f)
-    fs.createReadStream(__dirname + '/mock.html').pipe(tr)
+    fs.createReadStream(path.join(__dirname, 'mock.html')).pipe(tr)
   })
 
   it('trumpetInnerText delivers a stream parser that never callback for wrong stream format', (done) => {
-      const f = trumpetInnerText(() => {
-          done('Failed, should not call callback!')
-      })
+    const f = trumpetInnerText(() => {
+      done('Failed, should not call callback!')
+    })
 
-      const tr = trumpet();
-      tr.select('#test1', f)
-      fs.createReadStream(__dirname + '/mock.json').pipe(tr)
+    const tr = trumpet()
+    tr.select('#test1', f)
+    fs.createReadStream(path.join(__dirname, 'mock.json')).pipe(tr)
 
-      tr.on('end', done)
+    tr.on('end', done)
   })
 })
+
