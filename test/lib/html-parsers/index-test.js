@@ -6,7 +6,7 @@ import trumpet from 'trumpet'
 import fs from 'fs'
 import path from 'path'
 
-import { trumpetInnerText } from '../../../lib/html-parsers/index'
+import { trumpetInnerText, trumpetClasses } from '../../../lib/html-parsers/index'
 
 describe('HTML parsers tools', () => {
   it('trumpetInnerText function  delivers a function', () => {
@@ -35,6 +35,24 @@ describe('HTML parsers tools', () => {
     fs.createReadStream(path.join(__dirname, 'mock.json')).pipe(tr)
 
     tr.on('end', done)
+  })
+
+  it('trumpetClasses function  delivers a function', () => {
+    const f = trumpetClasses(() => {})
+    expect(f).to.be.a.function
+  })
+
+  it('trumpetClasses delivers a function that calls callback with classes', (done) => {
+    const f = trumpetClasses((classes) => {
+      expect(classes).to.include('class_test_1')
+      expect(classes).to.include('class_test_2')
+      expect(classes).to.have.lengthOf(2)
+      done()
+    })
+
+    const tr = trumpet()
+    tr.select('#test2', f)
+    fs.createReadStream(path.join(__dirname, 'mock.html')).pipe(tr)
   })
 })
 
