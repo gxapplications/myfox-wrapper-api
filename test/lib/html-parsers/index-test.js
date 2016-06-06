@@ -25,6 +25,17 @@ describe('HTML parsers tools', () => {
     fs.createReadStream(path.join(__dirname, 'mock.html')).pipe(tr)
   })
 
+  it('trumpetInnerText delivers a stream parser that calls callback with trimmed text', (done) => {
+    const f = trumpetInnerText((innerText) => {
+      expect(innerText).to.equal('my text')
+      done()
+    })
+
+    const tr = trumpet()
+    tr.select('#test1b', f)
+    fs.createReadStream(path.join(__dirname, 'mock.html')).pipe(tr)
+  })
+
   it('trumpetInnerText delivers a stream parser that never callback for wrong stream format', (done) => {
     const f = trumpetInnerText(() => {
       done('Failed, should not call callback!')
