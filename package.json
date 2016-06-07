@@ -7,6 +7,8 @@
   "contributors": [],
   "license": "MIT",
   "scripts": {
+    "build": "babel lib --presets babel-preset-es2015 --presets babel-preset-stage-2 --out-dir dist",
+    "prepublish": "npm run build",
     "start": "node server.js",
     "test": "cross-env NODE_ENV=test mocha",
     "doc": "rimraf doc && jsdoc --package package.json --destination doc/jsdoc/ server/ lib/ && groc && cross-env NODE_ENV=test nyc --require babel-core/register --reporter=lcov mocha && rimraf .nyc_output",
@@ -18,7 +20,7 @@
     "debug:start": "iron-node server.js",
     "debug:test": "cross-env NODE_ENV=test iron-node node_modules/mocha/bin/_mocha"
   },
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/gxapplications/myfox-wrapper-api"
@@ -86,6 +88,7 @@
     "trumpet": "^1.7.2"
   },
   "devDependencies": {
+    "babel-cli": "^6.9.0",
     "chai": "^3.5.0",
     "cross-env": "^1.0.7",
     "gh-pages": "^0.11.0",
