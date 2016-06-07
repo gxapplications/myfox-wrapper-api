@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Home parser test</title>
+</head>
+<body class="myfox" cz-shortcut-listen="true">
+<div id="lMain">
+<header>
+    <div class="logo"><a href="https://myfox.me/home/1234"><span>Myfox</span></a></div>
+    <div id="masterStatus" class="loading-zone">
+        <a href="https://myfox.me/diagnosis/1234" class="smart diagnostic loading-start initialized loading-init"
+           data-busy="0">
+            <span class="logo"><img src="/assets/img/icon/model/masterStatus/1.png" alt=""></span>
+            <span class="icon icon-internet level-0" style="margin-left: 38px;"></span>
+            <span class="icon icon-powerSupply level-0" style="margin-left: 43px;"></span>
+            <span class="icon icon-diagnosis level-0" style="margin-left: 43px;"></span>
+        </a>
+    </div>
+    <div id="userPanel">
+        <div id="p_top">
+            <span class="b"><a href="https://myfox.me/account/1234"><span class="icon"></span> M. XXX</a></span>
+            <span class="b site"><a href="https://myfox.me/sites/1234">Maison</a> <span class="icon"></span></span>
+        </div>
+        <div id="p_bottom">
+            <span class="alertCredits">
+                <span class="icon icon-alert"></span> 70 crédits restants
+            </span>
+            <span class="b action">
+                <a href="https://myfox.me/logout" id="logout">Quitter <span class="icon"></span></a>
+            </span>
+        </div>
+    </div>
+    <div class="clear"></div>
+</header>
+<div id="body">
+    <nav id="nav">
+        <ul>
+        </ul>
+    </nav>
+    <div id="content" style="min-height: 917px;">
+        <!-- START site/home -->
+        <div id="dashboard" xmlns="http://www.w3.org/1999/html">
+            <h1>Tableau de bord</h1>
+            <div data-widget="protection" data-reload="https://myfox.me/widget/1234/protection/index/0"
+                 class="widget-base widget-noLeft widget-protection">
+                <div class="head">
+                    <span id="widget-protection-logo" class="icon"></span>
+                    <span class="title">Ma protection</span>
+                    <span id="widget-protection-action" class="action" style="display: none;"> </span>
+                    <span id="widget-protection-option" class="option"> </span>
+                </div>
+                <div class="body">
+                    <div id="describe_zone" class="describe seclev4">
+                        <div class="icon"></div>
+                    </div>
+                    <div id="slider_zone" class="slider_zone loading-zone seclev4">
+                        <div class="slider_bg">
+                            <div class="colored"></div>
+                        </div>
+                        <div class="slider">
+                            <div class="colored"></div>
+                            <div class="pointer"></div>
+                            <table width="100%">
+                                <tbody>
+                                <tr>
+                                    <td width="33%" align="left">
+                                        <a href="https://myfox.me/widget/1234/protection/seclev/1"
+                                           data-success="showSeclev(1);"
+                                           class="label loading-start smart initialized loading-init" data-busy="0">Désactivée</a>
+                                    </td>
+                                    <td width="33%" align="center">
+                                        <a href="https://myfox.me/widget/1234/protection/seclev/2"
+                                           data-success="showSeclev(2);"
+                                           class="label loading-start smart initialized loading-init" data-busy="0">Partielle</a>
+                                    </td>
+                                    <td width="33%" align="right">
+                                        <a href="https://myfox.me/widget/1234/protection/seclev/4"
+                                           data-success="showSeclev(4);"
+                                           class="label loading-start smart initialized loading-init" data-busy="0">Totale</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="widget-base widget-normal widget-camera ">
+                <div class="head">
+                    <span class="icon"></span>
+                    <span class="title">Mes caméras</span>
+                </div>
+                <div class="body" id="camera-widget-body">
+                    <table class="list">
+                        <tbody>
+                        <tr class="no-items">
+                            <td>
+                                <p><span class="icon"></span></p>
+                                <p>
+                                    <a href="https://myfox.me/system/add/1234#navArea-camera">
+                                        Installer une caméra
+                                    </a>
+                                </p>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="toolbar">
+                        <p>
+                            <a href="https://myfox.me/media/1234" class="btn btn-media"
+                               title="Consulter ma médiathèque"><span></span></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div data-widget="scenario" data-reload="https://myfox.me/widget/1234/scenario/index/0"
+                 class="widget-base widget-noLeft widget-small widget-scenario" data-currentpage="0"
+                 data-nbpages="8" data-paginating="0">
+                <div class="head">
+                    <span id="widget-scenario-logo" class="icon"></span>
+                    <span class="title">Mes scénarios</span>
+                    <span id="widget-scenario-action" class="action"> </span>
+                    <span id="widget-scenario-option" class="option"> </span>
+                </div>
+                <div class="body">
+                    <div id="scenario_list" class="list">
+                        <table class="list">
+                            <tbody>
+                            <tr class="loading-zone">
+                                <td><span class="icon icon-scenariotype-1"></span> <span
+                                        class="text">AA test</span></td>
+                                <td>
+                                    <a class="smart btn-play loading-start initialized loading-init"
+                                       href="https://myfox.me/widget/1234/scenario/play/3997" data-busy="0"></a>
+                                </td>
+                            </tr>
+                            <tr class="loading-zone">
+                                <td><span class="icon icon-scenariotype-4"></span> <span class="text">azer</span>
+                                </td>
+                                <td>
+                                    <span class="switch switch-slide switch-slide-ed simple choice-1 switch-initialized"
+                                          data-default="0" data-labelposition="left"><span class="label"
+                                                                                           style="display: none;"><span
+                                            style="display: inline-block;"></span></span><span class="buttons"><span
+                                            class="loading-start loading-init" data-value="1"
+                                            data-call="https://myfox.me/widget/1234/scenario/on/385"></span><span
+                                            class="loading-start loading-init" data-value="0"
+                                            data-call="https://myfox.me/widget/1234/scenario/off/385"></span></span><input
+                                            type="hidden" name="" value="0"></span>
+                                </td>
+                            </tr>
+                            <tr class="loading-zone">
+                                <td><span class="icon icon-scenariotype-4"></span> <span class="text">azer12</span>
+                                </td>
+                                <td>
+                                    <span class="switch switch-slide switch-slide-ed simple choice-1 switch-initialized"
+                                          data-default="0" data-labelposition="left"><span class="label"
+                                                                                           style="display: none;"><span
+                                            style="display: inline-block;"></span></span><span class="buttons"><span
+                                            class="loading-start loading-init" data-value="1"
+                                            data-call="https://myfox.me/widget/1234/scenario/on/381"></span><span
+                                            class="loading-start loading-init" data-value="0"
+                                            data-call="https://myfox.me/widget/1234/scenario/off/381"></span></span><input
+                                            type="hidden" name="" value="0"></span>
+                                </td>
+                            </tr>
+                            <tr class="loading-zone">
+                                <td><span class="icon icon-scenariotype-4"></span> <span class="text">azer13</span>
+                                </td>
+                                <td>
+                                    <span class="switch switch-slide switch-slide-ed simple choice-1 switch-initialized"
+                                          data-default="0" data-labelposition="left"><span class="label"
+                                                                                           style="display: none;"><span
+                                            style="display: inline-block;"></span></span><span class="buttons"><span
+                                            class="loading-start loading-init" data-value="1"
+                                            data-call="https://myfox.me/widget/1234/scenario/on/379"></span><span
+                                            class="loading-start loading-init" data-value="0"
+                                            data-call="https://myfox.me/widget/1234/scenario/off/379"></span></span><input
+                                            type="hidden" name="" value="0"></span>
+                                </td>
+                            </tr>
+                            <tr class="loading-zone">
+                                <td><span class="icon icon-scenariotype-1"></span> <span class="text">azer14</span>
+                                </td>
+                                <td>
+                                    <a class="smart btn-play loading-start initialized loading-init"
+                                       href="https://myfox.me/widget/1234/scenario/play/004" data-busy="0"></a>
+                                </td>
+                            </tr>
+                            <tr class="loading-zone">
+                                <td><span class="icon icon-scenariotype-2"></span> <span class="text">azer15</span>
+                                </td>
+                                <td>
+                                    <span class="switch switch-slide switch-slide-ed simple choice-0 switch-initialized"
+                                          data-default="1" data-labelposition="left"><span class="label"
+                                                                                           style="display: none;"><span
+                                            style="display: inline-block;"></span></span><span class="buttons"><span
+                                            class="loading-start loading-init" data-value="1"
+                                            data-call="https://myfox.me/widget/1234/scenario/on/390"></span><span
+                                            class="loading-start loading-init" data-value="0"
+                                            data-call="https://myfox.me/widget/1234/scenario/off/390"></span></span><input
+                                            type="hidden" name="" value="1"></span>
+                                </td>
+                            </tr>
+                            <tr class="loading-zone">
+                                <td><span class="icon icon-scenariotype-2"></span> <span class="text">azer16</span>
+                                </td>
+                                <td>
+                                    <span class="switch switch-slide switch-slide-ed simple choice-0 switch-initialized"
+                                          data-default="1" data-labelposition="left"><span class="label"
+                                                                                           style="display: none;"><span
+                                            style="display: inline-block;"></span></span><span class="buttons"><span
+                                            class="loading-start loading-init" data-value="1"
+                                            data-call="https://myfox.me/widget/1234/scenario/on/984"></span><span
+                                            class="loading-start loading-init" data-value="0"
+                                            data-call="https://myfox.me/widget/1234/scenario/off/984"></span></span><input
+                                            type="hidden" name="" value="1"></span>
+                                </td>
+                            </tr>
+                            <tr class="loading-zone">
+                                <td><span class="icon icon-scenariotype-4"></span> <span class="text">azer17</span>
+                                </td>
+                                <td>
+                                    <span class="switch switch-slide switch-slide-ed simple choice-1 switch-initialized"
+                                          data-default="0" data-labelposition="left"><span class="label"
+                                                                                           style="display: none;"><span
+                                            style="display: inline-block;"></span></span><span class="buttons"><span
+                                            class="loading-start loading-init" data-value="1"
+                                            data-call="https://myfox.me/widget/1234/scenario/on/101"></span><span
+                                            class="loading-start loading-init" data-value="0"
+                                            data-call="https://myfox.me/widget/1234/scenario/off/101"></span></span><input
+                                            type="hidden" name="" value="0"></span>
+                                </td>
+                            </tr>
+                            <tr class="loading-zone">
+                                <td><span class="icon icon-scenariotype-4"></span> <span class="text">azer18</span>
+                                </td>
+                                <td>
+                                    <span class="switch switch-slide switch-slide-ed simple choice-0 switch-initialized"
+                                          data-default="1" data-labelposition="left"><span class="label"
+                                                                                           style="display: none;"><span
+                                            style="display: inline-block;"></span></span><span class="buttons"><span
+                                            class="loading-start loading-init" data-value="1"
+                                            data-call="https://myfox.me/widget/1234/scenario/on/114"></span><span
+                                            class="loading-start loading-init" data-value="0"
+                                            data-call="https://myfox.me/widget/1234/scenario/off/114"></span></span><input
+                                            type="hidden" name="" value="1"></span>
+                                </td>
+                            </tr>
+                            <tr class="loading-zone">
+                                <td><span class="icon icon-scenariotype-4"></span> <span class="text">azer19</span>
+                                </td>
+                                <td>
+                                    <span class="switch switch-slide switch-slide-ed simple choice-1 switch-initialized"
+                                          data-default="0" data-labelposition="left"><span class="label"
+                                                                                           style="display: none;"><span
+                                            style="display: inline-block;"></span></span><span class="buttons"><span
+                                            class="loading-start loading-init" data-value="1"
+                                            data-call="https://myfox.me/widget/1234/scenario/on/115"></span><span
+                                            class="loading-start loading-init" data-value="0"
+                                            data-call="https://myfox.me/widget/1234/scenario/off/115"></span></span><input
+                                            type="hidden" name="" value="0"></span>
+                                </td>
+                            </tr>
+                            <tr class="loading-zone">
+                                <td><span class="icon icon-scenariotype-3"></span> <span class="text">azer20</span>
+                                </td>
+                                <td>
+                                    <span class="switch switch-slide switch-slide-ed simple choice-1 switch-initialized"
+                                          data-default="0" data-labelposition="left"><span class="label"
+                                                                                           style="display: none;"><span
+                                            style="display: inline-block;"></span></span><span class="buttons"><span
+                                            class="loading-start loading-init" data-value="1"
+                                            data-call="https://myfox.me/widget/1234/scenario/on/453"></span><span
+                                            class="loading-start loading-init" data-value="0"
+                                            data-call="https://myfox.me/widget/1234/scenario/off/453"></span></span><input
+                                            type="hidden" name="" value="0"></span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+            <div data-widget="domotic" data-reload="https://myfox.me/widget/1234/domotic/index/0"
+                 class="widget-base widget-small widget-domotic" data-currentpage="0" data-nbpages="3"
+                 data-paginating="0">
+                <div class="head">
+                    <span id="widget-domotic-logo" class="icon"></span>
+                    <span class="title">Mes équipements</span>
+                    <span id="widget-domotic-action" class="action"> </span>
+                    <span id="widget-domotic-option" class="option"> </span>
+                </div>
+                <div class="body">
+                    <div id="domotic_list" class="list">
+                        <table class="list">
+                            <tbody>
+                            <tr class="loading-zone">
+                                <td><span class="icon icon-domo-18"></span> <span class="text">Vtyui</span>
+                                </td>
+                                <td>
+                                    <span class="switch switch-exec switch-exec-oo simple choice-1 switch-initialized"
+                                          data-default="" data-labelposition="left"><span class="label"
+                                                                                          style="display: none;"><span
+                                            style="display: inline-block;"></span></span><span class="buttons"><span
+                                            class="loading-start loading-init" data-value=""
+                                            data-call="https://myfox.me/widget/1234/domotic/on/394">ON</span><span
+                                            class="loading-start loading-init" data-value=""
+                                            data-call="https://myfox.me/widget/1234/domotic/off/394">OFF</span></span><input
+                                            type="hidden" name="" value=""></span>
+                                </td>
+                            </tr>
+                            <tr class="loading-zone">
+                                <td><span class="icon icon-domo-18"></span> <span class="text">tyuii</span>
+                                </td>
+                                <td>
+                                    <span class="switch switch-exec switch-exec-oo simple choice-1 switch-initialized"
+                                          data-default="" data-labelposition="left"><span class="label"
+                                                                                          style="display: none;"><span
+                                            style="display: inline-block;"></span></span><span class="buttons"><span
+                                            class="loading-start loading-init" data-value=""
+                                            data-call="https://myfox.me/widget/1234/domotic/on/403">ON</span><span
+                                            class="loading-start loading-init" data-value=""
+                                            data-call="https://myfox.me/widget/1234/domotic/off/403">OFF</span></span><input
+                                            type="hidden" name="" value=""></span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div data-widget="data" data-reload="https://myfox.me/widget/1234/data/index/0"
+                 class="widget-base widget-small widget-data" data-currentpage="0" data-nbpages="1"
+                 data-paginating="0">
+                <div class="head">
+                    <span id="widget-data-logo" class="icon"></span>
+                    <span class="title">Mes données</span>
+                    <span id="widget-data-action" class="action" style="display: none;"> </span>
+                    <span id="widget-data-option" class="option"> </span>
+                </div>
+                <div class="body">
+                    <div id="data_list" class="list">
+                        <table class="list">
+                            <tbody>
+                            <tr class="loading-zone device-data"
+                                data-href="https://myfox.me/system/record/warmlight/1234/905">
+                                <td><span class="icon icon-data-29"></span> <span class="text">Capteur 1</span>
+                                </td>
+                                <td>
+                                    <span class="temperature">22.1°</span>
+                                    <span class="light">Lumière du jour</span>
+                                </td>
+                            </tr>
+                            <tr class="loading-zone device-data"
+                                data-href="https://myfox.me/system/record/warmlight/1234/257">
+                                <td><span class="icon icon-data-29"></span> <span class="text">Capteur 2</span>
+                                </td>
+                                <td>
+                                    <span class="temperature">20.2°</span>
+                                    <span class="light">Pénombre</span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div data-widget="historic" data-reload="https://myfox.me/widget/1234/historic/index/0"
+                 class="widget-base widget-historic widget-noLeft" data-currentpage="0" data-nbpages="1"
+                 data-paginating="0">
+                <div class="head">
+                    <span id="widget-historic-logo" class="icon"></span>
+                    <span class="title">Historique</span>
+                    <a class="btn btn-xsmall history-link" href="https://myfox.me/slow/history/1234/1">Consulter mon
+                        historique</a>
+                </div>
+                <div class="body">
+                    <div id="historic_list" class="list">
+                        <table cellspacing="0" class="list">
+                            <tbody>
+                            <tr>
+                                <td class="priority priority-low">•</td>
+                                <td>07/06/2016<br>08:07:00</td>
+                                <td>Lancement du scénario</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+            <div data-widget="heating" data-reload="https://myfox.me/widget/1234/heating/index/0"
+                 class="widget-base  widget-heating" data-currentpage="0" data-nbpages="1" data-paginating="0">
+                <div class="head">
+                    <span id="widget-heating-logo" class="icon"></span>
+                    <span class="title">Mon chauffage</span>
+                    <span id="widget-heating-action" class="action" style="display: none;"> </span>
+                    <span id="widget-heating-option" class="option"> </span>
+                </div>
+                <div class="body">
+                    <div id="heating_list" class="list">
+                        <table class="list">
+                            <tbody>
+                            <tr class="loading-zone">
+                                <td>
+                                    <span class="icon icon-heating-44"></span>
+                                    <span class="text">qsdf</span>
+                                </td>
+                                <td>
+                                    <span class="switch switch-exechwp switch-exechwp-hwp choice-0 switch-initialized"
+                                          data-default="" data-labelposition="left"><span class="label"
+                                                                                          style="display: none;"><span
+                                            style="display: inline-block;"></span></span><span class="buttons"><span
+                                            class="hwp-trigger loading-start active-2 loading-init" data-value="1"
+                                            data-call="https://myfox.me/widget/1234/heating/on/2171"></span><span
+                                            class="hwp-trigger loading-start active-2 loading-init" data-value="2"
+                                            data-call="https://myfox.me/widget/1234/heating/eco/2171"></span><span
+                                            class="hwp-trigger loading-start active-2 loading-init" data-value="4"
+                                            data-call="https://myfox.me/widget/1234/heating/frost/2171"></span><span
+                                            class="hwp-trigger loading-start active-2 loading-init" data-value="3"
+                                            data-call="https://myfox.me/widget/1234/heating/off/2171"></span></span><input
+                                            type="hidden" name="" value="1"></span>
+                                </td>
+                            </tr>
+                            <tr class="loading-zone">
+                                <td>
+                                    <span class="icon icon-heating-44"></span>
+                                    <span class="text">qsdf2</span>
+                                </td>
+                                <td>
+                                    <span class="switch switch-exechwp switch-exechwp-hwp choice-0 switch-initialized"
+                                          data-default="" data-labelposition="left"><span class="label"
+                                                                                          style="display: none;"><span
+                                            style="display: inline-block;"></span></span><span class="buttons"><span
+                                            class="hwp-trigger loading-start active-2 loading-init" data-value="1"
+                                            data-call="https://myfox.me/widget/1234/heating/on/965"></span><span
+                                            class="hwp-trigger loading-start active-2 loading-init" data-value="2"
+                                            data-call="https://myfox.me/widget/1234/heating/eco/965"></span><span
+                                            class="hwp-trigger loading-start active-2 loading-init" data-value="4"
+                                            data-call="https://myfox.me/widget/1234/heating/frost/965"></span><span
+                                            class="hwp-trigger loading-start active-2 loading-init" data-value="3"
+                                            data-call="https://myfox.me/widget/1234/heating/off/965"></span></span><input
+                                            type="hidden" name="" value="1"></span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END site/home -->
+    </div>
+    <div class="clear"></div>
+</div>
+</div>
+</body>
+</html>
+
