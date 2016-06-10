@@ -19,7 +19,7 @@ const routes = {
       }
     }
   },
-  'test': {
+  'home': {
     'path': {
       'express': '/home'
     },
@@ -33,8 +33,25 @@ const routes = {
         })
       }
     }
+  },
+  'scenario_action': {
+    'path': {
+      'express': '/scenario/:id/:action/:delay?',
+      'hapi': '/scenario/{id}/{action}/{delay?}'
+    },
+    'get': { // FIXME: no, post !
+      'express': (req, res, api) => {
+        // TODO !0:  support more actions in serial way from : [{id, action, delay}] as third param
+        api.callScenarioAction({id: req.params.id, action: req.params.action, delay: req.params.delay | 0}, (err, result) => {
+          if (err) {
+            return res.status(err.status).send(err.toString())
+          }
+          res.send(result)
+        })
+      }
+    }
   }
 }
-// TODO: quand fera hapi, si express et hapi ont la meme syntaxe dans la route, ou les handlers, alors on met en commun en sautant un �tage dans le tableau (testAction.get = function direct)
+// TODO !9: quand fera hapi, si express et hapi ont la meme syntaxe dans la route, ou les handlers, alors on met en commun en sautant un �tage dans le tableau (testAction.get = function direct)
 
 export default routes
