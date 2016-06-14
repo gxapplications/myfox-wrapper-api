@@ -41,13 +41,13 @@ const routes = {
     },
     'get': { // FIXME: no, post !
       'express': (req, res, api) => {
-        // TODO !0:  support more actions in serial way from : [{id, action, delay}] as third param
+        let nextCalls = req.body['next_calls']
         api.callScenarioAction({id: req.params.id, action: req.params.action, delay: req.params.delay | 0}, (err, result) => {
           if (err) {
             return res.status(err.status).send(err.toString())
           }
           res.send(result)
-        })
+        }, ...nextCalls)
       }
     }
   }

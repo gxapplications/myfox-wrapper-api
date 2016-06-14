@@ -28,7 +28,8 @@
       "redirectForbidden": "https://myfox.me/",
       "paths": {
         "login": "/login",
-        "home": "/home/{siteId}"
+        "home": "/home/{siteId}",
+        "scenario_action": "/widget/{siteId}/scenario/{action}/{id}"
       }
     }
   }
