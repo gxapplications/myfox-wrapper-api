@@ -4,6 +4,7 @@
 import { expect } from 'chai'
 import sinon from 'sinon'
 
+import CommonApi from '../../lib/common-api'
 import { Html as HtmlApi } from '../../lib/index'
 
 const myfoxSiteIds = {myfoxSiteIds: [1234]}
@@ -67,20 +68,76 @@ describe('HTML-api library', () => {
 
     beforeEach(() => {
       api = HtmlApi(myfoxSiteIds)
-      sinon.stub(api, 'callApi')
-      sinon.stub(api, 'notifyMacroListeners')
+      sinon.stub(CommonApi.prototype, 'callApi') // Because the method is in the parent class
+      sinon.stub(CommonApi.prototype, 'notifyMacroListeners') // Because the method is in the parent class
+      sinon.spy(api, '_callScenarioAction') // and not here...
     })
     afterEach(() => {
-      api.callApi.restore()
-      api.notifyMacroListeners.restore()
+      CommonApi.prototype.callApi.restore()
+      CommonApi.prototype.notifyMacroListeners.restore()
     })
 
-    // TODO !0: tester, en specialisant les stubs a chaque besoin
-    it('to test simple case (1 step, no delay)', () => {
+    it('to test simple case (1 step, no delay)', (done) => {
+      api.callApi.returns(Promise.resolve({data: 'test'}))
 
+      const callback = (a, b) => {
+        sinon.assert.notCalled(api.notifyMacroListeners)
+        sinon.assert.calledOnce(api.callApi)
+        sinon.assert.calledWithMatch(api.callApi, /widget\/\{siteId\}\/scenario\/play\/456\?_=/, /GET/)
+
+        expect(a).to.be.null
+        // The id is not scenario ID, but the macro ID! And null because no need to have one, if just 1 step without delay.
+        expect(b).to.deep.equal({id: null, data: 'test', state: 'finished', remaining: 0})
+        done()
+      }
+
+      api._callScenarioAction({id: 456, action: 'play', delay: 0}, callback)
     })
-    it('to test delayed case (1 step, with delay)')
-    it('to test complex macro (many steps, delays, ...)')
+
+    it('to test delayed case (1 step, with delay)', (done) => {
+      api.callApi.returns(Promise.resolve({data: 'test'}))
+
+      const callback = (a, b) => {
+        expect(a).to.be.null
+        // The id is not scenario ID, but the macro ID! And null because no need to have one, if just 1 step without delay.
+        expect(b).to.includes({state: 'delayed', remaining: 0})
+        expect(b.id).to.equal(918283)
+
+        setTimeout(() => {
+          sinon.assert.calledTwice(api._callScenarioAction)
+          sinon.assert.calledOnce(api.notifyMacroListeners)
+          sinon.assert.calledOnce(api.callApi)
+          sinon.assert.calledWithMatch(api.callApi, /widget\/\{siteId\}\/scenario\/play\/456\?_=/, /GET/)
+          done()
+        }, 100)
+      }
+
+      api._callScenarioAction({id: 456, action: 'play', delay: 10}, callback, 918283)
+    })
+
+    // TODO !0
+    it('to test complex macro (many steps, delays, ...)', (done) => {
+      api.callApi.returns(Promise.resolve({data: 'test'}))
+
+      const callback = (a, b) => {
+        // TODO
+        
+        setTimeout(() => {
+          // TODO
+          done()
+        }, 100)
+      }
+
+      api._callScenarioAction(
+        {id: 456, action: 'play', delay: 10},
+        callback,
+        54321,
+        {id: 123, action: 'on', delay: 20},
+        {id: 789, action: 'off', delay: 30}
+      )
+    })
+
+    it('to test error during Myfox subcall')
   })
 })
 
