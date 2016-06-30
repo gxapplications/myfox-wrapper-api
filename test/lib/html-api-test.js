@@ -75,6 +75,7 @@ describe('HTML-api library', () => {
     afterEach(() => {
       CommonApi.prototype.callApi.restore()
       CommonApi.prototype.notifyMacroListeners.restore()
+      api._callScenarioAction.restore()
     })
 
     it('to test simple case (1 step, no delay)', (done) => {
@@ -99,7 +100,7 @@ describe('HTML-api library', () => {
 
       const callback = (a, b) => {
         expect(a).to.be.null
-        // The id is not scenario ID, but the macro ID! And null because no need to have one, if just 1 step without delay.
+        // The id is not scenario ID, but the macro ID!
         expect(b).to.includes({state: 'delayed', remaining: 0})
         expect(b.id).to.equal(918283)
 
@@ -115,17 +116,21 @@ describe('HTML-api library', () => {
       api._callScenarioAction({id: 456, action: 'play', delay: 10}, callback, 918283)
     })
 
-    // TODO !0
     it('to test complex macro (many steps, delays, ...)', (done) => {
       api.callApi.returns(Promise.resolve({data: 'test'}))
 
       const callback = (a, b) => {
-        // TODO
-        
+        expect(a).to.be.null
+        // The id is not scenario ID, but the macro ID!
+        expect(b).to.includes({state: 'delayed', remaining: 2})
+        expect(b.id).to.equal(54321)
+
         setTimeout(() => {
-          // TODO
+          sinon.assert.callCount(api._callScenarioAction, 6)
+          sinon.assert.callCount(api.notifyMacroListeners, 5)
+          sinon.assert.callCount(api.callApi, 3)
           done()
-        }, 100)
+        }, 130)
       }
 
       api._callScenarioAction(
@@ -137,7 +142,20 @@ describe('HTML-api library', () => {
       )
     })
 
-    it('to test error during Myfox subcall')
+    it('to test error during Myfox subcall', (done) => {
+      api.callApi.returns(Promise.reject(new Error('error test')))
+
+      const callback = (a, b) => {
+        sinon.assert.notCalled(api.notifyMacroListeners)
+        sinon.assert.calledOnce(api.callApi)
+        sinon.assert.calledWithMatch(api.callApi, /widget\/\{siteId\}\/scenario\/play\/456\?_=/, /GET/)
+
+        expect(a).to.be.not.null
+        done()
+      }
+
+      api._callScenarioAction({id: 456, action: 'play', delay: 0}, callback)
+    })
   })
 })
 
