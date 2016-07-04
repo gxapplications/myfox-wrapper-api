@@ -1,8 +1,0 @@
-{
-  "server": {
-    "myfox": {
-      "autoAuthRetryCredits": 0,
-      "myfoxSiteIds": [7718]
-    }
-  }
-}
