@@ -11,7 +11,7 @@ import config from 'config'
 // This is mandatory to share authenticated session.
 // But from this point, we must always ensure an instance will handle calls for only one Myfox account!
 const router = new Router()
-const api = Api(config.get('server.myfox'), prompter())
+const api = Api(config.get('myfox-wrapper-api.server.myfox'), prompter())
 
 for (var routeName in routes) {
   let routeParams = routes[routeName]

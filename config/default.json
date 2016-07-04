@@ -1,35 +1,38 @@
 {
-  "server": {
-    "myfox": {
-      "myfoxSiteIds": [] // To be overiden in your local settings with a list of your Myfox siteIds
-    }
-  },
-  "html": {
-    "myfox": {
-      "protocol": "https",
-      "hostname": "myfox.me",
-      "port": 443,
-      "headers_login": {
-        "Origin": "https://myfox.me",
-        "Referer": "https://myfox.me/",
-      },
-      "headers": {
-      	"Accept": "application/json, text/javascript, */*; q=0.01",
-      	"Accept-Encoding": "gzip, deflate",
-        "Accept-Language": "en-US,en;q=0.8,fr;q=0.6",
-        "Cache-Control": "no-cache",
-        "Connection": "keep-alive",
-        "DNT": "1",
-        "Pragma": "no-cache",
-        "User-Agent": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.103 Safari/537.36",
-        "X-Requested-With": "XMLHttpRequest",
-        "X-SmartResponse": "1"
-      },
-      "redirectForbidden": "https://myfox.me/",
-      "paths": {
-        "login": "/login",
-        "home": "/home/{siteId}",
-        "scenario_action": "/widget/{siteId}/scenario/{action}/{id}"
+  "myfox-wrapper-api": {
+    "server": {
+      "myfox": {
+        "myfoxSiteIds": []
+        // To be overiden in your local settings with a list of your Myfox siteIds
+      }
+    },
+    "html": {
+      "myfox": {
+        "protocol": "https",
+        "hostname": "myfox.me",
+        "port": 443,
+        "headers_login": {
+          "Origin": "https://myfox.me",
+          "Referer": "https://myfox.me/",
+        },
+        "headers": {
+          "Accept": "application/json, text/javascript, */*; q=0.01",
+          "Accept-Encoding": "gzip, deflate",
+          "Accept-Language": "en-US,en;q=0.8,fr;q=0.6",
+          "Cache-Control": "no-cache",
+          "Connection": "keep-alive",
+          "DNT": "1",
+          "Pragma": "no-cache",
+          "User-Agent": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.103 Safari/537.36",
+          "X-Requested-With": "XMLHttpRequest",
+          "X-SmartResponse": "1"
+        },
+        "redirectForbidden": "https://myfox.me/",
+        "paths": {
+          "login": "/login",
+          "home": "/home/{siteId}",
+          "scenario_action": "/widget/{siteId}/scenario/{action}/{id}"
+        }
       }
     }
   }

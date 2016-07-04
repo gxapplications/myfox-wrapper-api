@@ -1,6 +1,7 @@
 npm-debug.log
 .jshint*
 
+/config/local*
 /node_modules
 /dist
 /doc
