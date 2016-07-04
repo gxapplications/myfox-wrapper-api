@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "myfox-wrapper-api",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "API wrapper (through official API, with more features and tools) for Myfox domotics",
   "author": "Xavier Gouley <gxapplications@gmail.com>",
   "contributors": [],
