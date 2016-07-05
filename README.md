@@ -2,13 +2,13 @@
 
 _An API layer to Myfox services to add easy usable features & tools, written in NodeJS._
 
-**This repository is for now empty. A first version will come in several weeks.**
+**The first release (v0.0.1) is a working version of a minimalist lib. Not ready for production for now.**
 
 
-[![Build Status](https://secure.travis-ci.org/gxapplications/myfox-wrapper-api.png)](http://travis-ci.org/gxapplications/myfox-wrapper-api)
+[![Build Status](https://travis-ci.org/gxapplications/myfox-wrapper-api.svg)](http://travis-ci.org/gxapplications/myfox-wrapper-api)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
-
-[npm versions and downloads from NPM - TODO]
+[![NPM Version](https://img.shields.io/npm/v/myfox-wrapper-api.svg)](https://npmjs.org/package/myfox-wrapper-api)
+[![NPM Downloads](https://img.shields.io/npm/dm/myfox-wrapper-api.svg))](https://npmjs.org/package/myfox-wrapper-api)
 
 
 ## What
@@ -83,6 +83,3 @@ _________
 _________
 ## License
 [MIT license](LICENSE)
-
-[npm-image]: https://img.shields.io/npm/v/express.svg
-[npm-url]: https://npmjs.org/package/express
