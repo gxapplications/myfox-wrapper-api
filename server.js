@@ -1,4 +1,4 @@
 'use strict'
 
 require('babel-core/register')
-require('./server/server-express')
+require('./server/server-hapi')

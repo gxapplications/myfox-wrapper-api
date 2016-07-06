@@ -1,6 +1,13 @@
 {
   "myfox-wrapper-api": {
     "server": {
+      "hapi": {
+        "options": {},
+        "main-connection": {
+          "host": "localhost",
+          "port": 3001
+        }
+      },
       "myfox": {
         "myfoxSiteIds": []
         // To be overiden in your local settings with a list of your Myfox siteIds
