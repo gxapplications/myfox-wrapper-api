@@ -1,7 +1,9 @@
 'use strict'
 
 import config from 'config'
+import { join as joinPaths } from 'path'
 import Hapi from 'hapi'
+import Hoek from 'hoek'
 
 class ApplicationHapi extends Hapi.Server {
   constructor (options) {
@@ -13,8 +15,27 @@ class ApplicationHapi extends Hapi.Server {
     }
     this.connection(connection)
 
+    // Assets path
+    this.register(require('inert'), (err) => {
+      Hoek.assert(!err, err)
+    })
+    this.route({
+      method: 'GET',
+      path: '/assets/{param*}',
+      handler: {
+        directory: {
+          path: joinPaths(__dirname, 'assets'),
+          listing: false
+        }
+      }
+    })
+
+    // TODO: equivalents de bodyParser et methodOverride d'express ?
+    // TODO: logger https://github.com/hapijs/good
+
     this.route([
-      // TODO: inscription des routes...
+      // TODO: inscription des routes et middlewares (pre, post, ...)... avec options: {"routes": {"prefix": "/v1"}}
+
     ])
   }
 }

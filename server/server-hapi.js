@@ -6,7 +6,7 @@ import 'colors'
 import ApplicationHapi from './application-hapi'
 
 var server = new ApplicationHapi(config.get('myfox-wrapper-api.server.hapi.options'))
-server.start(function (err) {
+server.start((err) => {
   if (err) {
     console.log('ERROR: Hapi server cannot start.'.red)
     console.log(err)
