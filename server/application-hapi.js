@@ -4,6 +4,9 @@ import config from 'config'
 import { join as joinPaths } from 'path'
 import Hapi from 'hapi'
 import Hoek from 'hoek'
+import Blipp from 'blipp'
+
+import hapiControllerV1 from './controller-hapi-v1'
 
 class ApplicationHapi extends Hapi.Server {
   constructor (options) {
@@ -15,13 +18,40 @@ class ApplicationHapi extends Hapi.Server {
     }
     this.connection(connection)
 
+    // Logger
+    const loggerOptions = {
+      ops: {
+        interval: 1000
+      },
+      reporters: {
+        console: [{
+          module: 'good-squeeze',
+          name: 'Squeeze',
+          args: [{ log: '*', response: '*' }]
+        }, {
+          module: 'good-console'
+        }, 'stdout']
+      }
+    }
+    this.register({
+      register: require('good'),
+      loggerOptions
+    }, (err) => {
+      Hoek.assert(!err, err)
+    })
+
+    // Controller and routes
+    this.register({register: hapiControllerV1}, {routes: {prefix: '/v1'}}, (err) => {
+      Hoek.assert(!err, err)
+    })
+
     // Assets path
     this.register(require('inert'), (err) => {
       Hoek.assert(!err, err)
     })
     this.route({
       method: 'GET',
-      path: '/assets/{param*}',
+      path: '/{param*}',
       handler: {
         directory: {
           path: joinPaths(__dirname, 'assets'),
@@ -30,13 +60,16 @@ class ApplicationHapi extends Hapi.Server {
       }
     })
 
-    // TODO: equivalents de bodyParser et methodOverride d'express ?
-    // TODO: logger https://github.com/hapijs/good
+    // Blipp, for routes dump at startup time.
+    this.register({
+      register: Blipp, options: {
+        showStart: true
+      }
+    }, (err) => {
+      Hoek.assert(!err, err)
+    })
 
-    this.route([
-      // TODO: inscription des routes et middlewares (pre, post, ...)... avec options: {"routes": {"prefix": "/v1"}}
-
-    ])
+    // TODO !0: equivalents de bodyParser et methodOverride d'express ?
   }
 }
 

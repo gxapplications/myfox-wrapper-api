@@ -21,7 +21,7 @@ describe('Express application', () => {
   })
   it('Can call controller through a route', (done) => {
     const agent = request.agent(expressApp)
-    agent.get('/v1/')
+    agent.get('/v1')
       .expect(418) // the Tea pot test
       .end((err) => {
         done(err)
