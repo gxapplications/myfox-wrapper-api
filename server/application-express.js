@@ -15,7 +15,7 @@ application.set('port', process.env.PORT || 3000)
 // middlewares
 application.use(express.static(assetsPath))
 application.use(bodyParser.urlencoded({ extended: true }))
-application.use(methodOverride((req) => req.body._method))
+application.use(methodOverride((req) => req.body._method)) // https://www.npmjs.com/package/method-override#override-using-a-query-value
 
 // logger
 if (application.get('env') !== 'test') {

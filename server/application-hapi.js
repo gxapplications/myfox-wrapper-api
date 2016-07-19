@@ -5,6 +5,7 @@ import { join as joinPaths } from 'path'
 import Hapi from 'hapi'
 import Hoek from 'hoek'
 import Blipp from 'blipp'
+import HapiMethodChange from 'hapi-method-change'
 
 import hapiControllerV1 from './controller-hapi-v1'
 
@@ -40,6 +41,12 @@ class ApplicationHapi extends Hapi.Server {
       Hoek.assert(!err, err)
     })
 
+    // Method override
+    this.register(HapiMethodChange, (err) => {
+      // https://github.com/58bits/hapi-method-change#registering-the-plugin
+      Hoek.assert(!err, err)
+    })
+
     // Controller and routes
     this.register({register: hapiControllerV1}, {routes: {prefix: '/v1'}}, (err) => {
       Hoek.assert(!err, err)
@@ -68,8 +75,6 @@ class ApplicationHapi extends Hapi.Server {
     }, (err) => {
       Hoek.assert(!err, err)
     })
-
-    // TODO !0: equivalents de bodyParser et methodOverride d'express ?
   }
 }
 
