@@ -10,7 +10,6 @@
       },
       "myfox": {
         "myfoxSiteIds": []
-        // To be overiden in your local settings with a list of your Myfox siteIds
       }
     },
     "html": {
@@ -19,8 +18,7 @@
         "hostname": "myfox.me",
         "port": 443,
         "headers_login": {
-          "Origin": "https://myfox.me",
-        //  "Referer": "https://myfox.me/",
+          "Origin": "https://myfox.me"
         },
         "headers": {
           "Accept": "application/json, text/javascript, */*; q=0.01",
