@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="en"><head><title>server/application-hapi</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="server/application-hapi"><meta name="groc-project-path" content="server/application-hapi.js"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">server/application-hapi.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-pi">'use strict'</span>
+
+<span class="hljs-keyword">import</span> config <span class="hljs-keyword">from</span> <span class="hljs-string">'config'</span>
+<span class="hljs-keyword">import</span> { join <span class="hljs-keyword">as</span> joinPaths } <span class="hljs-keyword">from</span> <span class="hljs-string">'path'</span>
+<span class="hljs-keyword">import</span> Hapi <span class="hljs-keyword">from</span> <span class="hljs-string">'hapi'</span>
+<span class="hljs-keyword">import</span> Hoek <span class="hljs-keyword">from</span> <span class="hljs-string">'hoek'</span>
+<span class="hljs-keyword">import</span> Blipp <span class="hljs-keyword">from</span> <span class="hljs-string">'blipp'</span>
+<span class="hljs-keyword">import</span> HapiMethodChange <span class="hljs-keyword">from</span> <span class="hljs-string">'hapi-method-change'</span>
+
+<span class="hljs-keyword">import</span> hapiControllerV1 <span class="hljs-keyword">from</span> <span class="hljs-string">'./controller-hapi-v1'</span>
+
+class ApplicationHapi extends Hapi.Server {
+  constructor (options) {
+    super(options)
+
+    let connection = config.get(<span class="hljs-string">'myfox-wrapper-api.server.hapi.main-connection'</span>)
+    if (process.env.PORT) {
+      connection.port = process.env.PORT
+    }
+    this.connection(connection)</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Logger</p></div></div><div class="code"><div class="wrapper">    <span class="hljs-keyword">const</span> loggerOptions = {
+      ops: {
+        interval: <span class="hljs-number">1000</span>
+      },
+      reporters: {
+        <span class="hljs-built_in">console</span>: [{
+          <span class="hljs-built_in">module</span>: <span class="hljs-string">'good-squeeze'</span>,
+          name: <span class="hljs-string">'Squeeze'</span>,
+          args: [{ log: <span class="hljs-string">'*'</span>, response: <span class="hljs-string">'*'</span> }]
+        }, {
+          <span class="hljs-built_in">module</span>: <span class="hljs-string">'good-console'</span>
+        }, <span class="hljs-string">'stdout'</span>]
+      }
+    }
+    <span class="hljs-keyword">this</span>.register({
+      register: <span class="hljs-built_in">require</span>(<span class="hljs-string">'good'</span>),
+      loggerOptions
+    }, (err) =&gt; {
+      Hoek.assert(!err, err)
+    })</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Method override</p></div></div><div class="code"><div class="wrapper">    <span class="hljs-keyword">this</span>.register(HapiMethodChange, (err) =&gt; {</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p><a href="https://github.com/58bits/hapi-method-change#registering-the-plugin">https://github.com/58bits/hapi-method-change#registering-the-plugin</a></p></div></div><div class="code"><div class="wrapper">      Hoek.assert(!err, err)
+    })</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Controller and routes</p></div></div><div class="code"><div class="wrapper">    <span class="hljs-keyword">this</span>.register({register: hapiControllerV1}, {routes: {prefix: <span class="hljs-string">'/v1'</span>}}, (err) =&gt; {
+      Hoek.assert(!err, err)
+    })</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Assets path</p></div></div><div class="code"><div class="wrapper">    <span class="hljs-keyword">this</span>.register(<span class="hljs-built_in">require</span>(<span class="hljs-string">'inert'</span>), (err) =&gt; {
+      Hoek.assert(!err, err)
+    })
+    <span class="hljs-keyword">this</span>.route({
+      method: <span class="hljs-string">'GET'</span>,
+      path: <span class="hljs-string">'/{param*}'</span>,
+      handler: {
+        directory: {
+          path: joinPaths(__dirname, <span class="hljs-string">'assets'</span>),
+          listing: <span class="hljs-literal">false</span>
+        }
+      }
+    })</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Blipp, for routes dump at startup time.</p></div></div><div class="code"><div class="wrapper">    <span class="hljs-keyword">this</span>.register({
+      register: Blipp, options: {
+        showStart: <span class="hljs-literal">true</span>
+      }
+    }, (err) =&gt; {
+      Hoek.assert(!err, err)
+    })
+  }
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> ApplicationHapi</div></div></div></div></body></html>

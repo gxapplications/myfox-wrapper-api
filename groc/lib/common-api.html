@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><title>lib\common-api</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="lib\common-api"><meta name="groc-project-path" content="lib\common-api.js"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">lib\common-api.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-pi">'use strict'</span>
+<!DOCTYPE html><html lang="en"><head><title>lib/common-api</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="lib/common-api"><meta name="groc-project-path" content="lib/common-api.js"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">lib/common-api.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-pi">'use strict'</span>
 
 <span class="hljs-keyword">import</span> Joi <span class="hljs-keyword">from</span> <span class="hljs-string">'joi'</span>
 
@@ -24,32 +24,32 @@ _notImplemented.bind(<object_as_this>)(...)</p>
 The constructor must never be squizzed even by a subclass: parameters validation is done here.</p></div></div><div class="code"><div class="wrapper"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyfoxWrapperApiCommon</span> </span>{</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Construction parts</p></div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Common constructor called by subclasses.</p>
 <p>Parameters:</p>
 <ul>
-<li><p><strong>options must be an object.</strong><br/>(The options to build the wrapper. Will be merged with default values (see below).)</p>
+<li><p><strong>options must be an object.</strong><br/>(The options to build the wrapper. Will be merged with default values (see below))</p>
 <ul>
-<li><p><strong>options.apiStrategy is optional and must be a string.</strong><br/>(The strategy adopted to fallback on another wrapper if the method does not exists. One of the following values: [&#39;htmlOnly&#39;, &#39;htmlFirst&#39;, &#39;restFirst&#39;, &#39;restOnly&#39;, &#39;custom&#39;].)</p>
+<li><p><strong>options.apiStrategy is optional and must be a string.</strong><br/>(The strategy adopted to fallback on another wrapper if the method does not exists. One of the following values: [&#39;htmlOnly&#39;, &#39;htmlFirst&#39;, &#39;restFirst&#39;, &#39;restOnly&#39;, &#39;custom&#39;])</p>
 </li>
-<li><p><strong>options.autoAuthentication is optional and must be a boolean.</strong><br/>(To automate or not the authentication process (between the wrapper and Myfox services).)</p>
+<li><p><strong>options.autoAuthentication is optional and must be a boolean.</strong><br/>(To automate or not the authentication process (between the wrapper and Myfox services))</p>
 </li>
-<li><p><strong>options.autoAuthRetryCredits is optional and must be an integer.</strong><br/>(The amount of tries to authenticate against Myfox services [0-10]. Warning: too many attempts can blacklist your IP.)</p>
+<li><p><strong>options.autoAuthRetryCredits is optional and must be an integer.</strong><br/>(The amount of tries to authenticate against Myfox services [0-10]. Warning: too many attempts can blacklist your IP)</p>
 </li>
-<li><p><strong>options.authValidity is optional and must be an integer.</strong><br/>(The amount of seconds a Myfox session SHOULD live [1-86400].)</p>
+<li><p><strong>options.authValidity is optional and must be an integer.</strong><br/>(The amount of seconds a Myfox session SHOULD live [1-86400])</p>
 </li>
-<li><p><strong>options.myfoxSiteIds is optional and must be an Array of integers.</strong><br/>(The list of site IDs (linked to the same user account) allowed to be used by the wrapper.)</p>
+<li><p><strong>options.myfoxSiteIds is optional and must be an Array of integers.</strong><br/>(The list of site IDs (linked to the same user account) allowed to be used by the wrapper)</p>
 </li>
 </ul>
 </li>
-<li><p><strong>fallbackApi is optional and must be a MyfoxWrapperApiCommon.</strong><br/>(Another instance of wrapper to use as fallback if the called method does not exists.)</p>
+<li><p><strong>fallbackApi is optional and must be a MyfoxWrapperApiCommon.</strong><br/>(Another instance of wrapper to use as fallback if the called method does not exists)</p>
 </li>
 <li><p><strong>accountCredentials is optional and must be an object.</strong><br/>(The Myfox account credentials)</p>
 <ul>
-<li><p><strong>accountCredentials.username is optional and must be a string.</strong><br/>(The username (the email used to login on the Myfox interface).)</p>
+<li><p><strong>accountCredentials.username is optional and must be a string.</strong><br/>(The username (the email used to login on the Myfox interface))</p>
 </li>
-<li><p><strong>accountCredentials.password is optional and must be a string.</strong><br/>(The password (used to login on the Myfox interface). Stored nowhere except on this dynamic class instance.)</p>
-</li>
-</ul>
+<li><p><strong>accountCredentials.password is optional and must be a string.</strong><br/>(The password (used to login on the Myfox interface). Stored nowhere except on this dynamic class instance)</p>
 </li>
 </ul>
-<p><strong>Returns a MyfoxWrapperApiCommon</strong><br/>(The instance to use as wrapper or as fallback wrapper inside another one.)</p></div></div><div class="code"><div class="wrapper">  constructor (options, fallbackApi, accountCredentials) {
+</li>
+</ul>
+<p><strong>Returns a MyfoxWrapperApiCommon</strong><br/>(The instance to use as wrapper or as fallback wrapper inside another one)</p></div></div><div class="code"><div class="wrapper">  constructor (options, fallbackApi, accountCredentials) {
     <span class="hljs-keyword">this</span>.options = <span class="hljs-built_in">Object</span>.assign({}, MyfoxWrapperApiCommon.defaultOptions(), options)
     Joi.assert(<span class="hljs-keyword">this</span>.options, MyfoxWrapperApiCommon.optionsSchema())
 
@@ -63,8 +63,10 @@ The constructor must never be squizzed even by a subclass: parameters validation
     <span class="hljs-keyword">this</span>.authenticatedSiteId = <span class="hljs-literal">null</span>
     <span class="hljs-keyword">this</span>.cookieJar = {}</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>persistent states are event triggerers and registers listeners. Statefull</p></div></div><div class="code"><div class="wrapper">    <span class="hljs-keyword">this</span>.persistentStates = {
       status: persistentState(<span class="hljs-string">'status'</span>),
-      alarm: persistentState(<span class="hljs-string">'alarm'</span>)
-    }
+      alarm: persistentState(<span class="hljs-string">'alarm'</span>),
+      scenarii: persistentState(<span class="hljs-string">'scenarii'</span>),</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>domotic: persistentState(&#39;domotic&#39;), // No dynamic behavior, so should not be required...</p></div></div><div class="code"><div class="wrapper">      data: persistentState(<span class="hljs-string">'data'</span>),
+      heat: persistentState(<span class="hljs-string">'heat'</span>)
+    }</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>macro action listeners</p></div></div><div class="code"><div class="wrapper">    <span class="hljs-keyword">this</span>.macroListeners = []
   }</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Default options merged into options given to the constructor.
 See details on the documented constructor.</p></div></div><div class="code"><div class="wrapper">  static defaultOptions () {
     <span class="hljs-keyword">return</span> {
@@ -154,7 +156,7 @@ This method will manage authentication layer.</p>
 This method must be overridden in the extended api implementation.</p>
 <p>Parameters:</p>
 <ul>
-<li><p><strong>authData must be an object.</strong><br/>(Authentication data that comes from previous authentication.)</p>
+<li><p><strong>authData must be an object.</strong><br/>(Authentication data that comes from previous authentication)</p>
 </li>
 <li><p><strong>callback must be a function.</strong><br/>(To use when the authentication is done (fail or success), with parameters: (err, authData))</p>
 </li>
@@ -181,14 +183,14 @@ Do not use this method directly to call Myfox services. Prefer use this.callApi(
 </li>
 <li><p><strong>reject must be a function.</strong><br/>(The callback to use if the call fails (with the error as unique parameter))</p>
 </li>
-<li><p><strong>reAuthenticate must be a function.</strong><br/>(The callback to use if the call received a 403 error, to force a new loop with an authentication process. May be null ! In this case, throw an error.)</p>
+<li><p><strong>reAuthenticate must be a function.</strong><br/>(The callback to use if the call received a 403 error, to force a new loop with an authentication process. May be null ! In this case, throw an error)</p>
 </li>
 </ul></div></div><div class="code"><div class="wrapper">  callDistant (url, method, queryParams, headers, payload, streamParser, resolve, reject, reAuthenticate) {
     <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Feature not implemented in this wrapper.'</span>)
   }</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Adds a listener to a persistent state, given a state label.
 The listener is a function, that will be called with the following arguments:</p>
 <ul>
-<li>state label</li>
+<li>state label,</li>
 <li>new state value,</li>
 <li>previous state value,</li>
 <li>a timestamp (creation date of the event)</li>
@@ -197,22 +199,115 @@ The listener is a function, that will be called with the following arguments:</p
 <ul>
 <li><p><strong>label must be a string.</strong><br/>(The unique label that identifies a persistent state)</p>
 </li>
-<li><p><strong>listener must be a function.</strong><br/>(The listener function to call if the state changes.)</p>
+<li><p><strong>listener must be a function.</strong><br/>(The listener function to call if the state changes)</p>
 </li>
 </ul>
-<p><strong>Returns a boolean</strong><br/>(True if the listener is added, false if already registered.)</p></div></div><div class="code"><div class="wrapper">  addStateListener (label, listener) {
-    <span class="hljs-keyword">let</span> state = <span class="hljs-keyword">this</span>.persistentStates[<span class="hljs-string">'label'</span>]
+<p><strong>Returns a boolean</strong><br/>(True if the listener is added, false if already registered)</p></div></div><div class="code"><div class="wrapper">  addStateListener (label, listener) {
+    <span class="hljs-keyword">let</span> state = <span class="hljs-keyword">this</span>.persistentStates[label]
     <span class="hljs-keyword">if</span> (state === <span class="hljs-literal">null</span> || state === <span class="hljs-literal">undefined</span>) {
       <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">`The state label <span class="hljs-subst">${label}</span> does not exists`</span>)
     }
     <span class="hljs-keyword">return</span> state.addListener(listener)
-  }</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Calls main page (/home) to retrieve data like alarm level, box status, default site info, and other subparts.
-This call is made for HTML wrapper. Rest wrapper does not provides this call.</p>
+  }</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Adds a listener to any macro action that can occurs.
+The listener is a function, that will be called with the following arguments:</p>
+<ul>
+<li>macro ID,</li>
+<li>data: an object with the parser response, depending on the call made,</li>
+<li>state: a label with the following allowed values: progress, finished,</li>
+<li>remaining: The number of steps in the macro still in the queue. When remaining==0, then the state should be &#39;finished&#39;.</li>
+<li>timestamp: a timestamp (creation date of the event)
+Important: the listener must return a boolean:</li>
+<li>true to be kept for the next event,</li>
+<li>false if the listener must be unregistered after this event.</li>
+</ul>
 <p>Parameters:</p>
 <ul>
-<li><strong>callback must be a function.</strong><br/>(The function to call with all data retrieved through /home.)</li>
+<li><strong>listener must be a function.</strong><br/>(The listener function to call if the state changes)</li>
+</ul>
+<p><strong>Returns a boolean</strong><br/>(True if the listener is added, false if already registered)</p></div></div><div class="code"><div class="wrapper">  addMacroListener (listener) {
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.macroListeners.indexOf(listener) !== -<span class="hljs-number">1</span>) {
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+    }
+    <span class="hljs-keyword">this</span>.macroListeners.push(listener)
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>
+  }</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Removes a listener if it is already registered.
+The listener is the function previously given to addMacroListener() method.</p>
+<p>Parameters:</p>
+<ul>
+<li><strong>listener must be a function.</strong><br/>(The listener function to remove from the registery)</li>
+</ul>
+<p><strong>Returns a boolean</strong><br/>(True if the listener is removed, false if it is not found)</p></div></div><div class="code"><div class="wrapper">  removeMacroListener (listener) {
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.macroListeners.indexOf(listener) === -<span class="hljs-number">1</span>) {
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+    }
+    <span class="hljs-keyword">let</span> listeners = <span class="hljs-keyword">this</span>.macroListeners.filter((element) =&gt; { <span class="hljs-keyword">return</span> element !== listener })
+    <span class="hljs-keyword">this</span>.macroListeners = listeners
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>
+  }</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Sends a notification to the macro listeners.
+Each listener is notified with the arguments described on the addMacroListener() documentation.
+If the err parameter is not null, the the listeners are not notified. The err will be logged instead.</p>
+<p>Parameters:</p>
+<ul>
+<li><p><strong>err must be an Object.</strong><br/>(The error if the event encountered an error, null in the other cases)</p>
+</li>
+<li><p><strong>info is optional and must be an Object.</strong><br/>(Information about the event)</p>
+<ul>
+<li><p><strong>info.id must be a string.</strong><br/>(The unique ID of the macro. This is usefull to follow a specific macro that can triggers many events)</p>
+</li>
+<li><p><strong>info.data must be an Object.</strong><br/>(The data sent by the event emitter. Can vary)</p>
+</li>
+<li><p><strong>info.state must be a string.</strong><br/>(The state of the macro. Can be one of: progress, finished)</p>
+</li>
+<li><p><strong>info.remaining must be an integer.</strong><br/>(The size of step stack still to execute. If 0, then state should be &#39;finished&#39;)</p>
+</li>
+</ul>
+</li>
+</ul></div></div><div class="code"><div class="wrapper">  notifyMacroListeners (err, {id, data = {}, state = <span class="hljs-literal">null</span>, remaining = <span class="hljs-number">0</span>}) {
+    <span class="hljs-keyword">if</span> (err) {
+      <span class="hljs-keyword">return</span> <span class="hljs-built_in">console</span>.error(err)
+    }
+    <span class="hljs-keyword">let</span> now = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>()
+    <span class="hljs-keyword">this</span>.macroListeners.forEach((listener) =&gt; {
+      <span class="hljs-keyword">if</span> (!listener(id, data, state, remaining, now)) {
+        <span class="hljs-keyword">this</span>.removeMacroListener(listener)
+      }
+    })
+  }</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Calls main page (/home) to retrieve data like alarm level, box status, default site info, and other subparts.
+This call is made for HTML wrapper. Rest wrapper does not provides this call.</p>
+<p>You should use this call to test your connection. In the same time, this call will give you data to keep in cache:</p>
+<ul>
+<li>scenarii list</li>
+<li>domotic stuff list</li>
+<li>heat list</li>
+<li>data list
+Except the fact that some of these can change their value, the list of their IDs cannot change realy often,
+and in case of change, a persistantState listener can be called.</li>
+</ul>
+<p>Parameters:</p>
+<ul>
+<li><strong>callback must be a function.</strong><br/>(The function to call with all data retrieved through /home)</li>
 </ul></div></div><div class="code"><div class="wrapper">  callHome (callback) {
     _notImplemented.bind(<span class="hljs-keyword">this</span>)(<span class="hljs-string">'callHome'</span>, callback)
+  }</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Calls scenario action (/widget/{siteId}/scenario/{action}/{id}) to turn on/off or to activate a scenario.
+The possible action depends on the action type (on demand or not).</p>
+<p>Parameters:</p>
+<ul>
+<li><p><strong>info is optional and must be an Object.</strong><br/>(Information to trigger the event)</p>
+<ul>
+<li><p><strong>info.id must be an integer.</strong><br/>(The unique ID of the scenario to play action against)</p>
+</li>
+<li><p><strong>info.action must be a string.</strong><br/>(The action to trigger. Can be play for &#39;on demand&#39; scenario, on or off for others)</p>
+</li>
+<li><p><strong>info.delay must be an integer.</strong><br/>(The delay (optional) to wait before triggering the action. If &gt; 0 then the method will callback just after scheduling of the action)</p>
+</li>
+</ul>
+</li>
+<li><p><strong>callback must be a function.</strong><br/>(The function to call with all data, depending on the step of the action macro: in the simplest case (one action, no delay), then the result of the call to Myfox. In other cases, an ID to follow with a macro listener The callback parameters must follows the same signature as a macro listener (see addMacroListener() method))</p>
+</li>
+<li><p><strong>info must be an Array of Objects.</strong><br/>([]] The next actions informations, like the first param)</p>
+</li>
+</ul></div></div><div class="code"><div class="wrapper">  callScenarioAction ({id, action, delay = <span class="hljs-number">0</span>}, callback, ...nextActions) {
+    _notImplemented.bind(<span class="hljs-keyword">this</span>)(<span class="hljs-string">'callScenarioAction'</span>, callback)
   }
 }
 

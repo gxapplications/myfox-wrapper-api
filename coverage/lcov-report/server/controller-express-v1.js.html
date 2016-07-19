@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for server\controller-express-v1.js</title>
+    <title>Code coverage report for server/controller-express-v1.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -20,14 +20,14 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">66.67% </span>
+        <span class="strong">70.97% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>20/30</span>
+        <span class='fraction'>22/31</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">52.63% </span>
+        <span class="strong">60.53% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>20/38</span>
+        <span class='fraction'>23/38</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">14.29% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>1/7</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">66.67% </span>
+        <span class="strong">70% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>20/30</span>
+        <span class='fraction'>21/30</span>
       </div>
     </div>
   </div>
@@ -118,39 +118,39 @@
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">2×</span>
-<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
 <span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2×</span>
-<span class="cline-any cline-yes">2×</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">3×</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">3×</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2×</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">3×</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -176,11 +176,11 @@ import config from 'config'
 // This is mandatory to share authenticated session.
 // But from this point, we must always ensure an instance will handle calls for only one Myfox account!
 const router = new Router()
-const api = Api(config.get('server.myfox'), prompter())
+const api = Api(config.get('myfox-wrapper-api.server.myfox'), prompter())
 &nbsp;
 for (var routeName in routes) {
   let routeParams = routes[routeName]
-  let route = router.route(routeParams.path.express || <span class="branch-1 cbranch-no" title="branch not covered" ></span>routeParams.path)
+  let route = router.route(routeParams.path.express || routeParams.path)
 &nbsp;
   // pre-action middleware
   if (routeParams.pre !== null &amp;&amp; routeParams.pre !== undefined) {
@@ -190,29 +190,29 @@ for (var routeName in routes) {
   }
 &nbsp;
   // HTTP methods
-  <span class="missing-if-branch" title="else path not taken" >E</span>if (routeParams.get !== null &amp;&amp; routeParams.get !== undefined) {
+  if (routeParams.get !== null &amp;&amp; routeParams.get !== undefined) {
     route = route.get(<span class="fstat-no" title="function not covered" >(req, res, next) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      (routeParams.get.express || routeParams.get)(req, res, api, next)</span>
+<span class="cstat-no" title="statement not covered" >      (routeParams.get.express || routeParams.get)(req, res, api)</span>
     })
   }
-  <span class="missing-if-branch" title="if path not taken" >I</span>if (routeParams.post !== null &amp;&amp; routeParams.post !== undefined) {
-<span class="cstat-no" title="statement not covered" >    route = route.post(<span class="fstat-no" title="function not covered" >(req, res, next) =&gt; {</span></span>
-<span class="cstat-no" title="statement not covered" >      (routeParams.post.express || routeParams.post)(req, res, api, next)</span>
+  if (routeParams.post !== null &amp;&amp; routeParams.post !== undefined) {
+    route = route.post(<span class="fstat-no" title="function not covered" >(req, res, next) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      (routeParams.post.express || routeParams.post)(req, res, api)</span>
     })
   }
   <span class="missing-if-branch" title="if path not taken" >I</span>if (routeParams.patch !== null &amp;&amp; routeParams.patch !== undefined) {
 <span class="cstat-no" title="statement not covered" >    route = route.patch(<span class="fstat-no" title="function not covered" >(req, res, next) =&gt; {</span></span>
-<span class="cstat-no" title="statement not covered" >      (routeParams.patch.express || routeParams.patch)(req, res, api, next)</span>
+<span class="cstat-no" title="statement not covered" >      (routeParams.patch.express || routeParams.patch)(req, res, api)</span>
     })
   }
   <span class="missing-if-branch" title="if path not taken" >I</span>if (routeParams.put !== null &amp;&amp; routeParams.put !== undefined) {
 <span class="cstat-no" title="statement not covered" >    route = route.put(<span class="fstat-no" title="function not covered" >(req, res, next) =&gt; {</span></span>
-<span class="cstat-no" title="statement not covered" >      (routeParams.put.express || routeParams.put)(req, res, api, next)</span>
+<span class="cstat-no" title="statement not covered" >      (routeParams.put.express || routeParams.put)(req, res, api)</span>
     })
   }
   <span class="missing-if-branch" title="if path not taken" >I</span>if (routeParams.delete !== null &amp;&amp; routeParams.delete !== undefined) {
 <span class="cstat-no" title="statement not covered" >    route = route.delete(<span class="fstat-no" title="function not covered" >(req, res, next) =&gt; {</span></span>
-<span class="cstat-no" title="statement not covered" >      (routeParams.delete.express || routeParams.delete)(req, res, api, next)</span>
+<span class="cstat-no" title="statement not covered" >      (routeParams.delete.express || routeParams.delete)(req, res, api)</span>
     })
   }
 }
@@ -229,7 +229,7 @@ export default router
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue May 31 2016 23:41:41 GMT+0200 (Paris, Madrid (heure d’été))
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Jul 19 2016 09:08:14 GMT+0200 (CEST)
 </div>
 </div>
 <script src="../prettify.js"></script>

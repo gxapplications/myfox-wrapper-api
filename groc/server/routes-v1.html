@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><title>server\routes-v1</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="server\routes-v1"><meta name="groc-project-path" content="server\routes-v1.js"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">server\routes-v1.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-pi">'use strict'</span>
+<!DOCTYPE html><html lang="en"><head><title>server/routes-v1</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="server/routes-v1"><meta name="groc-project-path" content="server/routes-v1.js"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">server/routes-v1.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-pi">'use strict'</span>
 
 <span class="hljs-keyword">const</span> routes = {
   <span class="hljs-string">'testLocal'</span>: {
@@ -6,19 +6,17 @@
       <span class="hljs-string">'express'</span>: <span class="hljs-string">'/test/:variable'</span>,
       <span class="hljs-string">'hapi'</span>: <span class="hljs-string">'/test/{variable}'</span>
     },
-    <span class="hljs-string">'pre'</span>: {
-      <span class="hljs-string">'express'</span>: (req, res, api, next) =&gt; {</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>call next() to ensure method handler will be called.</p></div></div><div class="code"><div class="wrapper">        next()
-      }
+    <span class="hljs-string">'pre'</span>: (req, res, api, next) =&gt; {</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>call next() to ensure method handler will be called.</p></div></div><div class="code"><div class="wrapper">      next()
     },
     <span class="hljs-string">'get'</span>: {
-      <span class="hljs-string">'express'</span>: (req, res, api, next) =&gt; {</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>call next() only if not finished (go to next route matching request)</p></div></div><div class="code"><div class="wrapper">        res.send(<span class="hljs-string">'Hello '</span> + req.params.variable).end()
+      <span class="hljs-string">'express'</span>: (req, res, api) =&gt; {</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>call next() only if not finished (go to next route matching request)</p></div></div><div class="code"><div class="wrapper">        res.send(<span class="hljs-string">'Hello '</span> + req.params.variable).end()
+      },
+      <span class="hljs-string">'hapi'</span>: (req, reply, api) =&gt; {</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>call next() only if not finished (go to next route matching request)</p></div></div><div class="code"><div class="wrapper">        reply(<span class="hljs-string">'Hello '</span> + req.params.variable)
       }
     }
   },
-  <span class="hljs-string">'test'</span>: {
-    <span class="hljs-string">'path'</span>: {
-      <span class="hljs-string">'express'</span>: <span class="hljs-string">'/home'</span>
-    },
+  <span class="hljs-string">'home'</span>: {
+    <span class="hljs-string">'path'</span>: <span class="hljs-string">'/home'</span>,
     <span class="hljs-string">'get'</span>: {
       <span class="hljs-string">'express'</span>: (req, res, api) =&gt; {
         api.callHome((err, result) =&gt; {
@@ -27,7 +25,43 @@
           }
           res.send(result)
         })
+      },
+      <span class="hljs-string">'hapi'</span>: (req, reply, api) =&gt; {
+        api.callHome((err, result) =&gt; {
+          <span class="hljs-keyword">if</span> (err) {
+            <span class="hljs-keyword">return</span> reply(err.toString()).code(err.status)
+          }
+          reply(result)
+        })
+      }
+    }
+  },
+  <span class="hljs-string">'scenario_action'</span>: {
+    <span class="hljs-string">'path'</span>: {
+      <span class="hljs-string">'express'</span>: <span class="hljs-string">'/scenario/:id/:action/:delay?'</span>,
+      <span class="hljs-string">'hapi'</span>: <span class="hljs-string">'/scenario/{id}/{action}/{delay?}'</span>
+    },
+    <span class="hljs-string">'post'</span>: {
+      <span class="hljs-string">'express'</span>: (req, res, api) =&gt; {
+        <span class="hljs-keyword">let</span> nextCalls = req.body[<span class="hljs-string">'next_calls'</span>]
+        api.callScenarioAction({id: req.params.id, action: req.params.action, delay: req.params.delay | <span class="hljs-number">0</span>}, (err, result) =&gt; {
+          <span class="hljs-keyword">if</span> (err) {
+            <span class="hljs-keyword">return</span> res.status(err.status).send(err.toString())
+          }
+          res.send(result)
+        }, ...nextCalls)
+      },
+      <span class="hljs-string">'hapi'</span>: (req, reply, api) =&gt; {
+        <span class="hljs-keyword">let</span> nextCalls = req.body[<span class="hljs-string">'next_calls'</span>]
+        api.callScenarioAction({id: req.params.id, action: req.params.action, delay: req.params.delay | <span class="hljs-number">0</span>}, (err, result) =&gt; {
+          <span class="hljs-keyword">if</span> (err) {
+            <span class="hljs-keyword">return</span> reply(err.toString()).code(err.status)
+          }
+          reply(result)
+        }, ...nextCalls)
       }
     }
   }
-}</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>TODO: quand fera hapi, si express et hapi ont la meme syntaxe dans la route, ou les handlers, alors on met en commun en sautant un �tage dans le tableau (testAction.get = function direct)</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> routes</div></div></div></div></body></html>
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> routes</div></div></div></div></body></html>

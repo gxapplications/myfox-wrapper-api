@@ -30,7 +30,8 @@
     
         <h2>MyfoxWrapperApiCommon</h2>
         
-            <div class="class-description">Parent class that contains the method list to implement on the subclasses, and common methods.The constructor must never be squizzed even by a subclass: parameters validation is done here.</div>
+            <div class="class-description">Parent class that contains the method list to implement on the subclasses, and common methods.
+The constructor must never be squizzed even by a subclass: parameters validation is done here.</div>
         
     
 </header>
@@ -113,7 +114,7 @@
 
             
 
-            <td class="description last">The options to build the wrapper. Will be merged with default values (see below).
+            <td class="description last">The options to build the wrapper. Will be merged with default values (see below)
                 <h6>Properties</h6>
                 
 
@@ -167,7 +168,7 @@
 
             
 
-            <td class="description last">The strategy adopted to fallback on another wrapper if the method does not exists. One of the following values: ['htmlOnly', 'htmlFirst', 'restFirst', 'restOnly', 'custom'].</td>
+            <td class="description last">The strategy adopted to fallback on another wrapper if the method does not exists. One of the following values: ['htmlOnly', 'htmlFirst', 'restFirst', 'restOnly', 'custom']</td>
         </tr>
 
     
@@ -200,7 +201,7 @@
 
             
 
-            <td class="description last">To automate or not the authentication process (between the wrapper and Myfox services).</td>
+            <td class="description last">To automate or not the authentication process (between the wrapper and Myfox services)</td>
         </tr>
 
     
@@ -233,7 +234,7 @@
 
             
 
-            <td class="description last">The amount of tries to authenticate against Myfox services [0-10]. Warning: too many attempts can blacklist your IP.</td>
+            <td class="description last">The amount of tries to authenticate against Myfox services [0-10]. Warning: too many attempts can blacklist your IP</td>
         </tr>
 
     
@@ -266,7 +267,7 @@
 
             
 
-            <td class="description last">The amount of seconds a Myfox session SHOULD live [1-86400].</td>
+            <td class="description last">The amount of seconds a Myfox session SHOULD live [1-86400]</td>
         </tr>
 
     
@@ -299,7 +300,7 @@
 
             
 
-            <td class="description last">The list of site IDs (linked to the same user account) allowed to be used by the wrapper.</td>
+            <td class="description last">The list of site IDs (linked to the same user account) allowed to be used by the wrapper</td>
         </tr>
 
     
@@ -339,7 +340,7 @@
 
             
 
-            <td class="description last">Another instance of wrapper to use as fallback if the called method does not exists.</td>
+            <td class="description last">Another instance of wrapper to use as fallback if the called method does not exists</td>
         </tr>
 
     
@@ -426,7 +427,7 @@
 
             
 
-            <td class="description last">The username (the email used to login on the Myfox interface).</td>
+            <td class="description last">The username (the email used to login on the Myfox interface)</td>
         </tr>
 
     
@@ -459,7 +460,7 @@
 
             
 
-            <td class="description last">The password (used to login on the Myfox interface). Stored nowhere except on this dynamic class instance.</td>
+            <td class="description last">The password (used to login on the Myfox interface). Stored nowhere except on this dynamic class instance</td>
         </tr>
 
     
@@ -563,7 +564,8 @@
 
 
 <div class="description">
-    Account credentials format validator.See details on the documented constructor.
+    Account credentials format validator.
+See details on the documented constructor.
 </div>
 
 
@@ -607,7 +609,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="common-api.js.html">common-api.js</a>, <a href="common-api.js.html#line105">line 105</a>
+        <a href="common-api.js.html">common-api.js</a>, <a href="common-api.js.html#line112">line 112</a>
     </li></ul></dd>
     
 
@@ -645,7 +647,8 @@
 
 
 <div class="description">
-    Default options merged into options given to the constructor.See details on the documented constructor.
+    Default options merged into options given to the constructor.
+See details on the documented constructor.
 </div>
 
 
@@ -689,7 +692,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="common-api.js.html">common-api.js</a>, <a href="common-api.js.html#line77">line 77</a>
+        <a href="common-api.js.html">common-api.js</a>, <a href="common-api.js.html#line84">line 84</a>
     </li></ul></dd>
     
 
@@ -727,7 +730,8 @@
 
 
 <div class="description">
-    Options format validator.See details on the documented constructor.
+    Options format validator.
+See details on the documented constructor.
 </div>
 
 
@@ -771,7 +775,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="common-api.js.html">common-api.js</a>, <a href="common-api.js.html#line91">line 91</a>
+        <a href="common-api.js.html">common-api.js</a>, <a href="common-api.js.html#line98">line 98</a>
     </li></ul></dd>
     
 
@@ -802,6 +806,168 @@
 
     
 
+    <h4 class="name" id="addMacroListener"><span class="type-signature"></span>addMacroListener<span class="signature">(listener)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Adds a listener to any macro action that can occurs.
+The listener is a function, that will be called with the following arguments:
+- macro ID,
+- data: an object with the parser response, depending on the call made,
+- state: a label with the following allowed values: progress, finished,
+- remaining: The number of steps in the macro still in the queue. When remaining==0, then the state should be 'finished'.
+- timestamp: a timestamp (creation date of the event)
+Important: the listener must return a boolean:
+- true to be kept for the next event,
+- false if the listener must be unregistered after this event.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>listener</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The listener function to call if the state changes</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="common-api.js.html">common-api.js</a>, <a href="common-api.js.html#line255">line 255</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    True if the listener is added, false if already registered
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
     <h4 class="name" id="addStateListener"><span class="type-signature"></span>addStateListener<span class="signature">(label, listener)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
 
     
@@ -809,7 +975,12 @@
 
 
 <div class="description">
-    Adds a listener to a persistent state, given a state label.The listener is a function, that will be called with the following arguments:- state label- new state value,- previous state value,- a timestamp (creation date of the event)
+    Adds a listener to a persistent state, given a state label.
+The listener is a function, that will be called with the following arguments:
+- state label,
+- new state value,
+- previous state value,
+- a timestamp (creation date of the event)
 </div>
 
 
@@ -884,7 +1055,7 @@
 
             
 
-            <td class="description last">The listener function to call if the state changes.</td>
+            <td class="description last">The listener function to call if the state changes</td>
         </tr>
 
     
@@ -925,7 +1096,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="common-api.js.html">common-api.js</a>, <a href="common-api.js.html#line225">line 225</a>
+        <a href="common-api.js.html">common-api.js</a>, <a href="common-api.js.html#line232">line 232</a>
     </li></ul></dd>
     
 
@@ -952,7 +1123,7 @@
 
         
 <div class="param-desc">
-    True if the listener is added, false if already registered.
+    True if the listener is added, false if already registered
 </div>
 
 
@@ -985,7 +1156,8 @@
 
 
 <div class="description">
-    Call Myfox authentication process.This method must be overridden in the extended api implementation.
+    Call Myfox authentication process.
+This method must be overridden in the extended api implementation.
 </div>
 
 
@@ -1037,7 +1209,7 @@
 
             
 
-            <td class="description last">Authentication data that comes from previous authentication.</td>
+            <td class="description last">Authentication data that comes from previous authentication</td>
         </tr>
 
     
@@ -1101,7 +1273,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="common-api.js.html">common-api.js</a>, <a href="common-api.js.html#line190">line 190</a>
+        <a href="common-api.js.html">common-api.js</a>, <a href="common-api.js.html#line197">line 197</a>
     </li></ul></dd>
     
 
@@ -1139,7 +1311,9 @@
 
 
 <div class="description">
-    Call Myfox interface with the action/query.This method must be overridden in the extended api implementation.Do not use this method directly to call Myfox services. Prefer use this.callApi(url, method, queryParams, headers, payload)
+    Call Myfox interface with the action/query.
+This method must be overridden in the extended api implementation.
+Do not use this method directly to call Myfox services. Prefer use this.callApi(url, method, queryParams, headers, payload)
 </div>
 
 
@@ -1375,7 +1549,7 @@
 
             
 
-            <td class="description last">The callback to use if the call received a 403 error, to force a new loop with an authentication process. May be null ! In this case, throw an error.</td>
+            <td class="description last">The callback to use if the call received a 403 error, to force a new loop with an authentication process. May be null ! In this case, throw an error</td>
         </tr>
 
     
@@ -1416,7 +1590,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="common-api.js.html">common-api.js</a>, <a href="common-api.js.html#line209">line 209</a>
+        <a href="common-api.js.html">common-api.js</a>, <a href="common-api.js.html#line216">line 216</a>
     </li></ul></dd>
     
 
@@ -1454,7 +1628,16 @@
 
 
 <div class="description">
-    Calls main page (/home) to retrieve data like alarm level, box status, default site info, and other subparts.This call is made for HTML wrapper. Rest wrapper does not provides this call.
+    Calls main page (/home) to retrieve data like alarm level, box status, default site info, and other subparts.
+This call is made for HTML wrapper. Rest wrapper does not provides this call.
+
+You should use this call to test your connection. In the same time, this call will give you data to keep in cache:
+- scenarii list
+- domotic stuff list
+- heat list
+- data list
+Except the fact that some of these can change their value, the list of their IDs cannot change realy often,
+and in case of change, a persistantState listener can be called.
 </div>
 
 
@@ -1506,7 +1689,7 @@
 
             
 
-            <td class="description last">The function to call with all data retrieved through /home.</td>
+            <td class="description last">The function to call with all data retrieved through /home</td>
         </tr>
 
     
@@ -1547,7 +1730,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="common-api.js.html">common-api.js</a>, <a href="common-api.js.html#line239">line 239</a>
+        <a href="common-api.js.html">common-api.js</a>, <a href="common-api.js.html#line317">line 317</a>
     </li></ul></dd>
     
 
@@ -1574,6 +1757,759 @@
 
 
         
+            
+
+    
+
+    <h4 class="name" id="callScenarioAction"><span class="type-signature"></span>callScenarioAction<span class="signature">(info<span class="signature-attributes">opt</span>, callback, info[]<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Calls scenario action (/widget/{siteId}/scenario/{action}/{id}) to turn on/off or to activate a scenario.
+The possible action depends on the action type (on demand or not).
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>info</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Information to trigger the event
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">integer</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The unique ID of the scenario to play action against</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>action</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The action to trigger. Can be play for 'on demand' scenario, on or off for others</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>delay</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">integer</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The delay (optional) to wait before triggering the action. If > 0 then the method will callback just after scheduling of the action</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The function to call with all data, depending on the step of the action macro: in the simplest case (one action, no delay),
+                                then the result of the call to Myfox. In other cases, an ID to follow with a macro listener
+                                The callback parameters must follows the same signature as a macro listener (see addMacroListener() method)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>info[]</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;Object></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The next actions informations, like the first param</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="common-api.js.html">common-api.js</a>, <a href="common-api.js.html#line334">line 334</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="notifyMacroListeners"><span class="type-signature"></span>notifyMacroListeners<span class="signature">(err, info<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Sends a notification to the macro listeners.
+Each listener is notified with the arguments described on the addMacroListener() documentation.
+If the err parameter is not null, the the listeners are not notified. The err will be logged instead.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>err</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The error if the event encountered an error, null in the other cases</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>info</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Information about the event
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The unique ID of the macro. This is usefull to follow a specific macro that can triggers many events</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The data sent by the event emitter. Can vary</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>state</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The state of the macro. Can be one of: progress, finished</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>remaining</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">integer</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The size of step stack still to execute. If 0, then state should be 'finished'</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="common-api.js.html">common-api.js</a>, <a href="common-api.js.html#line291">line 291</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="removeMacroListener"><span class="type-signature"></span>removeMacroListener<span class="signature">(listener)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Removes a listener if it is already registered.
+The listener is the function previously given to addMacroListener() method.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>listener</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The listener function to remove from the registery</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="common-api.js.html">common-api.js</a>, <a href="common-api.js.html#line270">line 270</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    True if the listener is removed, false if it is not found
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
     
 
     
@@ -1589,13 +2525,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="MyfoxWrapperApiCommon.html">MyfoxWrapperApiCommon</a></li><li><a href="PersistentState.html">PersistentState</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_notImplemented">_notImplemented</a></li><li><a href="global.html#callApi">callApi</a></li><li><a href="global.html#myfoxWrapperApi">myfoxWrapperApi</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="MyfoxWrapperApiCommon.html">MyfoxWrapperApiCommon</a></li><li><a href="MyfoxWrapperApiHtml.html">MyfoxWrapperApiHtml</a></li><li><a href="PersistentState.html">PersistentState</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_notImplemented">_notImplemented</a></li><li><a href="global.html#callApi">callApi</a></li><li><a href="global.html#myfoxWrapperApi">myfoxWrapperApi</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue May 31 2016 23:41:31 GMT+0200 (Paris, Madrid (heure d’été))
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue Jul 19 2016 09:08:08 GMT+0200 (CEST)
 </footer>
 
 <script> prettyPrint(); </script>

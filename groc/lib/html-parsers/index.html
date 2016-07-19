@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><title>lib\html-parsers\index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="lib\html-parsers\index"><meta name="groc-project-path" content="lib\html-parsers\index.js"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path">lib\html-parsers\index.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-pi">'use strict'</span>
+<!DOCTYPE html><html lang="en"><head><title>lib/html-parsers/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="lib/html-parsers/index"><meta name="groc-project-path" content="lib/html-parsers/index.js"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path">lib/html-parsers/index.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-pi">'use strict'</span>
 
 <span class="hljs-keyword">import</span> config <span class="hljs-keyword">from</span> <span class="hljs-string">'config'</span>
 <span class="hljs-keyword">import</span> http <span class="hljs-keyword">from</span> <span class="hljs-string">'http'</span>
@@ -40,17 +40,17 @@ and to avoid parsing general events like errors, authentication problems, etc...
   <span class="hljs-keyword">try</span> {
     <span class="hljs-keyword">let</span> cookie = (cookieJar !== <span class="hljs-literal">null</span> &amp;&amp; cookieJar !== <span class="hljs-literal">undefined</span> &amp;&amp; cookieJar().cookie !== <span class="hljs-literal">undefined</span>) ? {<span class="hljs-string">'cookie'</span>: [cookieJar().cookie]} : {}
     <span class="hljs-keyword">let</span> requestData = {
-      hostname: config.get(<span class="hljs-string">'html.myfox.hostname'</span>),
-      port: config.get(<span class="hljs-string">'html.myfox.port'</span>),
+      hostname: config.get(<span class="hljs-string">'myfox-wrapper-api.html.myfox.hostname'</span>),
+      port: config.get(<span class="hljs-string">'myfox-wrapper-api.html.myfox.port'</span>),
       path: path,
-      headers: <span class="hljs-built_in">Object</span>.assign(postHeaders, config.get(<span class="hljs-string">'html.myfox.headers'</span>), cookie, headers),
+      headers: <span class="hljs-built_in">Object</span>.assign(postHeaders, config.get(<span class="hljs-string">'myfox-wrapper-api.html.myfox.headers'</span>), cookie, headers),
       method: method
-    }</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>console.log(&#39;Sending request to Myfox:&#39;, requestData)</p></div></div><div class="code"><div class="wrapper">    <span class="hljs-keyword">let</span> req = ((config.get(<span class="hljs-string">'html.myfox.protocol'</span>) === <span class="hljs-string">'http'</span>) ? http : https).request(requestData, (res) =&gt; {</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>console.log(&#39;Receiving response:&#39;, res.statusCode, res.headers)
+    }</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>console.log(&#39;Sending request to Myfox:&#39;, requestData)</p></div></div><div class="code"><div class="wrapper">    <span class="hljs-keyword">let</span> req = ((config.get(<span class="hljs-string">'myfox-wrapper-api.html.myfox.protocol'</span>) === <span class="hljs-string">'http'</span>) ? http : https).request(requestData, (res) =&gt; {</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>console.log(&#39;Receiving response:&#39;, res.statusCode, res.headers)
 If HTTP error case, no need to parse the body</p></div></div><div class="code"><div class="wrapper">      <span class="hljs-keyword">if</span> (res.statusCode &gt;= <span class="hljs-number">400</span>) {
         <span class="hljs-keyword">const</span> error = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Error status code returned by Myfox.'</span>)
         error.status = res.statusCode
         <span class="hljs-keyword">return</span> callback(error)
-      }</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>If false HTTP codes, fix them</p></div></div><div class="code"><div class="wrapper">      <span class="hljs-keyword">if</span> (res.statusCode === <span class="hljs-number">302</span> &amp;&amp; res.headers.location === config.get(<span class="hljs-string">'html.myfox.redirectForbidden'</span>)) {
+      }</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>If false HTTP codes, fix them</p></div></div><div class="code"><div class="wrapper">      <span class="hljs-keyword">if</span> (res.statusCode === <span class="hljs-number">302</span> &amp;&amp; res.headers.location === config.get(<span class="hljs-string">'myfox-wrapper-api.html.myfox.redirectForbidden'</span>)) {
         <span class="hljs-keyword">const</span> error = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Myfox redirected to / because of forbidden access.'</span>)
         error.status = <span class="hljs-number">403</span>
         <span class="hljs-keyword">return</span> callback(error)
@@ -114,7 +114,7 @@ If HTTP error case, no need to parse the body</p></div></div><div class="code"><
 <ul>
 <li><strong>callback must be a function.</strong><br/>(The callback function to give to the inner text stream parser.)</li>
 </ul>
-<p><strong>Returns a Function</strong><br/>(A function generating a stream parser to retrieve inner text.)</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">trumpetInnerText</span> (<span class="hljs-params">callback</span>) </span>{
+<p><strong>Returns a function</strong><br/>(A function generating a stream parser to retrieve inner text.)</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">trumpetInnerText</span> (<span class="hljs-params">callback</span>) </span>{
   <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">element</span>) </span>{
     <span class="hljs-keyword">let</span> buffer = <span class="hljs-string">''</span>
     <span class="hljs-keyword">const</span> stream = element.createReadStream()
@@ -123,16 +123,35 @@ If HTTP error case, no need to parse the body</p></div></div><div class="code"><
       buffer += chunk
     })
     stream.on(<span class="hljs-string">'end'</span>, () =&gt; {
-      callback(buffer)
+      callback(buffer.trim())
     })
     stream.on(<span class="hljs-string">'error'</span>, (err) =&gt; {
       <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(err)
     })
   }
-}</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>TODO !0: doc et TU</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">trumpetClasses</span> (<span class="hljs-params">callback</span>) </span>{
+}</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Returns a function to call back with all CSS classes found on the given element.</p>
+<p>Parameters:</p>
+<ul>
+<li><strong>callback must be a function.</strong><br/>(The callback function to give to the CSS class extractor.)</li>
+</ul>
+<p><strong>Returns a function</strong><br/>(A function that will call callback with the array of CSS classes found on the element.)</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">trumpetClasses</span> (<span class="hljs-params">callback</span>) </span>{
   <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">element</span>) </span>{
     element.getAttribute(<span class="hljs-string">'class'</span>, (classes) =&gt; {
       callback(classes.split(<span class="hljs-string">' '</span>))
+    })
+  }
+}</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Returns a function to call back with the attribute value found on the given element.</p>
+<p>Parameters:</p>
+<ul>
+<li><p><strong>attributeName must be a string.</strong><br/>(The attribute name to retrieve.)</p>
+</li>
+<li><p><strong>callback must be a function.</strong><br/>(The callback function to give to the attribute extractor.)</p>
+</li>
+</ul>
+<p><strong>Returns a function</strong><br/>(A function that will call callback with the value of the attribute found on the element. If no attribute is found, then the callback is not called!)</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">trumpetAttr</span> (<span class="hljs-params">attributeName, callback</span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">element</span>) </span>{
+    element.getAttribute(attributeName, (attributeValue) =&gt; {
+      callback(attributeValue)
     })
   }
 }</div></div></div></div></body></html>

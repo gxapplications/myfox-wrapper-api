@@ -1,1 +1,15 @@
-<!DOCTYPE html><html lang="en"><head><title>server\server-hapi</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="server\server-hapi"><meta name="groc-project-path" content="server\server-hapi.js"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">server\server-hapi.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-pi">'use strict'</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>TODO: not ready yet...</p></div></div></div></div></body></html>
+<!DOCTYPE html><html lang="en"><head><title>server/server-hapi</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="server/server-hapi"><meta name="groc-project-path" content="server/server-hapi.js"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">server/server-hapi.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-pi">'use strict'</span>
+
+<span class="hljs-keyword">import</span> config <span class="hljs-keyword">from</span> <span class="hljs-string">'config'</span>
+<span class="hljs-keyword">import</span> <span class="hljs-string">'colors'</span>
+
+<span class="hljs-keyword">import</span> ApplicationHapi <span class="hljs-keyword">from</span> <span class="hljs-string">'./application-hapi'</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Application (Hapi server)</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">var</span> server = <span class="hljs-keyword">new</span> ApplicationHapi(config.get(<span class="hljs-string">'myfox-wrapper-api.server.hapi.options'</span>))</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Server start</p></div></div><div class="code"><div class="wrapper">server.start((err) =&gt; {
+  <span class="hljs-keyword">if</span> (err) {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'ERROR: Hapi server cannot start.'</span>.red)
+    <span class="hljs-built_in">console</span>.log(err)
+    process.exit(<span class="hljs-number">1</span>)
+  }
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'WARNING: The hapi server version here is in construction.'</span>.red)
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'✔ Server ready.'</span>.green)
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'✔ Server listening on '</span>.green, <span class="hljs-built_in">String</span>(server.info.uri).cyan)
+})</div></div></div></div></body></html>

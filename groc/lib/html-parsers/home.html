@@ -1,9 +1,39 @@
-<!DOCTYPE html><html lang="en"><head><title>lib\html-parsers\home</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="lib\html-parsers\home"><meta name="groc-project-path" content="lib\html-parsers\home.js"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path">lib\html-parsers\home.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-pi">'use strict'</span>
+<!DOCTYPE html><html lang="en"><head><title>lib/html-parsers/home</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="lib/html-parsers/home"><meta name="groc-project-path" content="lib/html-parsers/home.js"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path">lib/html-parsers/home.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-pi">'use strict'</span>
 
 <span class="hljs-keyword">import</span> trumpet <span class="hljs-keyword">from</span> <span class="hljs-string">'trumpet'</span>
-<span class="hljs-keyword">import</span> { trumpetInnerText, trumpetClasses } <span class="hljs-keyword">from</span> <span class="hljs-string">'./index'</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>TODO !1: doc et TU</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">wrapperApi</span>) </span>{
+<span class="hljs-keyword">import</span> { trumpetInnerText, trumpetClasses, trumpetAttr } <span class="hljs-keyword">from</span> <span class="hljs-string">'./index'</span></div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Returns a trumpet parser with multiple selectors and events to parse all data present on the /home/<siteId> page.</p>
+<p>Can throw event on the following persistent states:</p>
+<ul>
+<li>alarm (when the alarm level changed)</li>
+<li>status (when the box status changed, or at least one of its 3 sub elements)</li>
+<li>scenarii (name, ID, type, state). For now, type === &quot;1&quot; or type === &quot;&gt;1&quot;</li>
+<li>domotic stuff (name, ID)</li>
+<li>data modules (name, ID, temperature, light). for now, just literals values (in your language...)</li>
+<li>heat modules (name, ID, state)</li>
+</ul>
+<p>Parameters:</p>
+<ul>
+<li><strong>wrapperApi must be a MyfoxWrapperApiCommon.</strong><br/>(The Api instance, to throw events)</li>
+</ul>
+<p><strong>Returns a trumpet</strong><br/>(The trumpet parser to plug on the HTML stream.)</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">wrapperApi</span>) </span>{
   <span class="hljs-keyword">const</span> trumpetParser = trumpet()
-  trumpetParser.status = {}</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Master status</p></div></div><div class="code"><div class="wrapper">  trumpetParser.selectAll(<span class="hljs-string">'div#masterStatus &gt; a &gt; span.icon'</span>, trumpetClasses((classes) =&gt; {
+  trumpetParser.setMaxListeners(<span class="hljs-number">32</span>) <span class="hljs-comment">// We have a lot of stuff to analyze...</span>
+  trumpetParser.status = {}
+  trumpetParser.scenarii = {}
+  trumpetParser.domotic = {}
+  trumpetParser.data = {}
+  trumpetParser.heat = {}
+
+  <span class="hljs-keyword">let</span> temp = {
+    <span class="hljs-string">'scenarioNames'</span>: [],
+    <span class="hljs-string">'scenariosIds'</span>: [],
+    <span class="hljs-string">'domoticNames'</span>: [],
+    <span class="hljs-string">'dataNames'</span>: [],
+    <span class="hljs-string">'dataTemperatures'</span>: [],
+    <span class="hljs-string">'dataIds'</span>: [],
+    <span class="hljs-string">'heatIds'</span>: [],
+    <span class="hljs-string">'heatNames'</span>: []
+  }</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Master status</p></div></div><div class="code"><div class="wrapper">  trumpetParser.selectAll(<span class="hljs-string">'div#masterStatus &gt; a &gt; span.icon'</span>, trumpetClasses((classes) =&gt; {
     <span class="hljs-keyword">let</span> matches = <span class="hljs-literal">null</span>
     <span class="hljs-keyword">let</span> key = <span class="hljs-literal">null</span>
     <span class="hljs-keyword">let</span> value = <span class="hljs-literal">null</span>
@@ -31,8 +61,58 @@
       trumpetParser.alarm = <span class="hljs-string">'full'</span>
     }
     wrapperApi.persistentStates.alarm.push(trumpetParser.alarm)
-  }))</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>TODO !2: all others to parse!</p></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>End of parsing, no need to go further</p></div></div><div class="code"><div class="wrapper">  trumpetParser.selectAll(<span class="hljs-string">'footer'</span>, () =&gt; {
+  }))</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Cameras (XXX, I have no cam to try)
+trumpetParser.select(&#39;div#camera-widget-body &gt; table.list&#39;, trumpetInnerText((camerasToParse) =&gt; {</p></div></div><div class="code"><div class="wrapper">  <span class="hljs-comment">// ))</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Scenarii</p></div></div><div class="code"><div class="wrapper">  trumpetParser.selectAll(<span class="hljs-string">'div#scenario_list &gt; table.list tr span.text'</span>, trumpetInnerText((scenarioName) =&gt; {
+    temp.scenarioNames.push(scenarioName)
+  })) <span class="hljs-comment">// To retrieve scenario name</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>trumpetParser.selectAll(&#39;div#scenario_list &gt; table.list tr span.icon&#39;, trumpetClasses((scenarioTypeClasses) =&gt; {
+XXX retrieve class &#39;icon-scenariotype-X&#39; and store X (==type!)</p></div></div><div class="code"><div class="wrapper">  <span class="hljs-comment">// )) // To retrieve scenario type</span>
+  trumpetParser.selectAll(<span class="hljs-string">'div#scenario_list &gt; table.list tr a.btn-play'</span>, trumpetAttr(<span class="hljs-string">'href'</span>, (url) =&gt; {
+    <span class="hljs-keyword">let</span> id = url.split(<span class="hljs-string">'/'</span>).pop()
+    trumpetParser.scenarii[id] = {<span class="hljs-string">'type'</span>: <span class="hljs-number">1</span>, <span class="hljs-string">'name'</span>: temp.scenarioNames.shift()}
+  })) <span class="hljs-comment">// To retrieve action URL (then, type==1)</span>
+  trumpetParser.selectAll(<span class="hljs-string">'div#scenario_list &gt; table.list tr span[data-value="0"]'</span>, trumpetAttr(<span class="hljs-string">'data-call'</span>, (url) =&gt; {
+    temp.scenariosIds.push(url.split(<span class="hljs-string">'/'</span>).pop())
+  })) <span class="hljs-comment">// To retrieve action URL (then, type&gt;1)</span>
+  trumpetParser.selectAll(<span class="hljs-string">'div#scenario_list &gt; table.list tr input'</span>, trumpetAttr(<span class="hljs-string">'value'</span>, (active) =&gt; {
+    trumpetParser.scenarii[temp.scenariosIds.shift()] = {<span class="hljs-string">'type'</span>: <span class="hljs-string">'&gt;1'</span>, <span class="hljs-string">'name'</span>: temp.scenarioNames.shift(), <span class="hljs-string">'active'</span>: active}
+  })) <span class="hljs-comment">// To retrieve state value</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Domotic stuff</p></div></div><div class="code"><div class="wrapper">  trumpetParser.selectAll(<span class="hljs-string">'div#domotic_list &gt; table.list tr span.text'</span>, trumpetInnerText((domoticName) =&gt; {
+    temp.domoticNames.push(domoticName)
+  })) <span class="hljs-comment">// To retrieve domotic stuff name</span>
+  trumpetParser.selectAll(<span class="hljs-string">'div#domotic_list &gt; table.list tr span.buttons &gt; span + span'</span>, trumpetAttr(<span class="hljs-string">'data-call'</span>, (url) =&gt; {
+    trumpetParser.domotic[url.split(<span class="hljs-string">'/'</span>).pop()] = {<span class="hljs-string">'name'</span>: temp.domoticNames.shift()}
+  })) <span class="hljs-comment">// To retrieve action URL</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Data modules (temp, light)</p></div></div><div class="code"><div class="wrapper">  trumpetParser.selectAll(<span class="hljs-string">'div#data_list &gt; table.list tr'</span>, trumpetAttr(<span class="hljs-string">'data-href'</span>, (url) =&gt; {
+    temp.dataIds.push(url.split(<span class="hljs-string">'/'</span>).pop())
+  }))
+  trumpetParser.selectAll(<span class="hljs-string">'div#data_list &gt; table.list tr span.text'</span>, trumpetInnerText((dataName) =&gt; {
+    temp.dataNames.push(dataName)
+  })) <span class="hljs-comment">// To retrieve data module name</span>
+  trumpetParser.selectAll(<span class="hljs-string">'div#data_list &gt; table.list tr span.temperature'</span>, trumpetInnerText((temperature) =&gt; {
+    temp.dataTemperatures.push(temperature)
+  })) <span class="hljs-comment">// To retrieve temperature</span>
+  trumpetParser.selectAll(<span class="hljs-string">'div#data_list &gt; table.list tr span.light'</span>, trumpetInnerText((light) =&gt; {
+    trumpetParser.data[temp.dataIds.shift()] = {<span class="hljs-string">'name'</span>: temp.dataNames.shift(), <span class="hljs-string">'temperature'</span>: temp.dataTemperatures.shift(), <span class="hljs-string">'light'</span>: light}
+  }))</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Heat modules</p></div></div><div class="code"><div class="wrapper">  trumpetParser.selectAll(<span class="hljs-string">'div#heating_list &gt; table.list tr span.text'</span>, trumpetInnerText((heatName) =&gt; {
+    temp.heatNames.push(heatName)
+  })) <span class="hljs-comment">// To retrieve heat module name</span>
+  trumpetParser.selectAll(<span class="hljs-string">'div#heating_list &gt; table.list tr span.buttons &gt; span[data-value="1"]'</span>, trumpetAttr(<span class="hljs-string">'data-call'</span>, (url) =&gt; {
+    temp.heatIds.push(url.split(<span class="hljs-string">'/'</span>).pop())
+  })) <span class="hljs-comment">// To retrieve action URL</span>
+  trumpetParser.selectAll(<span class="hljs-string">'div#heating_list &gt; table.list tr span.buttons &gt; span[data-value="2"]'</span>, trumpetClasses((classes) =&gt; {
+    <span class="hljs-keyword">let</span> state = <span class="hljs-string">''</span>
+    <span class="hljs-keyword">if</span> (classes.indexOf(<span class="hljs-string">'active-1'</span>) !== -<span class="hljs-number">1</span>) {
+      state = <span class="hljs-string">'on'</span>
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (classes.indexOf(<span class="hljs-string">'active-2'</span>) !== -<span class="hljs-number">1</span>) {
+      state = <span class="hljs-string">'eco'</span>
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (classes.indexOf(<span class="hljs-string">'active-4'</span>) !== -<span class="hljs-number">1</span>) {
+      state = <span class="hljs-string">'frost'</span>
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (classes.indexOf(<span class="hljs-string">'active-3'</span>) !== -<span class="hljs-number">1</span>) {
+      state = <span class="hljs-string">'off'</span>
+    }
+    trumpetParser.heat[temp.heatIds.shift()] = {<span class="hljs-string">'name'</span>: temp.heatNames.shift(), <span class="hljs-string">'state'</span>: state}
+  })) <span class="hljs-comment">// To retrieve state value</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>End of parsing, no need to go further</p></div></div><div class="code"><div class="wrapper">  trumpetParser.selectAll(<span class="hljs-string">'footer'</span>, () =&gt; {
     wrapperApi.persistentStates.status.push(trumpetParser.status)
+    wrapperApi.persistentStates.scenarii.push(trumpetParser.scenarii)</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>wrapperApi.persistentStates.domotic.push(trumpetParser.domotic) // No dynamic behavior, so should not be required...</p></div></div><div class="code"><div class="wrapper">    wrapperApi.persistentStates.data.push(trumpetParser.data)
+    wrapperApi.persistentStates.heat.push(trumpetParser.heat)
     trumpetParser.end()
   })
 

@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang="en"><head><title>server/controller-hapi-v1</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="server/controller-hapi-v1"><meta name="groc-project-path" content="server/controller-hapi-v1.js"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">server/controller-hapi-v1.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-pi">'use strict'</span>
+
+<span class="hljs-keyword">import</span> prompter <span class="hljs-keyword">from</span> <span class="hljs-string">'./credentials-prompter'</span>
+<span class="hljs-keyword">import</span> Api <span class="hljs-keyword">from</span> <span class="hljs-string">'../lib/index'</span>
+<span class="hljs-keyword">import</span> routes <span class="hljs-keyword">from</span> <span class="hljs-string">'./routes-v1'</span>
+<span class="hljs-keyword">import</span> config <span class="hljs-keyword">from</span> <span class="hljs-string">'config'</span>
+
+exports.register = function (server, options, next) {</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>This const is instantiated once at init,
+to keep the same instance of this object for all requests.
+This is mandatory to share authenticated session.
+But from this point, we must always ensure an instance will handle calls for only one Myfox account!</p></div></div><div class="code"><div class="wrapper">  <span class="hljs-keyword">const</span> api = Api(config.get(<span class="hljs-string">'myfox-wrapper-api.server.myfox'</span>), prompter())</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Routes</p></div></div><div class="code"><div class="wrapper">  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> routeName <span class="hljs-keyword">in</span> routes) {
+    <span class="hljs-keyword">let</span> routeParams = routes[routeName]
+    <span class="hljs-keyword">let</span> preHandlers = []</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>pre-action middleware</p></div></div><div class="code"><div class="wrapper">    <span class="hljs-keyword">if</span> (routeParams.pre !== <span class="hljs-literal">null</span> &amp;&amp; routeParams.pre !== <span class="hljs-literal">undefined</span>) {
+      <span class="hljs-keyword">const</span> preHandler = routeParams.pre.hapi || routeParams.pre
+      preHandlers.push({method: (request, reply) =&gt; {
+        <span class="hljs-keyword">return</span> preHandler(request, reply, api, () =&gt; { reply.continue() })
+      }})
+    }
+
+    <span class="hljs-keyword">if</span> (routeParams.get !== <span class="hljs-literal">null</span> &amp;&amp; routeParams.get !== <span class="hljs-literal">undefined</span>) {
+      server.route([{
+        path: routeParams.path.hapi || routeParams.path,
+        method: <span class="hljs-string">'get'</span>,
+        config: {
+          pre: preHandlers,
+          handler: (request, reply) =&gt; {
+            (routeParams.get.hapi || routeParams.get)(request, reply, api)
+          }
+        }
+      }])
+    }
+    <span class="hljs-keyword">if</span> (routeParams.post !== <span class="hljs-literal">null</span> &amp;&amp; routeParams.post !== <span class="hljs-literal">undefined</span>) {
+      server.route([{
+        path: routeParams.path.hapi || routeParams.path,
+        method: <span class="hljs-string">'post'</span>,
+        config: {
+          pre: preHandlers,
+          handler: (request, reply) =&gt; {
+            (routeParams.post.hapi || routeParams.post)(request, reply, api)
+          }
+        }
+      }])
+    }
+    <span class="hljs-keyword">if</span> (routeParams.patch !== <span class="hljs-literal">null</span> &amp;&amp; routeParams.patch !== <span class="hljs-literal">undefined</span>) {
+      server.route([{
+        path: routeParams.path.hapi || routeParams.path,
+        method: <span class="hljs-string">'patch'</span>,
+        config: {
+          pre: preHandlers,
+          handler: (request, reply) =&gt; {
+            (routeParams.patch.hapi || routeParams.patch)(request, reply, api)
+          }
+        }
+      }])
+    }
+    <span class="hljs-keyword">if</span> (routeParams.put !== <span class="hljs-literal">null</span> &amp;&amp; routeParams.put !== <span class="hljs-literal">undefined</span>) {
+      server.route([{
+        path: routeParams.path.hapi || routeParams.path,
+        method: <span class="hljs-string">'put'</span>,
+        config: {
+          pre: preHandlers,
+          handler: (request, reply) =&gt; {
+            (routeParams.put.hapi || routeParams.put)(request, reply, api)
+          }
+        }
+      }])
+    }
+    <span class="hljs-keyword">if</span> (routeParams.delete !== <span class="hljs-literal">null</span> &amp;&amp; routeParams.delete !== <span class="hljs-literal">undefined</span>) {
+      server.route([{
+        path: routeParams.path.hapi || routeParams.path,
+        method: <span class="hljs-string">'delete'</span>,
+        config: {
+          pre: preHandlers,
+          handler: (request, reply) =&gt; {
+            (routeParams.delete.hapi || routeParams.delete)(request, reply, api)
+          }
+        }
+      }])
+    }
+  }</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Tea pot test route. To keep for test purpose.</p></div></div><div class="code"><div class="wrapper">  server.route([{
+    path: <span class="hljs-string">'/'</span>,
+    method: <span class="hljs-string">'get'</span>,
+    config: {
+      handler: (request, reply) =&gt; {
+        reply(<span class="hljs-string">'Hello world!'</span>).code(<span class="hljs-number">418</span>)
+      }
+    }
+  }])
+
+  next()
+}
+
+exports.register.attributes = {
+  name: <span class="hljs-string">'controller-hapi-v1'</span>,
+  version: <span class="hljs-string">'1.0.0'</span>
+}</div></div></div></div></body></html>
