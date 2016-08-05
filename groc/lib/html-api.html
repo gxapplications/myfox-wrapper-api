@@ -40,9 +40,10 @@ This overrides the default constructor to add HTML parameters to the configurati
 </ul>
 <p><strong>Returns a MyfoxWrapperApiCommon</strong><br/>(The instance to use as wrapper or as fallback wrapper inside another one)</p></div></div><div class="code"><div class="wrapper">  constructor (options, fallbackApi, accountCredentials) {
     <span class="hljs-keyword">super</span>(options, fallbackApi, accountCredentials)
-    <span class="hljs-keyword">try</span> {</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Success only in server mode, or for test env.</p></div></div><div class="code"><div class="wrapper">      <span class="hljs-keyword">const</span> defaultConfig = {<span class="hljs-string">'html'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'../config/default.json'</span>)[<span class="hljs-string">'myfox-wrapper-api'</span>][<span class="hljs-string">'html'</span>]}
+    <span class="hljs-keyword">try</span> {</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Success only if used as a dependency.</p></div></div><div class="code"><div class="wrapper">      <span class="hljs-keyword">const</span> defaultConfig = {<span class="hljs-string">'html'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'../config/default.json'</span>)[<span class="hljs-string">'myfox-wrapper-api'</span>][<span class="hljs-string">'html'</span>]}
       config.util.setModuleDefaults(<span class="hljs-string">'myfox-wrapper-api'</span>, defaultConfig)
-    } <span class="hljs-keyword">catch</span> (err) {</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>If used as a dependency, will fail. Settings must then be on the dependent part side.</p></div></div><div class="code"><div class="wrapper">    }
+    } <span class="hljs-keyword">catch</span> (err) {
+    }
   }</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Call Myfox authentication process (login form filled in POST method).
 Do not use this method directly to login to Myfox services: the auth will not be stored.</p>
 <p>Parameters:</p>
@@ -189,9 +190,11 @@ The possible action depends on the action type (on demand or not).</p>
 </li>
 <li><p><strong>callback must be a function.</strong><br/>(The function to call with all data, depending on the step of the action macro: in the simplest case (one action, no delay), then the result of the call to Myfox. In other cases, an ID to follow with a macro listener The callback parameters must follows the same signature as a macro listener (see addMacroListener() method))</p>
 </li>
+<li><p><strong>macroId is optional and must be a string.</strong><br/>(Optional ID to keep track of the action if multiple steps or delay is provided.)</p>
+</li>
 <li><p><strong>info must be an Array of Objects.</strong><br/>([]] The next actions informations, like the first param)</p>
 </li>
-</ul></div></div><div class="code"><div class="wrapper">  callScenarioAction ({id, action, delay = <span class="hljs-number">0</span>}, callback, ...nextActions) {</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Validation of parameters</p></div></div><div class="code"><div class="wrapper">    <span class="hljs-keyword">const</span> validator = Joi.object({
+</ul></div></div><div class="code"><div class="wrapper">  callScenarioAction ({id, action, delay = <span class="hljs-number">0</span>}, callback, macroId = <span class="hljs-literal">undefined</span>, ...nextActions) {</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Validation of parameters</p></div></div><div class="code"><div class="wrapper">    <span class="hljs-keyword">const</span> validator = Joi.object({
       id: Joi.number().integer().required().positive(),
       action: Joi.string().required().valid([<span class="hljs-string">'on'</span>, <span class="hljs-string">'off'</span>, <span class="hljs-string">'play'</span>]),
       delay: Joi.number().integer().min(<span class="hljs-number">0</span>).optional().default(<span class="hljs-number">0</span>)
@@ -200,7 +203,7 @@ The possible action depends on the action type (on demand or not).</p>
     Joi.assert({id, action, delay}, validator)</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>If nextActions not empty, then check structure</p></div></div><div class="code"><div class="wrapper">    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> nextAction <span class="hljs-keyword">of</span> nextActions) {
       Joi.assert(nextAction, validator)
     }</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>If there is a delay, or nextActions, then an ID should be returned to allow a listener to be registered.</p></div></div><div class="code"><div class="wrapper">    <span class="hljs-keyword">if</span> (delay &gt; <span class="hljs-number">0</span> || nextActions.length &gt; <span class="hljs-number">0</span>) {
-      <span class="hljs-keyword">this</span>._callScenarioAction({id, action, delay}, callback, crypto.randomBytes(<span class="hljs-number">20</span>).toString(<span class="hljs-string">'hex'</span>), ...nextActions)
+      <span class="hljs-keyword">this</span>._callScenarioAction({id, action, delay}, callback, macroId || crypto.randomBytes(<span class="hljs-number">20</span>).toString(<span class="hljs-string">'hex'</span>), ...nextActions)
     } <span class="hljs-keyword">else</span> {
       <span class="hljs-keyword">this</span>._callScenarioAction({id, action, delay: <span class="hljs-number">0</span>}, callback)
     }
