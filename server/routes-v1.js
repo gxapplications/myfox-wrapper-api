@@ -55,7 +55,7 @@ const routes = {
             return res.status(err.status).send(err.toString())
           }
           res.send(result)
-        }, ...nextCalls)
+        }, undefined, ...nextCalls)
       },
       'hapi': (req, reply, api) => {
         let nextCalls = req.body['next_calls']
@@ -64,7 +64,7 @@ const routes = {
             return reply(err.toString()).code(err.status)
           }
           reply(result)
-        }, ...nextCalls)
+        }, undefined, ...nextCalls)
       }
     }
   }
