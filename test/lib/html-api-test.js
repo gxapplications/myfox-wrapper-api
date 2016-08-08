@@ -106,7 +106,9 @@ describe('HTML-api library', () => {
 
         setTimeout(() => {
           sinon.assert.calledTwice(api._callScenarioAction)
+          sinon.assert.alwaysCalledOn(api._callScenarioAction, api)
           sinon.assert.calledOnce(api.notifyMacroListeners)
+          sinon.assert.calledOn(api.notifyMacroListeners, api)
           sinon.assert.calledOnce(api.callApi)
           sinon.assert.calledWithMatch(api.callApi, /widget\/\{siteId\}\/scenario\/play\/456\?_=/, /GET/)
           done()
