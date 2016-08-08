@@ -55,7 +55,6 @@ describe('HTML-api library', () => {
 
       expect(api.callScenarioAction.bind(api, {id: 456, bad: 'key', falsy: 'argument'}, callback)).to.throw(Error, /missing/)
       expect(api.callScenarioAction.bind(api, {id: 456, action: 'bad action', delay: 0}, callback)).to.throw(Error, /must be one of/)
-      expect(api.callScenarioAction.bind(api, {id: 456, action: 'on', delay: 'after midnight'}, callback)).to.throw(Error, /must be a number/)
       expect(api.callScenarioAction.bind(api, {id: 'id-not-integer', action: 'off'}, callback)).to.throw(Error, /must be a number/)
       expect(api.callScenarioAction.bind(api, {id: 42, action: 'play', delay: 0}, callback, '42Z', {id: 42, action: 'fifi', delay: 0})).to.throw(Error, /must be one of/)
 

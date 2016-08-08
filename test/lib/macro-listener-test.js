@@ -61,7 +61,7 @@ describe('Macro listener behavior', () => {
         this.api.notifyMacroListeners(null, {id: 56789, data: {test: 'hello!'}, state: 'finished', remaining: 0})
         expect(this.timestamps[1]).to.be.defined
 
-        expect(this.timestamps[1].getTime()).to.be.above(this.timestamps[0].getTime())
+        expect(this.timestamps[1]).to.be.above(this.timestamps[0])
         done()
       }, 20)
     })
