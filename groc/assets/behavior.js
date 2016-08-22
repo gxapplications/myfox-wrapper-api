@@ -193,6 +193,26 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                   "foldPrefix": "^",
                   "name": "JavaScript"
                 },
+                "sourcePath": "/home/xavier/git/tests/myfox-wrapper-api/lib/html-parsers/domotic-action.js",
+                "projectPath": "lib/html-parsers/domotic-action.js",
+                "targetPath": "lib/html-parsers/domotic-action",
+                "pageTitle": "lib/html-parsers/domotic-action",
+                "title": "domotic-action"
+              },
+              "depth": 3,
+              "outline": []
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".js"],
+                  "pygmentsLexer": "javascript",
+                  "multiLineComment": ["/*", "*", "*/"],
+                  "singleLineComment": ["//"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "JavaScript"
+                },
                 "sourcePath": "/home/xavier/git/tests/myfox-wrapper-api/lib/html-parsers/false-error-codes.js",
                 "projectPath": "lib/html-parsers/false-error-codes.js",
                 "targetPath": "lib/html-parsers/false-error-codes",

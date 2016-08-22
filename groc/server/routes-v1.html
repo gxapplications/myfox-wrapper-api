@@ -61,6 +61,32 @@
         }, <span class="hljs-literal">undefined</span>, ...nextCalls)
       }
     }
+  },
+  <span class="hljs-string">'domotic_action'</span>: {
+    <span class="hljs-string">'path'</span>: {
+      <span class="hljs-string">'express'</span>: <span class="hljs-string">'/domotic/:id/:action/:delay?'</span>,
+      <span class="hljs-string">'hapi'</span>: <span class="hljs-string">'/domotic/{id}/{action}/{delay?}'</span>
+    },
+    <span class="hljs-string">'post'</span>: {
+      <span class="hljs-string">'express'</span>: (req, res, api) =&gt; {
+        <span class="hljs-keyword">let</span> nextCalls = req.body[<span class="hljs-string">'next_calls'</span>]
+        api.callDomoticAction({id: req.params.id, action: req.params.action, delay: req.params.delay | <span class="hljs-number">0</span>}, (err, result) =&gt; {
+          <span class="hljs-keyword">if</span> (err) {
+            <span class="hljs-keyword">return</span> res.status(err.status).send(err.toString())
+          }
+          res.send(result)
+        }, <span class="hljs-literal">undefined</span>, ...nextCalls)
+      },
+      <span class="hljs-string">'hapi'</span>: (req, reply, api) =&gt; {
+        <span class="hljs-keyword">let</span> nextCalls = req.body[<span class="hljs-string">'next_calls'</span>]
+        api.callDomoticAction({id: req.params.id, action: req.params.action, delay: req.params.delay | <span class="hljs-number">0</span>}, (err, result) =&gt; {
+          <span class="hljs-keyword">if</span> (err) {
+            <span class="hljs-keyword">return</span> reply(err.toString()).code(err.status)
+          }
+          reply(result)
+        }, <span class="hljs-literal">undefined</span>, ...nextCalls)
+      }
+    }
   }
 }
 

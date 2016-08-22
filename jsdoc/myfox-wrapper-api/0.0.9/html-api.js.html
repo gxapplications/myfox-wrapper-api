@@ -39,6 +39,7 @@ import { httpsRequest } from './html-parsers'
 // Html parsers
 import homeParser from './html-parsers/home'
 import scenarioActionParser from './html-parsers/scenario-action'
+import domoticActionParser from './html-parsers/domotic-action'
 
 class MyfoxWrapperApiHtml extends MyfoxWrapperApiCommon {
 
@@ -255,8 +256,9 @@ class MyfoxWrapperApiHtml extends MyfoxWrapperApiCommon {
     // If scheduled, cannot return the state in the callback: will return an ID to register a listener.
     if (delay > 0) {
       // Delayed case: returns directly with an ID, and schedules calling itself for later.
-      setTimeout(() => {
-        this._callScenarioAction({id, action, delat: 0}, super.notifyMacroListeners, macroId, ...nextActions)
+      const that = this
+      setTimeout(function () {
+        that._callScenarioAction({id, action, delay: 0}, that.notifyMacroListeners.bind(that), macroId, ...nextActions)
       }, delay)
       callback(null, { id: macroId, state: 'delayed', remaining: nextActions.length })
     } else {
@@ -264,7 +266,7 @@ class MyfoxWrapperApiHtml extends MyfoxWrapperApiCommon {
       if (action === 'play') {
         url += '?_=' + (new Date()).getTime()
       }
-      super.callApi(url, (action === 'play') ? 'GET' : 'POST', scenarioActionParser(this), {}, {}, {})
+      this.callApi(url, (action === 'play') ? 'GET' : 'POST', scenarioActionParser(this), {}, {}, {})
         .then((parser) => {
           callback(null, {
             id: macroId,
@@ -274,7 +276,88 @@ class MyfoxWrapperApiHtml extends MyfoxWrapperApiCommon {
           })
           if (nextActions.length > 0) {
             let nextAction = nextActions.shift()
-            this._callScenarioAction(nextAction, super.notifyMacroListeners, macroId, ...nextActions)
+            this._callScenarioAction(nextAction, this.notifyMacroListeners.bind(this), macroId, ...nextActions)
+          }
+        })
+        .catch((err) => {
+          console.error(err)
+          callback(err)
+        })
+    }
+  }
+
+  /**
+   * Calls domotic switch action (/widget/{siteId}/domotic/{action}/{id}) to turn on/off a domotic switch.
+   *
+   * @param  {Object}   [info]       Information to trigger the event
+   * @param  {integer}  info.id      The unique ID of the domotic switch to play action against
+   * @param  {string}   info.action  The action to trigger. Can be on or off
+   * @param  {integer}  info.delay   The delay (optional) to wait before triggering the action. If > 0 then the method will callback just after scheduling of the action
+   * @param  {function} callback     The function to call with all data, depending on the step of the action macro: in the simplest case (one action, no delay),
+   *                                 then the result of the call to Myfox. In other cases, an ID to follow with a macro listener
+   *                                 The callback parameters must follows the same signature as a macro listener (see addMacroListener() method)
+   * @param  {string}   [macroId]    Optional ID to keep track of the action if multiple steps or delay is provided.
+   * @param  {Object[]} [info[]]     The next actions informations, like the first param
+   */
+  callDomoticAction ({id, action, delay = 0}, callback, macroId = undefined, ...nextActions) {
+    // Validation of parameters
+    const validator = Joi.object({
+      id: Joi.number().integer().required().positive(),
+      action: Joi.string().required().valid(['on', 'off']),
+      delay: Joi.number().integer().min(0).optional().default(0)
+    })
+
+    Joi.assert({id, action, delay}, validator)
+    // If nextActions not empty, then check structure
+    for (var nextAction of nextActions) {
+      Joi.assert(nextAction, validator)
+    }
+
+    // If there is a delay, or nextActions, then an ID should be returned to allow a listener to be registered.
+    if (delay > 0 || nextActions.length > 0) {
+      this._callDomoticAction({id, action, delay}, callback, macroId || crypto.randomBytes(20).toString('hex'), ...nextActions)
+    } else {
+      this._callDomoticAction({id, action, delay: 0}, callback)
+    }
+  }
+
+  /**
+   * Subcall of callDomoticAction() to allow recursive call, and to keep unique macro ID over all the macro steps.
+   *
+   * @private
+   * @param  {Object}   [info]       Information to trigger the event
+   * @param  {integer}  info.id      The unique ID of the domotic switch to play action against
+   * @param  {string}   info.action  The action to trigger. Can be on or off
+   * @param  {integer}  info.delay   The delay (optional) to wait before triggering the action. If > 0 then the method will callback just after scheduling of the action
+   * @param  {function} callback     The function to call with all data, depending on the step of the action macro: in the simplest case (one action, no delay),
+   *                                 then the result of the call to Myfox. In other cases, an ID to follow with a macro listener
+   *                                 The callback parameters must follows the same signature as a macro listener (see addMacroListener() method)
+   * @param  {string}   [macroId]    Optional ID to keep track of the action if multiple steps or delay is provided.
+   * @param  {Object[]} [info[]]     The next actions informations, like the first param
+   */
+  _callDomoticAction ({id, action, delay = 0}, callback, macroId = null, ...nextActions) {
+    // Call Api for first action (or schedule it if delayed), THEN schedule next.
+    // If scheduled, cannot return the state in the callback: will return an ID to register a listener.
+    if (delay > 0) {
+      // Delayed case: returns directly with an ID, and schedules calling itself for later.
+      const that = this
+      setTimeout(function () {
+        that._callDomoticAction({id, action, delay: 0}, that.notifyMacroListeners.bind(that), macroId, ...nextActions)
+      }, delay)
+      callback(null, { id: macroId, state: 'delayed', remaining: nextActions.length })
+    } else {
+      let url = config.get('myfox-wrapper-api.html.myfox.paths.domotic_action').replace('{action}', action).replace('{id}', id)
+      this.callApi(url, 'POST', domoticActionParser(this), {}, {}, {})
+        .then((parser) => {
+          callback(null, {
+            id: macroId,
+            data: parser.data,
+            state: (nextActions.length > 0) ? 'progress' : 'finished',
+            remaining: nextActions.length
+          })
+          if (nextActions.length > 0) {
+            let nextAction = nextActions.shift()
+            this._callDomoticAction(nextAction, this.notifyMacroListeners.bind(this), macroId, ...nextActions)
           }
         })
         .catch((err) => {
@@ -305,7 +388,7 @@ export default function myfoxWrapperApiHtml (options, fallbackApi, accountCreden
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Aug 05 2016 17:57:15 GMT+0200 (CEST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Aug 22 2016 13:58:19 GMT+0200 (CEST)
 </footer>
 
 <script> prettyPrint(); </script>

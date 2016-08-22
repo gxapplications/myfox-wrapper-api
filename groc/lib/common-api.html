@@ -266,7 +266,7 @@ If the err parameter is not null, the the listeners are not notified. The err wi
     <span class="hljs-keyword">if</span> (err) {
       <span class="hljs-keyword">return</span> <span class="hljs-built_in">console</span>.error(err)
     }
-    <span class="hljs-keyword">let</span> now = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>()
+    <span class="hljs-keyword">let</span> now = <span class="hljs-built_in">Date</span>.now()
     <span class="hljs-keyword">this</span>.macroListeners.forEach((listener) =&gt; {
       <span class="hljs-keyword">if</span> (!listener(id, data, state, remaining, now)) {
         <span class="hljs-keyword">this</span>.removeMacroListener(listener)
@@ -310,6 +310,27 @@ The possible action depends on the action type (on demand or not).</p>
 </li>
 </ul></div></div><div class="code"><div class="wrapper">  callScenarioAction ({id, action, delay = <span class="hljs-number">0</span>}, callback, macroId = <span class="hljs-literal">undefined</span>, ...nextActions) {
     _notImplemented.bind(<span class="hljs-keyword">this</span>)(<span class="hljs-string">'callScenarioAction'</span>, callback)
+  }</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Calls domotic switch action (/widget/{siteId}/domotic/{action}/{id}) to turn on/off a domotic switch.</p>
+<p>Parameters:</p>
+<ul>
+<li><p><strong>info is optional and must be an Object.</strong><br/>(Information to trigger the event)</p>
+<ul>
+<li><p><strong>info.id must be an integer.</strong><br/>(The unique ID of the domotic switch to play action against)</p>
+</li>
+<li><p><strong>info.action must be a string.</strong><br/>(The action to trigger. Can be on or off)</p>
+</li>
+<li><p><strong>info.delay must be an integer.</strong><br/>(The delay (optional) to wait before triggering the action. If &gt; 0 then the method will callback just after scheduling of the action)</p>
+</li>
+</ul>
+</li>
+<li><p><strong>callback must be a function.</strong><br/>(The function to call with all data, depending on the step of the action macro: in the simplest case (one action, no delay), then the result of the call to Myfox. In other cases, an ID to follow with a macro listener The callback parameters must follows the same signature as a macro listener (see addMacroListener() method))</p>
+</li>
+<li><p><strong>macroId is optional and must be a string.</strong><br/>(Optional ID to keep track of the action if multiple steps or delay is provided.)</p>
+</li>
+<li><p><strong>info must be an Array of Objects.</strong><br/>([]] The next actions informations, like the first param)</p>
+</li>
+</ul></div></div><div class="code"><div class="wrapper">  callDomoticAction ({id, action, delay = <span class="hljs-number">0</span>}, callback, macroId = <span class="hljs-literal">undefined</span>, ...nextActions) {
+    _notImplemented.bind(<span class="hljs-keyword">this</span>)(<span class="hljs-string">'callDomoticAction'</span>, callback)
   }
 }
 
