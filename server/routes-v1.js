@@ -67,6 +67,32 @@ const routes = {
         }, undefined, ...nextCalls)
       }
     }
+  },
+  'domotic_action': {
+    'path': {
+      'express': '/domotic/:id/:action/:delay?',
+      'hapi': '/domotic/{id}/{action}/{delay?}'
+    },
+    'post': {
+      'express': (req, res, api) => {
+        let nextCalls = req.body['next_calls']
+        api.callDomoticAction({id: req.params.id, action: req.params.action, delay: req.params.delay | 0}, (err, result) => {
+          if (err) {
+            return res.status(err.status).send(err.toString())
+          }
+          res.send(result)
+        }, undefined, ...nextCalls)
+      },
+      'hapi': (req, reply, api) => {
+        let nextCalls = req.body['next_calls']
+        api.callDomoticAction({id: req.params.id, action: req.params.action, delay: req.params.delay | 0}, (err, result) => {
+          if (err) {
+            return reply(err.toString()).code(err.status)
+          }
+          reply(result)
+        }, undefined, ...nextCalls)
+      }
+    }
   }
 }
 

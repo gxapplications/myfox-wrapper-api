@@ -158,5 +158,148 @@ describe('HTML-api library', () => {
       api._callScenarioAction({id: 456, action: 'play', delay: 0}, callback)
     })
   })
-})
 
+  describe('callDomoticAction isolated', () => {
+    let api = null
+
+    beforeEach(() => {
+      api = HtmlApi(myfoxSiteIds)
+      sinon.stub(api, '_callDomoticAction')
+    })
+    afterEach(() => {
+      api._callDomoticAction.restore()
+    })
+
+    it('to test subcall for very simple case (1 step, no delay by default)', (done) => {
+      const callback = () => {
+        sinon.assert.calledOnce(api._callDomoticAction)
+        sinon.assert.calledWithExactly(api._callDomoticAction, {id: 456, action: 'on', delay: 0}, callback)
+        done()
+      }
+      api._callDomoticAction.callsArg(1) // the stub must call the callback just above in return
+      api.callDomoticAction({id: 456, action: 'on'}, callback)
+    })
+
+    it('to test subcall for delayed case (1 step, with delay)', (done) => {
+      const callback = () => {
+        sinon.assert.calledOnce(api._callDomoticAction)
+        sinon.assert.calledWith(api._callDomoticAction, {id: 456, action: 'off', delay: 20}, callback)
+        done()
+      }
+      api._callDomoticAction.callsArg(1) // the stub must call the callback just above in return
+      api.callDomoticAction({id: 456, action: 'off', delay: 20}, callback)
+    })
+
+    it('to test wrong input formats', (done) => {
+      const callback = () => {
+        sinon.assert.notCalled(api._callDomoticAction)
+        done('Callback should not be called')
+      }
+      api._callDomoticAction.callsArg(1) // the stub must call the callback just above in return. But the stub should not be called...
+
+      expect(api.callDomoticAction.bind(api, {id: 456, bad: 'key', falsy: 'argument'}, callback)).to.throw(Error, /missing/)
+      expect(api.callDomoticAction.bind(api, {id: 456, action: 'play', delay: 0}, callback)).to.throw(Error, /must be one of/)
+      expect(api.callDomoticAction.bind(api, {id: 'id-not-integer', action: 'off'}, callback)).to.throw(Error, /must be a number/)
+      expect(api.callDomoticAction.bind(api, {id: 42, action: 'on', delay: 0}, callback, '42Z', {id: 42, action: 'play', delay: 0})).to.throw(Error, /must be one of/)
+
+      done()
+    })
+  })
+
+  describe('_callDomoticAction subcall isolated', () => {
+    let api = null
+
+    beforeEach(() => {
+      api = HtmlApi(myfoxSiteIds)
+      sinon.stub(CommonApi.prototype, 'callApi') // Because the method is in the parent class
+      sinon.stub(CommonApi.prototype, 'notifyMacroListeners') // Because the method is in the parent class
+      sinon.spy(api, '_callDomoticAction') // and not here...
+    })
+    afterEach(() => {
+      CommonApi.prototype.callApi.restore()
+      CommonApi.prototype.notifyMacroListeners.restore()
+      api._callDomoticAction.restore()
+    })
+
+    it('to test simple case (1 step, no delay)', (done) => {
+      api.callApi.returns(Promise.resolve({data: 'test'}))
+
+      const callback = (a, b) => {
+        sinon.assert.notCalled(api.notifyMacroListeners)
+        sinon.assert.calledOnce(api.callApi)
+        sinon.assert.calledWithMatch(api.callApi, /widget\/\{siteId\}\/domotic\/on\/456/, /POST/)
+
+        expect(a).to.be.null
+        // The id is not domotic ID, but the macro ID! And null because no need to have one, if just 1 step without delay.
+        expect(b).to.deep.equal({id: null, data: 'test', state: 'finished', remaining: 0})
+        done()
+      }
+
+      api._callDomoticAction({id: 456, action: 'on', delay: 0}, callback)
+    })
+
+    it('to test delayed case (1 step, with delay)', (done) => {
+      api.callApi.returns(Promise.resolve({data: 'test'}))
+
+      const callback = (a, b) => {
+        expect(a).to.be.null
+        // The id is not scenario ID, but the macro ID!
+        expect(b).to.includes({state: 'delayed', remaining: 0})
+        expect(b.id).to.equal(918283)
+
+        setTimeout(() => {
+          sinon.assert.calledTwice(api._callDomoticAction)
+          sinon.assert.alwaysCalledOn(api._callDomoticAction, api)
+          sinon.assert.calledOnce(api.notifyMacroListeners)
+          sinon.assert.calledOn(api.notifyMacroListeners, api)
+          sinon.assert.calledOnce(api.callApi)
+          sinon.assert.calledWithMatch(api.callApi, /widget\/\{siteId\}\/domotic\/on\/456/, /POST/)
+          done()
+        }, 100)
+      }
+
+      api._callDomoticAction({id: 456, action: 'on', delay: 10}, callback, 918283)
+    })
+
+    it('to test complex macro (many steps, delays, ...)', (done) => {
+      api.callApi.returns(Promise.resolve({data: 'test'}))
+
+      const callback = (a, b) => {
+        expect(a).to.be.null
+        // The id is not scenario ID, but the macro ID!
+        expect(b).to.includes({state: 'delayed', remaining: 2})
+        expect(b.id).to.equal(54321)
+
+        setTimeout(() => {
+          sinon.assert.callCount(api._callDomoticAction, 6)
+          sinon.assert.callCount(api.notifyMacroListeners, 5)
+          sinon.assert.callCount(api.callApi, 3)
+          done()
+        }, 130)
+      }
+
+      api._callDomoticAction(
+        {id: 456, action: 'on', delay: 10},
+        callback,
+        54321,
+        {id: 123, action: 'on', delay: 20},
+        {id: 789, action: 'off', delay: 30}
+      )
+    })
+
+    it('to test error during Myfox subcall', (done) => {
+      api.callApi.returns(Promise.reject(new Error('error test')))
+
+      const callback = (a, b) => {
+        sinon.assert.notCalled(api.notifyMacroListeners)
+        sinon.assert.calledOnce(api.callApi)
+        sinon.assert.calledWithMatch(api.callApi, /widget\/\{siteId\}\/domotic\/on\/456/, /POST/)
+
+        expect(a).to.be.not.null
+        done()
+      }
+
+      api._callDomoticAction({id: 456, action: 'on', delay: 0}, callback)
+    })
+  })
+})

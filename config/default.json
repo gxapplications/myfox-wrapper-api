@@ -36,7 +36,8 @@
         "paths": {
           "login": "/login",
           "home": "/home/{siteId}",
-          "scenario_action": "/widget/{siteId}/scenario/{action}/{id}"
+          "scenario_action": "/widget/{siteId}/scenario/{action}/{id}",
+          "domotic_action": "/widget/{siteId}/domotic/{action}/{id}"
         }
       }
     }
