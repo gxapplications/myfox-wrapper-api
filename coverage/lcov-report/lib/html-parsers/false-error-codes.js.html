@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for lib/html-parsers/false-error-codes.js</title>
+    <title>Code coverage report for lib\html-parsers\false-error-codes.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">23.81% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/2</span>
+        <span class='fraction'>5/21</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>0/4</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">23.81% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/2</span>
+        <span class='fraction'>5/21</span>
       </div>
     </div>
   </div>
@@ -81,36 +81,36 @@
 36
 37</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -123,30 +123,30 @@ import JsonStream from 'JSONStream'
 &nbsp;
 // Myfox page not found is a code 200... must fix it!
 const notFound200 = <span class="fstat-no" title="function not covered" >function () {</span>
-  const parser = trumpet()
-  parser.select('head title', trumpetInnerText(<span class="fstat-no" title="function not covered" >(data) =&gt; {</span>
-    parser.status = 200
-<span class="cstat-no" title="statement not covered" >    if (data.indexOf('Page not found') !== -1) {</span>
-      parser.status = 404
-      const error = new Error('Page not found case returned by Myfox.')
-      error.status = 404
-      return parser.emit('error', error)
+<span class="cstat-no" title="statement not covered" >  const parser = trumpet()</span>
+<span class="cstat-no" title="statement not covered" >  parser.select('head title', trumpetInnerText(<span class="fstat-no" title="function not covered" >(data) =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >    parser.status = 200</span>
+<span class="cstat-no" title="statement not covered" ></span>    if (data.indexOf('Page not found') !== -1) {
+<span class="cstat-no" title="statement not covered" >      parser.status = 404</span>
+<span class="cstat-no" title="statement not covered" >      const error = new Error('Page not found case returned by Myfox.')</span>
+<span class="cstat-no" title="statement not covered" >      error.status = 404</span>
+<span class="cstat-no" title="statement not covered" >      return parser.emit('error', error)</span>
     }
   }))
-  return parser
+<span class="cstat-no" title="statement not covered" >  return parser</span>
 }
 &nbsp;
 // Myfox code KO is a code 200... must fix it and return error messages.
 const codeKo200 = <span class="fstat-no" title="function not covered" >function () {</span>
-  const parser = JsonStream.parse('code')
-  parser.on('data', <span class="fstat-no" title="function not covered" >(data) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    if (data === 'KO') {</span>
-      const error = new Error('Code KO returned by Myfox.')
-      error.status = 400
-      return parser.emit('error', error)
+<span class="cstat-no" title="statement not covered" >  const parser = JsonStream.parse('code')</span>
+<span class="cstat-no" title="statement not covered" >  parser.on('data', <span class="fstat-no" title="function not covered" >(data) =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" ></span>    if (data === 'KO') {
+<span class="cstat-no" title="statement not covered" >      const error = new Error('Code KO returned by Myfox.')</span>
+<span class="cstat-no" title="statement not covered" >      error.status = 400</span>
+<span class="cstat-no" title="statement not covered" >      return parser.emit('error', error)</span>
     }
   })
-  return parser
+<span class="cstat-no" title="statement not covered" >  return parser</span>
 }
 &nbsp;
 export { notFound200 as notFound200 }
@@ -157,7 +157,7 @@ export { codeKo200 as codeKo200 }
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Aug 22 2016 13:58:25 GMT+0200 (CEST)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Aug 24 2016 18:41:17 GMT+0200 (Paris, Madrid (heure d’été))
 </div>
 </div>
 <script src="../../prettify.js"></script>

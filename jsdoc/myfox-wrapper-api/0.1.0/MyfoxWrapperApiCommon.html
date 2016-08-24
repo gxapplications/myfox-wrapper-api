@@ -30,8 +30,7 @@
     
         <h2>MyfoxWrapperApiCommon</h2>
         
-            <div class="class-description">Parent class that contains the method list to implement on the subclasses, and common methods.
-The constructor must never be squizzed even by a subclass: parameters validation is done here.</div>
+            <div class="class-description">Parent class that contains the method list to implement on the subclasses, and common methods.The constructor must never be squizzed even by a subclass: parameters validation is done here.</div>
         
     
 </header>
@@ -564,8 +563,7 @@ The constructor must never be squizzed even by a subclass: parameters validation
 
 
 <div class="description">
-    Account credentials format validator.
-See details on the documented constructor.
+    Account credentials format validator.See details on the documented constructor.
 </div>
 
 
@@ -647,8 +645,7 @@ See details on the documented constructor.
 
 
 <div class="description">
-    Default options merged into options given to the constructor.
-See details on the documented constructor.
+    Default options merged into options given to the constructor.See details on the documented constructor.
 </div>
 
 
@@ -730,8 +727,7 @@ See details on the documented constructor.
 
 
 <div class="description">
-    Options format validator.
-See details on the documented constructor.
+    Options format validator.See details on the documented constructor.
 </div>
 
 
@@ -813,16 +809,7 @@ See details on the documented constructor.
 
 
 <div class="description">
-    Adds a listener to any macro action that can occurs.
-The listener is a function, that will be called with the following arguments:
-- macro ID,
-- data: an object with the parser response, depending on the call made,
-- state: a label with the following allowed values: progress, finished,
-- remaining: The number of steps in the macro still in the queue. When remaining==0, then the state should be 'finished'.
-- timestamp: a timestamp (creation date of the event)
-Important: the listener must return a boolean:
-- true to be kept for the next event,
-- false if the listener must be unregistered after this event.
+    Adds a listener to any macro action that can occurs.The listener is a function, that will be called with the following arguments:- macro ID,- data: an object with the parser response, depending on the call made,- state: a label with the following allowed values: progress, finished,- remaining: The number of steps in the macro still in the queue. When remaining==0, then the state should be 'finished'.- timestamp: a timestamp (creation date of the event)Important: the listener must return a boolean:- true to be kept for the next event,- false if the listener must be unregistered after this event.
 </div>
 
 
@@ -975,12 +962,7 @@ Important: the listener must return a boolean:
 
 
 <div class="description">
-    Adds a listener to a persistent state, given a state label.
-The listener is a function, that will be called with the following arguments:
-- state label,
-- new state value,
-- previous state value,
-- a timestamp (creation date of the event)
+    Adds a listener to a persistent state, given a state label.The listener is a function, that will be called with the following arguments:- state label,- new state value,- previous state value,- a timestamp (creation date of the event)
 </div>
 
 
@@ -1156,8 +1138,7 @@ The listener is a function, that will be called with the following arguments:
 
 
 <div class="description">
-    Call Myfox authentication process.
-This method must be overridden in the extended api implementation.
+    Call Myfox authentication process.This method must be overridden in the extended api implementation.
 </div>
 
 
@@ -1311,9 +1292,7 @@ This method must be overridden in the extended api implementation.
 
 
 <div class="description">
-    Call Myfox interface with the action/query.
-This method must be overridden in the extended api implementation.
-Do not use this method directly to call Myfox services. Prefer use this.callApi(url, method, queryParams, headers, payload)
+    Call Myfox interface with the action/query.This method must be overridden in the extended api implementation.Do not use this method directly to call Myfox services. Prefer use this.callApi(url, method, queryParams, headers, payload)
 </div>
 
 
@@ -1818,9 +1797,7 @@ Do not use this method directly to call Myfox services. Prefer use this.callApi(
 
             
 
-            <td class="description last">The function to call with all data, depending on the step of the action macro: in the simplest case (one action, no delay),
-                                then the result of the call to Myfox. In other cases, an ID to follow with a macro listener
-                                The callback parameters must follows the same signature as a macro listener (see addMacroListener() method)</td>
+            <td class="description last">The function to call with all data, depending on the step of the action macro: in the simplest case (one action, no delay),                                then the result of the call to Myfox. In other cases, an ID to follow with a macro listener                                The callback parameters must follows the same signature as a macro listener (see addMacroListener() method)</td>
         </tr>
 
     
@@ -1965,16 +1942,7 @@ Do not use this method directly to call Myfox services. Prefer use this.callApi(
 
 
 <div class="description">
-    Calls main page (/home) to retrieve data like alarm level, box status, default site info, and other subparts.
-This call is made for HTML wrapper. Rest wrapper does not provides this call.
-
-You should use this call to test your connection. In the same time, this call will give you data to keep in cache:
-- scenarii list
-- domotic stuff list
-- heat list
-- data list
-Except the fact that some of these can change their value, the list of their IDs cannot change realy often,
-and in case of change, a persistantState listener can be called.
+    Calls main page (/home) to retrieve data like alarm level, box status, default site info, and other subparts.This call is made for HTML wrapper. Rest wrapper does not provides this call.You should use this call to test your connection. In the same time, this call will give you data to keep in cache:- scenarii list- domotic stuff list- heat list- data listExcept the fact that some of these can change their value, the list of their IDs cannot change realy often,and in case of change, a persistantState listener can be called.
 </div>
 
 
@@ -2105,8 +2073,7 @@ and in case of change, a persistantState listener can be called.
 
 
 <div class="description">
-    Calls scenario action (/widget/{siteId}/scenario/{action}/{id}) to turn on/off or to activate a scenario.
-The possible action depends on the action type (on demand or not).
+    Calls scenario action (/widget/{siteId}/scenario/{action}/{id}) to turn on/off or to activate a scenario.The possible action depends on the action type (on demand or not).
 </div>
 
 
@@ -2296,9 +2263,7 @@ The possible action depends on the action type (on demand or not).
 
             
 
-            <td class="description last">The function to call with all data, depending on the step of the action macro: in the simplest case (one action, no delay),
-                                then the result of the call to Myfox. In other cases, an ID to follow with a macro listener
-                                The callback parameters must follows the same signature as a macro listener (see addMacroListener() method)</td>
+            <td class="description last">The function to call with all data, depending on the step of the action macro: in the simplest case (one action, no delay),                                then the result of the call to Myfox. In other cases, an ID to follow with a macro listener                                The callback parameters must follows the same signature as a macro listener (see addMacroListener() method)</td>
         </tr>
 
     
@@ -2443,9 +2408,7 @@ The possible action depends on the action type (on demand or not).
 
 
 <div class="description">
-    Sends a notification to the macro listeners.
-Each listener is notified with the arguments described on the addMacroListener() documentation.
-If the err parameter is not null, the the listeners are not notified. The err will be logged instead.
+    Sends a notification to the macro listeners.Each listener is notified with the arguments described on the addMacroListener() documentation.If the err parameter is not null, the the listeners are not notified. The err will be logged instead.
 </div>
 
 
@@ -2737,8 +2700,7 @@ If the err parameter is not null, the the listeners are not notified. The err wi
 
 
 <div class="description">
-    Removes a listener if it is already registered.
-The listener is the function previously given to addMacroListener() method.
+    Removes a listener if it is already registered.The listener is the function previously given to addMacroListener() method.
 </div>
 
 
@@ -2901,7 +2863,7 @@ The listener is the function previously given to addMacroListener() method.
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Aug 22 2016 13:58:19 GMT+0200 (CEST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed Aug 24 2016 18:40:52 GMT+0200 (Paris, Madrid (heure d’été))
 </footer>
 
 <script> prettyPrint(); </script>

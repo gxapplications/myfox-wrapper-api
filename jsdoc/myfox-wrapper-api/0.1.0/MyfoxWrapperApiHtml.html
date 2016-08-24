@@ -47,8 +47,7 @@
 
 
 <div class="description">
-    Html version constructor.
-This overrides the default constructor to add HTML parameters to the configuration.
+    Html version constructor.This overrides the default constructor to add HTML parameters to the configuration.
 </div>
 
 
@@ -582,8 +581,7 @@ This overrides the default constructor to add HTML parameters to the configurati
 
 
 <div class="description">
-    Call Myfox authentication process (login form filled in POST method).
-Do not use this method directly to login to Myfox services: the auth will not be stored.
+    Call Myfox authentication process (login form filled in POST method).Do not use this method directly to login to Myfox services: the auth will not be stored.
 </div>
 
 
@@ -737,8 +735,7 @@ Do not use this method directly to login to Myfox services: the auth will not be
 
 
 <div class="description">
-    Call Myfox interface with the action/query.
-Do not use this method directly to call Myfox services. Prefer use this.callApi(url, method, queryParams, headers, payload).
+    Call Myfox interface with the action/query.Do not use this method directly to call Myfox services. Prefer use this.callApi(url, method, queryParams, headers, payload).
 </div>
 
 
@@ -1243,9 +1240,7 @@ Do not use this method directly to call Myfox services. Prefer use this.callApi(
 
             
 
-            <td class="description last">The function to call with all data, depending on the step of the action macro: in the simplest case (one action, no delay),
-                                then the result of the call to Myfox. In other cases, an ID to follow with a macro listener
-                                The callback parameters must follows the same signature as a macro listener (see addMacroListener() method)</td>
+            <td class="description last">The function to call with all data, depending on the step of the action macro: in the simplest case (one action, no delay),                                then the result of the call to Myfox. In other cases, an ID to follow with a macro listener                                The callback parameters must follows the same signature as a macro listener (see addMacroListener() method)</td>
         </tr>
 
     
@@ -1352,7 +1347,7 @@ Do not use this method directly to call Myfox services. Prefer use this.callApi(
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="html-api.js.html">html-api.js</a>, <a href="html-api.js.html#line274">line 274</a>
+        <a href="html-api.js.html">html-api.js</a>, <a href="html-api.js.html#line281">line 281</a>
     </li></ul></dd>
     
 
@@ -1390,16 +1385,7 @@ Do not use this method directly to call Myfox services. Prefer use this.callApi(
 
 
 <div class="description">
-    Calls main page (/home) to retrieve data like alarm level, box status, default site info, and other subparts.
-This call is made for HTML wrapper. Rest wrapper does not provides this call.
-
-You should use this call to test your connection. In the same time, this call will give you data to keep in cache:
-- scenarii list
-- domotic stuff list
-- heat list
-- data list
-Except the fact that some of these can change their value, the list of their IDs cannot change really often,
-and in case of change, a persistantState listener can be called.
+    Calls main page (/home) to retrieve data like alarm level, box status, default site info, and other subparts.This call is made for HTML wrapper. Rest wrapper does not provides this call.You should use this call to test your connection. In the same time, this call will give you data to keep in cache:- scenarii list- domotic stuff list- heat list- data listExcept the fact that some of these can change their value, the list of their IDs cannot change really often,and in case of change, a persistantState listener can be called.
 </div>
 
 
@@ -1530,8 +1516,7 @@ and in case of change, a persistantState listener can be called.
 
 
 <div class="description">
-    Calls scenario action (/widget/{siteId}/scenario/{action}/{id}) to turn on/off or to activate a scenario.
-The possible action depends on the action type (on demand or not).
+    Calls scenario action (/widget/{siteId}/scenario/{action}/{id}) to turn on/off or to activate a scenario.The possible action depends on the action type (on demand or not).
 </div>
 
 
@@ -1721,9 +1706,7 @@ The possible action depends on the action type (on demand or not).
 
             
 
-            <td class="description last">The function to call with all data, depending on the step of the action macro: in the simplest case (one action, no delay),
-                                then the result of the call to Myfox. In other cases, an ID to follow with a macro listener
-                                The callback parameters must follows the same signature as a macro listener (see addMacroListener() method)</td>
+            <td class="description last">The function to call with all data, depending on the step of the action macro: in the simplest case (one action, no delay),                                then the result of the call to Myfox. In other cases, an ID to follow with a macro listener                                The callback parameters must follows the same signature as a macro listener (see addMacroListener() method)</td>
         </tr>
 
     
@@ -1878,7 +1861,7 @@ The possible action depends on the action type (on demand or not).
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Aug 22 2016 13:58:19 GMT+0200 (CEST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed Aug 24 2016 18:40:52 GMT+0200 (Paris, Madrid (heure d’été))
 </footer>
 
 <script> prettyPrint(); </script>
