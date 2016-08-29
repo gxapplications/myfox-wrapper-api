@@ -37,7 +37,8 @@
           "login": "/login",
           "home": "/home/{siteId}",
           "scenario_action": "/widget/{siteId}/scenario/{action}/{id}",
-          "domotic_action": "/widget/{siteId}/domotic/{action}/{id}"
+          "domotic_action": "/widget/{siteId}/domotic/{action}/{id}",
+          "heating_action": "/widget/{siteId}/heating/{action}/{id}"
         }
       }
     }

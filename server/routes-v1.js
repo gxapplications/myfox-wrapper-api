@@ -93,6 +93,32 @@ const routes = {
         }, undefined, ...nextCalls)
       }
     }
+  },
+  'heating_action': {
+    'path': {
+      'express': '/heating/:id/:action/:delay?',
+      'hapi': '/heating/{id}/{action}/{delay?}'
+    },
+    'post': {
+      'express': (req, res, api) => {
+        let nextCalls = req.body['next_calls']
+        api.callHeatingAction({id: req.params.id, action: req.params.action, delay: req.params.delay | 0}, (err, result) => {
+          if (err) {
+            return res.status(err.status).send(err.toString())
+          }
+          res.send(result)
+        }, undefined, ...nextCalls)
+      },
+      'hapi': (req, reply, api) => {
+        let nextCalls = req.body['next_calls']
+        api.callHeatingAction({id: req.params.id, action: req.params.action, delay: req.params.delay | 0}, (err, result) => {
+          if (err) {
+            return reply(err.toString()).code(err.status)
+          }
+          reply(result)
+        }, undefined, ...nextCalls)
+      }
+    }
   }
 }
 
