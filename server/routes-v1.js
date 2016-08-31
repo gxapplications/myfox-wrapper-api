@@ -49,7 +49,7 @@ const routes = {
     },
     'post': {
       'express': (req, res, api) => {
-        let nextCalls = req.body['next_calls']
+        let nextCalls = req.body ? req.body['next_calls'] : []
         api.callScenarioAction({id: req.params.id, action: req.params.action, delay: req.params.delay | 0}, (err, result) => {
           if (err) {
             return res.status(err.status).send(err.toString())
@@ -58,7 +58,7 @@ const routes = {
         }, undefined, ...nextCalls)
       },
       'hapi': (req, reply, api) => {
-        let nextCalls = req.body['next_calls']
+        let nextCalls = req.body ? req.body['next_calls'] : []
         api.callScenarioAction({id: req.params.id, action: req.params.action, delay: req.params.delay | 0}, (err, result) => {
           if (err) {
             return reply(err.toString()).code(err.status)
@@ -75,7 +75,7 @@ const routes = {
     },
     'post': {
       'express': (req, res, api) => {
-        let nextCalls = req.body['next_calls']
+        let nextCalls = req.body ? req.body['next_calls'] : []
         api.callDomoticAction({id: req.params.id, action: req.params.action, delay: req.params.delay | 0}, (err, result) => {
           if (err) {
             return res.status(err.status).send(err.toString())
@@ -84,7 +84,7 @@ const routes = {
         }, undefined, ...nextCalls)
       },
       'hapi': (req, reply, api) => {
-        let nextCalls = req.body['next_calls']
+        let nextCalls = req.body ? req.body['next_calls'] : []
         api.callDomoticAction({id: req.params.id, action: req.params.action, delay: req.params.delay | 0}, (err, result) => {
           if (err) {
             return reply(err.toString()).code(err.status)
@@ -101,7 +101,7 @@ const routes = {
     },
     'post': {
       'express': (req, res, api) => {
-        let nextCalls = req.body['next_calls']
+        let nextCalls = req.body ? req.body['next_calls'] : []
         api.callHeatingAction({id: req.params.id, action: req.params.action, delay: req.params.delay | 0}, (err, result) => {
           if (err) {
             return res.status(err.status).send(err.toString())
@@ -110,7 +110,7 @@ const routes = {
         }, undefined, ...nextCalls)
       },
       'hapi': (req, reply, api) => {
-        let nextCalls = req.body['next_calls']
+        let nextCalls = req.body ? req.body['next_calls'] : []
         api.callHeatingAction({id: req.params.id, action: req.params.action, delay: req.params.delay | 0}, (err, result) => {
           if (err) {
             return reply(err.toString()).code(err.status)
