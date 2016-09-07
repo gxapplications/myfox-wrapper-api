@@ -119,6 +119,30 @@ const routes = {
         }, undefined, ...nextCalls)
       }
     }
+  },
+  'alarm_action': {
+    'path': {
+      'express': '/alarm/:action',
+      'hapi': '/alarm/{action}'
+    },
+    'post': {
+      'express': (req, res, api) => {
+        api.callAlarmLevelAction({action: req.params.action}, (err, result) => {
+          if (err) {
+            return res.status(err.status).send(err.toString())
+          }
+          res.send(result)
+        })
+      },
+      'hapi': (req, reply, api) => {
+        api.callAlarmLevelAction({action: req.params.action}, (err, result) => {
+          if (err) {
+            return reply(err.toString()).code(err.status)
+          }
+          reply(result)
+        })
+      }
+    }
   }
 }
 
