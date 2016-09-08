@@ -48,7 +48,6 @@ describe('HTML-api library', () => {
 
     it('to test wrong input formats', (done) => {
       const callback = () => {
-        sinon.assert.notCalled(api._callScenarioAction)
         done('Callback should not be called')
       }
       api._callScenarioAction.callsArg(1) // the stub must call the callback just above in return. But the stub should not be called...
@@ -57,6 +56,7 @@ describe('HTML-api library', () => {
       expect(api.callScenarioAction.bind(api, {id: 456, action: 'bad action', delay: 0}, callback)).to.throw(Error, /must be one of/)
       expect(api.callScenarioAction.bind(api, {id: 'id-not-integer', action: 'off'}, callback)).to.throw(Error, /must be a number/)
       expect(api.callScenarioAction.bind(api, {id: 42, action: 'play', delay: 0}, callback, '42Z', {id: 42, action: 'fifi', delay: 0})).to.throw(Error, /must be one of/)
+      sinon.assert.notCalled(api._callScenarioAction)
 
       done()
     })
@@ -192,7 +192,6 @@ describe('HTML-api library', () => {
 
     it('to test wrong input formats', (done) => {
       const callback = () => {
-        sinon.assert.notCalled(api._callDomoticAction)
         done('Callback should not be called')
       }
       api._callDomoticAction.callsArg(1) // the stub must call the callback just above in return. But the stub should not be called...
@@ -201,6 +200,7 @@ describe('HTML-api library', () => {
       expect(api.callDomoticAction.bind(api, {id: 456, action: 'play', delay: 0}, callback)).to.throw(Error, /must be one of/)
       expect(api.callDomoticAction.bind(api, {id: 'id-not-integer', action: 'off'}, callback)).to.throw(Error, /must be a number/)
       expect(api.callDomoticAction.bind(api, {id: 42, action: 'on', delay: 0}, callback, '42Z', {id: 42, action: 'play', delay: 0})).to.throw(Error, /must be one of/)
+      sinon.assert.notCalled(api._callDomoticAction)
 
       done()
     })
@@ -336,7 +336,6 @@ describe('HTML-api library', () => {
 
     it('to test wrong input formats', (done) => {
       const callback = () => {
-        sinon.assert.notCalled(api._callHeatingAction)
         done('Callback should not be called')
       }
       api._callHeatingAction.callsArg(1) // the stub must call the callback just above in return. But the stub should not be called...
@@ -345,6 +344,7 @@ describe('HTML-api library', () => {
       expect(api.callHeatingAction.bind(api, {id: 456, action: 'play', delay: 0}, callback)).to.throw(Error, /must be one of/)
       expect(api.callHeatingAction.bind(api, {id: 'id-not-integer', action: 'off'}, callback)).to.throw(Error, /must be a number/)
       expect(api.callHeatingAction.bind(api, {id: 42, action: 'on', delay: 0}, callback, '42Z', {id: 42, action: 'play', delay: 0})).to.throw(Error, /must be one of/)
+      sinon.assert.notCalled(api._callHeatingAction)
 
       done()
     })
@@ -444,6 +444,99 @@ describe('HTML-api library', () => {
       }
 
       api._callHeatingAction({id: 456, action: 'on', delay: 0}, callback)
+    })
+  })
+
+  describe('callAlarmLevelAction isolated', () => {
+    let api = null
+
+    beforeEach(() => {
+      api = HtmlApi(myfoxSiteIds)
+      sinon.stub(CommonApi.prototype, 'callApi') // Because the method is in the parent class
+      sinon.stub(CommonApi.prototype, 'notifyMacroListeners') // Because the method is in the parent class
+    })
+    afterEach(() => {
+      CommonApi.prototype.callApi.restore()
+      CommonApi.prototype.notifyMacroListeners.restore()
+    })
+
+    it('to test simple nominative case OFF', (done) => {
+      api.callApi.returns(Promise.resolve({data: 'test'}))
+
+      const callback = (a, b) => {
+        sinon.assert.notCalled(api.notifyMacroListeners)
+        sinon.assert.calledOnce(api.callApi)
+        sinon.assert.calledWithMatch(api.callApi, /widget\/\{siteId\}\/protection\/seclev\/1/, /GET/)
+
+        expect(a).to.be.null
+        // The id is not domotic ID, but the macro ID! And null because no need to have one, if just 1 step without delay.
+        expect(b).to.deep.equal({id: null, data: 'test', state: 'finished', remaining: 0})
+        done()
+      }
+
+      api.callAlarmLevelAction({action: 'off'}, callback)
+    })
+
+    it('to test simple nominative case HALF', (done) => {
+      api.callApi.returns(Promise.resolve({data: 'test'}))
+
+      const callback = (a, b) => {
+        sinon.assert.notCalled(api.notifyMacroListeners)
+        sinon.assert.calledOnce(api.callApi)
+        sinon.assert.calledWithMatch(api.callApi, /widget\/\{siteId\}\/protection\/seclev\/2/, /GET/)
+
+        expect(a).to.be.null
+        // The id is not domotic ID, but the macro ID! And null because no need to have one, if just 1 step without delay.
+        expect(b).to.deep.equal({id: null, data: 'test', state: 'finished', remaining: 0})
+        done()
+      }
+
+      api.callAlarmLevelAction({action: 'half'}, callback)
+    })
+
+    it('to test simple nominative case ON', (done) => {
+      api.callApi.returns(Promise.resolve({data: 'test'}))
+
+      const callback = (a, b) => {
+        sinon.assert.notCalled(api.notifyMacroListeners)
+        sinon.assert.calledOnce(api.callApi)
+        sinon.assert.calledWithMatch(api.callApi, /widget\/\{siteId\}\/protection\/seclev\/4/, /GET/)
+
+        expect(a).to.be.null
+        // The id is not domotic ID, but the macro ID! And null because no need to have one, if just 1 step without delay.
+        expect(b).to.deep.equal({id: null, data: 'test', state: 'finished', remaining: 0})
+        done()
+      }
+
+      api.callAlarmLevelAction({action: 'on'}, callback)
+    })
+
+    it('to test error case (wrong level given)', (done) => {
+      const callback = () => {
+        done('Callback should not be called')
+      }
+
+      expect(api.callAlarmLevelAction.bind(api, {bad: 'key', falsy: 'argument'}, callback)).to.throw(Error, /missing/)
+      expect(api.callAlarmLevelAction.bind(api, {action: 'falsy'}, callback)).to.throw(Error, /must be one of/)
+      sinon.assert.notCalled(api.notifyMacroListeners)
+      sinon.assert.notCalled(api.callApi)
+
+      done()
+    })
+
+    it('to test error during Myfox subcall', (done) => {
+      api.callApi.returns(Promise.reject(new Error('error test')))
+
+      const callback = (a, b) => {
+        sinon.assert.notCalled(api.notifyMacroListeners)
+        sinon.assert.calledOnce(api.callApi)
+        sinon.assert.calledWithMatch(api.callApi, /widget\/\{siteId\}\/protection\/seclev\/4/, /GET/)
+
+        expect(a).to.be.not.null
+        done()
+      }
+
+      api.callAlarmLevelAction({action: 'on'}, callback)
     })
   })
 })
