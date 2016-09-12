@@ -6,12 +6,12 @@ import fs from 'fs'
 import path from 'path'
 
 import CommonApi from '../../../lib/common-api'
-import scenarioActionParser from '../../../lib/html-parsers/scenario-action'
+import simpleCodeActionParser from '../../../lib/html-parsers/simple-code-action'
 
-describe('HTML Scenario-action parser', () => {
+describe('HTML simple-code-action parser', () => {
   it('can parse a \'OK\' response and delivers \'ok\' state', (done) => {
     let api = new CommonApi({'myfoxSiteIds': [1234]})
-    let parser = scenarioActionParser(api)
+    let parser = simpleCodeActionParser(api)
     parser.on('end', () => {
       expect(parser.status).to.equal('ok')
       done()
@@ -22,7 +22,7 @@ describe('HTML Scenario-action parser', () => {
 
   it('can parse a \'KO\' response and delivers \'ko\' state', (done) => {
     let api = new CommonApi({'myfoxSiteIds': [1234]})
-    let parser = scenarioActionParser(api)
+    let parser = simpleCodeActionParser(api)
     parser.on('end', () => {
       expect(parser.status).to.equal('ko')
       done()
@@ -33,7 +33,7 @@ describe('HTML Scenario-action parser', () => {
 
   it('can parse an unknown formatted response and triggers error', (done) => {
     let api = new CommonApi({'myfoxSiteIds': [1234]})
-    let parser = scenarioActionParser(api)
+    let parser = simpleCodeActionParser(api)
     parser.on('end', () => {
       done('Should never be called')
     })
@@ -46,7 +46,7 @@ describe('HTML Scenario-action parser', () => {
 
   it('cannot parse an non JSON response and throws error', (done) => {
     let api = new CommonApi({'myfoxSiteIds': [1234]})
-    let parser = scenarioActionParser(api)
+    let parser = simpleCodeActionParser(api)
     parser.on('end', () => {
       done('Should never be called')
     })
