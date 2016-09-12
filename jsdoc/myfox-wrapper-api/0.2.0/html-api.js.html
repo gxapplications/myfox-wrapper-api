@@ -32,14 +32,14 @@ import JsonStream from 'JSONStream'
 import config from 'config'
 import Joi from 'joi'
 import crypto from 'crypto'
+import cloneDeep from 'clone-deep'
 
 import MyfoxWrapperApiCommon from './common-api'
 import { httpsRequest } from './html-parsers'
 
 // Html parsers
 import homeParser from './html-parsers/home'
-import scenarioActionParser from './html-parsers/scenario-action'
-import domoticActionParser from './html-parsers/domotic-action'
+import simpleCodeActionParser from './html-parsers/simple-code-action'
 
 class MyfoxWrapperApiHtml extends MyfoxWrapperApiCommon {
 
@@ -266,11 +266,11 @@ class MyfoxWrapperApiHtml extends MyfoxWrapperApiCommon {
       if (action === 'play') {
         url += '?_=' + (new Date()).getTime()
       }
-      this.callApi(url, (action === 'play') ? 'GET' : 'POST', scenarioActionParser(this), {}, {}, {})
+      this.callApi(url, (action === 'play') ? 'GET' : 'POST', simpleCodeActionParser(this), {}, {}, {})
         .then((parser) => {
           // If action succeed and on/off, then must update persistentStates
           if (parser.status === 'ok' &amp;&amp; action !== 'play') {
-            const scenarii = this.persistentStates.scenarii.value
+            const scenarii = cloneDeep(this.persistentStates.scenarii.value)
             scenarii[id].active = (action === 'on') ? '1' : '0'
             this.persistentStates.scenarii.push(scenarii)
           }
@@ -354,8 +354,13 @@ class MyfoxWrapperApiHtml extends MyfoxWrapperApiCommon {
       callback(null, { id: macroId, state: 'delayed', remaining: nextActions.length })
     } else {
       let url = config.get('myfox-wrapper-api.html.myfox.paths.domotic_action').replace('{action}', action).replace('{id}', id)
-      this.callApi(url, 'POST', domoticActionParser(this), {}, {}, {})
+      this.callApi(url, 'POST', simpleCodeActionParser(this), {}, {}, {})
         .then((parser) => {
+          if (parser.status === 'ok') {
+            const domotic = cloneDeep(this.persistentStates.domotic.value)
+            domotic[id].supposedState = (action === 'on') ? '1' : '0'
+            this.persistentStates.domotic.push(domotic)
+          }
           callback(null, {
             id: macroId,
             data: parser.data,
@@ -373,6 +378,136 @@ class MyfoxWrapperApiHtml extends MyfoxWrapperApiCommon {
           callback(err)
         })
     }
+  }
+
+  /**
+   * Calls heating 4 orders piloted (/widget/{siteId}/heating/{action}/{id}) to turn on/eco/frost/off a heating.
+   *
+   * @param  {Object}   [info]       Information to trigger the event
+   * @param  {integer}  info.id      The unique ID of the heating pilot to play action against
+   * @param  {string}   info.action  The action to trigger. Can be on, eco, frost or off
+   * @param  {integer}  info.delay   The delay (optional) to wait before triggering the action. If > 0 then the method will callback just after scheduling of the action
+   * @param  {function} callback     The function to call with all data, depending on the step of the action macro: in the simplest case (one action, no delay),
+   *                                 then the result of the call to Myfox. In other cases, an ID to follow with a macro listener
+   *                                 The callback parameters must follows the same signature as a macro listener (see addMacroListener() method)
+   * @param  {string}   [macroId]    Optional ID to keep track of the action if multiple steps or delay is provided.
+   * @param  {Object[]} [info[]]     The next actions informations, like the first param
+   */
+  callHeatingAction ({id, action, delay = 0}, callback, macroId = undefined, ...nextActions) {
+    // Validation of parameters
+    const validator = Joi.object({
+      id: Joi.number().integer().required().positive(),
+      action: Joi.string().required().valid(['on', 'eco', 'frost', 'off']),
+      delay: Joi.number().integer().min(0).optional().default(0)
+    })
+
+    Joi.assert({id, action, delay}, validator)
+    // If nextActions not empty, then check structure
+    for (var nextAction of nextActions) {
+      Joi.assert(nextAction, validator)
+    }
+
+    // If there is a delay, or nextActions, then an ID should be returned to allow a listener to be registered.
+    if (delay > 0 || nextActions.length > 0) {
+      this._callHeatingAction({id, action, delay}, callback, macroId || crypto.randomBytes(20).toString('hex'), ...nextActions)
+    } else {
+      this._callHeatingAction({id, action, delay: 0}, callback)
+    }
+  }
+
+    /**
+   * Subcall of callHeatingAction() to allow recursive call, and to keep unique macro ID over all the macro steps.
+   *
+   * @private
+   * @param  {Object}   [info]       Information to trigger the event
+   * @param  {integer}  info.id      The unique ID of the heating pilot to play action against
+   * @param  {string}   info.action  The action to trigger. Can be on, eco, frost or off
+   * @param  {integer}  info.delay   The delay (optional) to wait before triggering the action. If > 0 then the method will callback just after scheduling of the action
+   * @param  {function} callback     The function to call with all data, depending on the step of the action macro: in the simplest case (one action, no delay),
+   *                                 then the result of the call to Myfox. In other cases, an ID to follow with a macro listener
+   *                                 The callback parameters must follows the same signature as a macro listener (see addMacroListener() method)
+   * @param  {string}   [macroId]    Optional ID to keep track of the action if multiple steps or delay is provided.
+   * @param  {Object[]} [info[]]     The next actions informations, like the first param
+   */
+  _callHeatingAction ({id, action, delay = 0}, callback, macroId = null, ...nextActions) {
+    // Call Api for first action (or schedule it if delayed), THEN schedule next.
+    // If scheduled, cannot return the state in the callback: will return an ID to register a listener.
+    if (delay > 0) {
+      // Delayed case: returns directly with an ID, and schedules calling itself for later.
+      const that = this
+      setTimeout(function () {
+        that._callHeatingAction({id, action, delay: 0}, that.notifyMacroListeners.bind(that), macroId, ...nextActions)
+      }, delay)
+      callback(null, { id: macroId, state: 'delayed', remaining: nextActions.length })
+    } else {
+      let url = config.get('myfox-wrapper-api.html.myfox.paths.heating_action').replace('{action}', action).replace('{id}', id)
+      this.callApi(url, 'POST', simpleCodeActionParser(this), {}, {}, {})
+        .then((parser) => {
+          // If action succeed, then must update persistentStates
+          if (parser.status === 'ok') {
+            const heat = cloneDeep(this.persistentStates.heat.value)
+            heat[id].state = action
+            this.persistentStates.heat.push(heat)
+          }
+          callback(null, {
+            id: macroId,
+            data: parser.data,
+            state: (nextActions.length > 0) ? 'progress' : 'finished',
+            remaining: nextActions.length
+          })
+          // If still some steps after, then call in recursive way
+          if (nextActions.length > 0) {
+            let nextAction = nextActions.shift()
+            this._callHeatingAction(nextAction, this.notifyMacroListeners.bind(this), macroId, ...nextActions)
+          }
+        })
+        .catch((err) => {
+          console.error(err)
+          callback(err)
+        })
+    }
+  }
+
+  /**
+   * Modifies the alarm level (off, half, on).
+   *
+   * @param  {Object}   [info]       Information to trigger the event.
+   * @param  {string}   info.action  The level to trigger. Can be on, half or off.
+   * @param  {function} callback     The function to call with all data, depending on the step of the action macro: in the simplest case (one action, no delay),
+   *                                 then the result of the call to Myfox. In other cases, an ID to follow with a macro listener
+   *                                 The callback parameters must follows the same signature as a macro listener (see addMacroListener() method).
+   * @param  {string}   [macroId]    Optional ID to keep track of the action if multiple steps or delay is provided.
+   */
+  callAlarmLevelAction ({action}, callback, macroId = undefined) {
+    // Validation of parameters
+    const validator = Joi.object({
+      action: Joi.string().required().valid(['on', 'half', 'off'])
+    })
+    Joi.assert({action}, validator)
+
+    // Build macroId only if a delay or complex steps are added.
+    // macroId = macroId || crypto.randomBytes(20).toString('hex')
+    macroId = null
+    const actionLevel = action === 'off' ? 1 : (action === 'half' ? 2 : (action === 'on' ? 4 : -1))
+    let url = config.get('myfox-wrapper-api.html.myfox.paths.alarm_action').replace('{level}', actionLevel)
+
+    this.callApi(url, 'GET', simpleCodeActionParser(this), {}, {}, {})
+      .then((parser) => {
+        // If action succeed, then must update persistentStates
+        if (parser.status === 'ok') {
+          this.persistentStates.alarm.push(action)
+        }
+        callback(null, {
+          id: macroId,
+          data: parser.data,
+          state: 'finished',
+          remaining: 0
+        })
+      })
+      .catch((err) => {
+        console.error(err)
+        callback(err)
+      })
   }
 }
 
@@ -396,7 +531,7 @@ export default function myfoxWrapperApiHtml (options, fallbackApi, accountCreden
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed Aug 24 2016 18:40:52 GMT+0200 (Paris, Madrid (heure d’été))
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Sep 12 2016 13:29:50 GMT+0200 (CEST)
 </footer>
 
 <script> prettyPrint(); </script>

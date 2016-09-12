@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><title>lib\common-api</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="lib\common-api"><meta name="groc-project-path" content="lib\common-api.js"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">lib\common-api.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-pi">'use strict'</span>
+<!DOCTYPE html><html lang="en"><head><title>lib/common-api</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="lib/common-api"><meta name="groc-project-path" content="lib/common-api.js"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">lib/common-api.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-pi">'use strict'</span>
 
 <span class="hljs-keyword">import</span> Joi <span class="hljs-keyword">from</span> <span class="hljs-string">'joi'</span>
 
@@ -64,7 +64,9 @@ The constructor must never be squizzed even by a subclass: parameters validation
     <span class="hljs-keyword">this</span>.cookieJar = {}</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>persistent states are event triggerers and registers listeners. Statefull</p></div></div><div class="code"><div class="wrapper">    <span class="hljs-keyword">this</span>.persistentStates = {
       status: persistentState(<span class="hljs-string">'status'</span>),
       alarm: persistentState(<span class="hljs-string">'alarm'</span>),
-      scenarii: persistentState(<span class="hljs-string">'scenarii'</span>),</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>domotic: persistentState(&#39;domotic&#39;), // No dynamic behavior, so should not be required...</p></div></div><div class="code"><div class="wrapper">      data: persistentState(<span class="hljs-string">'data'</span>),
+      scenarii: persistentState(<span class="hljs-string">'scenarii'</span>),
+      domotic: persistentState(<span class="hljs-string">'domotic'</span>), <span class="hljs-comment">// No dynamic behavior, but we can store supposed states</span>
+      data: persistentState(<span class="hljs-string">'data'</span>),
       heat: persistentState(<span class="hljs-string">'heat'</span>)
     }</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>macro action listeners</p></div></div><div class="code"><div class="wrapper">    <span class="hljs-keyword">this</span>.macroListeners = []
   }</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Default options merged into options given to the constructor.
@@ -267,6 +269,7 @@ If the err parameter is not null, the the listeners are not notified. The err wi
       <span class="hljs-keyword">return</span> <span class="hljs-built_in">console</span>.error(err)
     }
     <span class="hljs-keyword">let</span> now = <span class="hljs-built_in">Date</span>.now()
+    <span class="hljs-built_in">console</span>.info(<span class="hljs-string">`Macro state updated on <span class="hljs-subst">${id}</span>, sending to <span class="hljs-subst">${this.macroListeners.length}</span> listeners...`</span>)
     <span class="hljs-keyword">this</span>.macroListeners.forEach((listener) =&gt; {
       <span class="hljs-keyword">if</span> (!listener(id, data, state, remaining, now)) {
         <span class="hljs-keyword">this</span>.removeMacroListener(listener)
@@ -292,45 +295,80 @@ and in case of change, a persistantState listener can be called.</li>
 The possible action depends on the action type (on demand or not).</p>
 <p>Parameters:</p>
 <ul>
-<li><p><strong>info is optional and must be an Object.</strong><br/>(Information to trigger the event)</p>
+<li><p><strong>info is optional and must be an Object.</strong><br/>(Information to trigger the event.)</p>
 <ul>
-<li><p><strong>info.id must be an integer.</strong><br/>(The unique ID of the scenario to play action against)</p>
+<li><p><strong>info.id must be an integer.</strong><br/>(The unique ID of the scenario to play action against.)</p>
 </li>
-<li><p><strong>info.action must be a string.</strong><br/>(The action to trigger. Can be play for &#39;on demand&#39; scenario, on or off for others)</p>
+<li><p><strong>info.action must be a string.</strong><br/>(The action to trigger. Can be play for &#39;on demand&#39; scenario, on or off for others.)</p>
 </li>
-<li><p><strong>info.delay must be an integer.</strong><br/>(The delay (optional) to wait before triggering the action. If &gt; 0 then the method will callback just after scheduling of the action)</p>
+<li><p><strong>info.delay must be an integer.</strong><br/>(The delay (optional) to wait before triggering the action. If &gt; 0 then the method will callback just after scheduling of the action.)</p>
 </li>
 </ul>
 </li>
-<li><p><strong>callback must be a function.</strong><br/>(The function to call with all data, depending on the step of the action macro: in the simplest case (one action, no delay), then the result of the call to Myfox. In other cases, an ID to follow with a macro listener The callback parameters must follows the same signature as a macro listener (see addMacroListener() method))</p>
+<li><p><strong>callback must be a function.</strong><br/>(The function to call with all data, depending on the step of the action macro: in the simplest case (one action, no delay), then the result of the call to Myfox. In other cases, an ID to follow with a macro listener The callback parameters must follows the same signature as a macro listener (see addMacroListener() method).)</p>
 </li>
 <li><p><strong>macroId is optional and must be a string.</strong><br/>(Optional ID to keep track of the action if multiple steps or delay is provided.)</p>
 </li>
-<li><p><strong>info must be an Array of Objects.</strong><br/>([]] The next actions informations, like the first param)</p>
+<li><p><strong>info must be an Array of Objects.</strong><br/>([]] The next actions informations, like the first param.)</p>
 </li>
 </ul></div></div><div class="code"><div class="wrapper">  callScenarioAction ({id, action, delay = <span class="hljs-number">0</span>}, callback, macroId = <span class="hljs-literal">undefined</span>, ...nextActions) {
     _notImplemented.bind(<span class="hljs-keyword">this</span>)(<span class="hljs-string">'callScenarioAction'</span>, callback)
   }</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Calls domotic switch action (/widget/{siteId}/domotic/{action}/{id}) to turn on/off a domotic switch.</p>
 <p>Parameters:</p>
 <ul>
-<li><p><strong>info is optional and must be an Object.</strong><br/>(Information to trigger the event)</p>
+<li><p><strong>info is optional and must be an Object.</strong><br/>(Information to trigger the event.)</p>
 <ul>
-<li><p><strong>info.id must be an integer.</strong><br/>(The unique ID of the domotic switch to play action against)</p>
+<li><p><strong>info.id must be an integer.</strong><br/>(The unique ID of the domotic switch to play action against.)</p>
 </li>
-<li><p><strong>info.action must be a string.</strong><br/>(The action to trigger. Can be on or off)</p>
+<li><p><strong>info.action must be a string.</strong><br/>(The action to trigger. Can be on or off.)</p>
 </li>
-<li><p><strong>info.delay must be an integer.</strong><br/>(The delay (optional) to wait before triggering the action. If &gt; 0 then the method will callback just after scheduling of the action)</p>
+<li><p><strong>info.delay must be an integer.</strong><br/>(The delay (optional) to wait before triggering the action. If &gt; 0 then the method will callback just after scheduling of the action.)</p>
 </li>
 </ul>
 </li>
-<li><p><strong>callback must be a function.</strong><br/>(The function to call with all data, depending on the step of the action macro: in the simplest case (one action, no delay), then the result of the call to Myfox. In other cases, an ID to follow with a macro listener The callback parameters must follows the same signature as a macro listener (see addMacroListener() method))</p>
+<li><p><strong>callback must be a function.</strong><br/>(The function to call with all data, depending on the step of the action macro: in the simplest case (one action, no delay), then the result of the call to Myfox. In other cases, an ID to follow with a macro listener The callback parameters must follows the same signature as a macro listener (see addMacroListener() method).)</p>
 </li>
 <li><p><strong>macroId is optional and must be a string.</strong><br/>(Optional ID to keep track of the action if multiple steps or delay is provided.)</p>
 </li>
-<li><p><strong>info must be an Array of Objects.</strong><br/>([]] The next actions informations, like the first param)</p>
+<li><p><strong>info must be an Array of Objects.</strong><br/>([]] The next actions informations, like the first param.)</p>
 </li>
 </ul></div></div><div class="code"><div class="wrapper">  callDomoticAction ({id, action, delay = <span class="hljs-number">0</span>}, callback, macroId = <span class="hljs-literal">undefined</span>, ...nextActions) {
     _notImplemented.bind(<span class="hljs-keyword">this</span>)(<span class="hljs-string">'callDomoticAction'</span>, callback)
+  }</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Calls heating 4 orders piloted (/widget/{siteId}/heating/{action}/{id}) to turn on/eco/frost/off a heating.</p>
+<p>Parameters:</p>
+<ul>
+<li><p><strong>info is optional and must be an Object.</strong><br/>(Information to trigger the event.)</p>
+<ul>
+<li><p><strong>info.id must be an integer.</strong><br/>(The unique ID of the heating pilot to play action against.)</p>
+</li>
+<li><p><strong>info.action must be a string.</strong><br/>(The action to trigger. Can be on, eco, frost or off.)</p>
+</li>
+<li><p><strong>info.delay must be an integer.</strong><br/>(The delay (optional) to wait before triggering the action. If &gt; 0 then the method will callback just after scheduling of the action.)</p>
+</li>
+</ul>
+</li>
+<li><p><strong>callback must be a function.</strong><br/>(The function to call with all data, depending on the step of the action macro: in the simplest case (one action, no delay), then the result of the call to Myfox. In other cases, an ID to follow with a macro listener The callback parameters must follows the same signature as a macro listener (see addMacroListener() method).)</p>
+</li>
+<li><p><strong>macroId is optional and must be a string.</strong><br/>(Optional ID to keep track of the action if multiple steps or delay is provided.)</p>
+</li>
+<li><p><strong>info must be an Array of Objects.</strong><br/>([]] The next actions informations, like the first param.)</p>
+</li>
+</ul></div></div><div class="code"><div class="wrapper">  callHeatingAction ({id, action, delay = <span class="hljs-number">0</span>}, callback, macroId = <span class="hljs-literal">undefined</span>, ...nextActions) {
+    _notImplemented.bind(<span class="hljs-keyword">this</span>)(<span class="hljs-string">'callHeatingAction'</span>, callback)
+  }</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Modifies the alarm level (off, half, on).</p>
+<p>Parameters:</p>
+<ul>
+<li><p><strong>info is optional and must be an Object.</strong><br/>(Information to trigger the event.)</p>
+<ul>
+<li><strong>info.action must be a string.</strong><br/>(The level to trigger. Can be on, half or off.)</li>
+</ul>
+</li>
+<li><p><strong>callback must be a function.</strong><br/>(The function to call with all data, depending on the step of the action macro: in the simplest case (one action, no delay), then the result of the call to Myfox. In other cases, an ID to follow with a macro listener The callback parameters must follows the same signature as a macro listener (see addMacroListener() method).)</p>
+</li>
+<li><p><strong>macroId is optional and must be a string.</strong><br/>(Optional ID to keep track of the action if multiple steps or delay is provided.)</p>
+</li>
+</ul></div></div><div class="code"><div class="wrapper">  callAlarmLevelAction ({action}, callback, macroId = <span class="hljs-literal">undefined</span>) {
+    _notImplemented.bind(<span class="hljs-keyword">this</span>)(<span class="hljs-string">'callAlarmLevelAction'</span>, callback)
   }
 }
 

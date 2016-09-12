@@ -1,0 +1,27 @@
+<!DOCTYPE html><html lang="en"><head><title>lib/html-parsers/simple-code-action</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="lib/html-parsers/simple-code-action"><meta name="groc-project-path" content="lib/html-parsers/simple-code-action.js"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path">lib/html-parsers/simple-code-action.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-pi">'use strict'</span>
+
+<span class="hljs-keyword">import</span> JsonStream <span class="hljs-keyword">from</span> <span class="hljs-string">'JSONStream'</span></div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Returns a JSON parser that will expect &#39;code&#39; attribute to interpret it.</p>
+<p>This parser understands the following values:</p>
+<ul>
+<li>OK, and responds with self.status = &#39;ok&#39;</li>
+<li>KO, and responds with self.status = &#39;ko&#39;</li>
+<li>other values triggers an &#39;error&#39; event from the parser.</li>
+</ul>
+<p>Parameters:</p>
+<ul>
+<li><strong>wrapperApi must be a MyfoxWrapperApiCommon.</strong><br/>(The Api instance, to throw events)</li>
+</ul>
+<p><strong>Returns a JsonStream</strong><br/>(The JsonStream parser to plug on the json stream.)</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">wrapperApi</span>) </span>{</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Receive {&quot;code&quot;:&quot;OK&quot;} OR {&quot;code&quot;:&quot;KO&quot;,&quot;msg&quot;:[[&quot;...&quot;,&quot;error&quot;]]}</p></div></div><div class="code"><div class="wrapper">  <span class="hljs-keyword">const</span> parser = JsonStream.parse(<span class="hljs-string">'code'</span>)
+  parser.on(<span class="hljs-string">'data'</span>, (data) =&gt; {
+    <span class="hljs-keyword">if</span> (data === <span class="hljs-string">'KO'</span>) {
+      parser.status = <span class="hljs-string">'ko'</span>
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (data === <span class="hljs-string">'OK'</span>) {
+      parser.status = <span class="hljs-string">'ok'</span>
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-keyword">const</span> error = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Unknown format returned by Myfox.'</span>)
+      error.status = <span class="hljs-number">500</span>
+      parser.emit(<span class="hljs-string">'error'</span>, error)
+    }
+  })
+  <span class="hljs-keyword">return</span> parser
+}</div></div></div></div></body></html>

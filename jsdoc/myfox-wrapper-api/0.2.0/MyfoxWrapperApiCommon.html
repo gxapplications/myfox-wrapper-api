@@ -30,7 +30,8 @@
     
         <h2>MyfoxWrapperApiCommon</h2>
         
-            <div class="class-description">Parent class that contains the method list to implement on the subclasses, and common methods.The constructor must never be squizzed even by a subclass: parameters validation is done here.</div>
+            <div class="class-description">Parent class that contains the method list to implement on the subclasses, and common methods.
+The constructor must never be squizzed even by a subclass: parameters validation is done here.</div>
         
     
 </header>
@@ -563,7 +564,8 @@
 
 
 <div class="description">
-    Account credentials format validator.See details on the documented constructor.
+    Account credentials format validator.
+See details on the documented constructor.
 </div>
 
 
@@ -645,7 +647,8 @@
 
 
 <div class="description">
-    Default options merged into options given to the constructor.See details on the documented constructor.
+    Default options merged into options given to the constructor.
+See details on the documented constructor.
 </div>
 
 
@@ -727,7 +730,8 @@
 
 
 <div class="description">
-    Options format validator.See details on the documented constructor.
+    Options format validator.
+See details on the documented constructor.
 </div>
 
 
@@ -809,7 +813,16 @@
 
 
 <div class="description">
-    Adds a listener to any macro action that can occurs.The listener is a function, that will be called with the following arguments:- macro ID,- data: an object with the parser response, depending on the call made,- state: a label with the following allowed values: progress, finished,- remaining: The number of steps in the macro still in the queue. When remaining==0, then the state should be 'finished'.- timestamp: a timestamp (creation date of the event)Important: the listener must return a boolean:- true to be kept for the next event,- false if the listener must be unregistered after this event.
+    Adds a listener to any macro action that can occurs.
+The listener is a function, that will be called with the following arguments:
+- macro ID,
+- data: an object with the parser response, depending on the call made,
+- state: a label with the following allowed values: progress, finished,
+- remaining: The number of steps in the macro still in the queue. When remaining==0, then the state should be 'finished'.
+- timestamp: a timestamp (creation date of the event)
+Important: the listener must return a boolean:
+- true to be kept for the next event,
+- false if the listener must be unregistered after this event.
 </div>
 
 
@@ -962,7 +975,12 @@
 
 
 <div class="description">
-    Adds a listener to a persistent state, given a state label.The listener is a function, that will be called with the following arguments:- state label,- new state value,- previous state value,- a timestamp (creation date of the event)
+    Adds a listener to a persistent state, given a state label.
+The listener is a function, that will be called with the following arguments:
+- state label,
+- new state value,
+- previous state value,
+- a timestamp (creation date of the event)
 </div>
 
 
@@ -1138,7 +1156,8 @@
 
 
 <div class="description">
-    Call Myfox authentication process.This method must be overridden in the extended api implementation.
+    Call Myfox authentication process.
+This method must be overridden in the extended api implementation.
 </div>
 
 
@@ -1285,6 +1304,264 @@
 
     
 
+    <h4 class="name" id="callAlarmLevelAction"><span class="type-signature"></span>callAlarmLevelAction<span class="signature">(info<span class="signature-attributes">opt</span>, callback, macroId<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Modifies the alarm level (off, half, on).
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>info</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Information to trigger the event.
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>action</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The level to trigger. Can be on, half or off.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The function to call with all data, depending on the step of the action macro: in the simplest case (one action, no delay),
+                                then the result of the call to Myfox. In other cases, an ID to follow with a macro listener
+                                The callback parameters must follows the same signature as a macro listener (see addMacroListener() method).</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>macroId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Optional ID to keep track of the action if multiple steps or delay is provided.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="common-api.js.html">common-api.js</a>, <a href="common-api.js.html#line384">line 384</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
     <h4 class="name" id="callDistant"><span class="type-signature"></span>callDistant<span class="signature">(url, method, queryParams, headers, payload, streamParser, resolve, reject, reAuthenticate)</span><span class="type-signature"></span></h4>
 
     
@@ -1292,7 +1569,9 @@
 
 
 <div class="description">
-    Call Myfox interface with the action/query.This method must be overridden in the extended api implementation.Do not use this method directly to call Myfox services. Prefer use this.callApi(url, method, queryParams, headers, payload)
+    Call Myfox interface with the action/query.
+This method must be overridden in the extended api implementation.
+Do not use this method directly to call Myfox services. Prefer use this.callApi(url, method, queryParams, headers, payload)
 </div>
 
 
@@ -1671,7 +1950,7 @@
 
             
 
-            <td class="description last">Information to trigger the event
+            <td class="description last">Information to trigger the event.
                 <h6>Properties</h6>
                 
 
@@ -1713,7 +1992,7 @@
 
             
 
-            <td class="description last">The unique ID of the domotic switch to play action against</td>
+            <td class="description last">The unique ID of the domotic switch to play action against.</td>
         </tr>
 
     
@@ -1736,7 +2015,7 @@
 
             
 
-            <td class="description last">The action to trigger. Can be on or off</td>
+            <td class="description last">The action to trigger. Can be on or off.</td>
         </tr>
 
     
@@ -1759,7 +2038,7 @@
 
             
 
-            <td class="description last">The delay (optional) to wait before triggering the action. If > 0 then the method will callback just after scheduling of the action</td>
+            <td class="description last">The delay (optional) to wait before triggering the action. If > 0 then the method will callback just after scheduling of the action.</td>
         </tr>
 
     
@@ -1797,7 +2076,9 @@
 
             
 
-            <td class="description last">The function to call with all data, depending on the step of the action macro: in the simplest case (one action, no delay),                                then the result of the call to Myfox. In other cases, an ID to follow with a macro listener                                The callback parameters must follows the same signature as a macro listener (see addMacroListener() method)</td>
+            <td class="description last">The function to call with all data, depending on the step of the action macro: in the simplest case (one action, no delay),
+                                then the result of the call to Myfox. In other cases, an ID to follow with a macro listener
+                                The callback parameters must follows the same signature as a macro listener (see addMacroListener() method).</td>
         </tr>
 
     
@@ -1863,7 +2144,7 @@
 
             
 
-            <td class="description last">The next actions informations, like the first param</td>
+            <td class="description last">The next actions informations, like the first param.</td>
         </tr>
 
     
@@ -1904,7 +2185,344 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="common-api.js.html">common-api.js</a>, <a href="common-api.js.html#line352">line 352</a>
+        <a href="common-api.js.html">common-api.js</a>, <a href="common-api.js.html#line353">line 353</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="callHeatingAction"><span class="type-signature"></span>callHeatingAction<span class="signature">(info<span class="signature-attributes">opt</span>, callback, macroId<span class="signature-attributes">opt</span>, info[]<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Calls heating 4 orders piloted (/widget/{siteId}/heating/{action}/{id}) to turn on/eco/frost/off a heating.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>info</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Information to trigger the event.
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">integer</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The unique ID of the heating pilot to play action against.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>action</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The action to trigger. Can be on, eco, frost or off.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>delay</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">integer</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The delay (optional) to wait before triggering the action. If > 0 then the method will callback just after scheduling of the action.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The function to call with all data, depending on the step of the action macro: in the simplest case (one action, no delay),
+                                then the result of the call to Myfox. In other cases, an ID to follow with a macro listener
+                                The callback parameters must follows the same signature as a macro listener (see addMacroListener() method).</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>macroId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Optional ID to keep track of the action if multiple steps or delay is provided.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>info[]</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;Object></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The next actions informations, like the first param.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="common-api.js.html">common-api.js</a>, <a href="common-api.js.html#line370">line 370</a>
     </li></ul></dd>
     
 
@@ -1942,7 +2560,16 @@
 
 
 <div class="description">
-    Calls main page (/home) to retrieve data like alarm level, box status, default site info, and other subparts.This call is made for HTML wrapper. Rest wrapper does not provides this call.You should use this call to test your connection. In the same time, this call will give you data to keep in cache:- scenarii list- domotic stuff list- heat list- data listExcept the fact that some of these can change their value, the list of their IDs cannot change realy often,and in case of change, a persistantState listener can be called.
+    Calls main page (/home) to retrieve data like alarm level, box status, default site info, and other subparts.
+This call is made for HTML wrapper. Rest wrapper does not provides this call.
+
+You should use this call to test your connection. In the same time, this call will give you data to keep in cache:
+- scenarii list
+- domotic stuff list
+- heat list
+- data list
+Except the fact that some of these can change their value, the list of their IDs cannot change realy often,
+and in case of change, a persistantState listener can be called.
 </div>
 
 
@@ -2035,7 +2662,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="common-api.js.html">common-api.js</a>, <a href="common-api.js.html#line317">line 317</a>
+        <a href="common-api.js.html">common-api.js</a>, <a href="common-api.js.html#line318">line 318</a>
     </li></ul></dd>
     
 
@@ -2073,7 +2700,8 @@
 
 
 <div class="description">
-    Calls scenario action (/widget/{siteId}/scenario/{action}/{id}) to turn on/off or to activate a scenario.The possible action depends on the action type (on demand or not).
+    Calls scenario action (/widget/{siteId}/scenario/{action}/{id}) to turn on/off or to activate a scenario.
+The possible action depends on the action type (on demand or not).
 </div>
 
 
@@ -2137,7 +2765,7 @@
 
             
 
-            <td class="description last">Information to trigger the event
+            <td class="description last">Information to trigger the event.
                 <h6>Properties</h6>
                 
 
@@ -2179,7 +2807,7 @@
 
             
 
-            <td class="description last">The unique ID of the scenario to play action against</td>
+            <td class="description last">The unique ID of the scenario to play action against.</td>
         </tr>
 
     
@@ -2202,7 +2830,7 @@
 
             
 
-            <td class="description last">The action to trigger. Can be play for 'on demand' scenario, on or off for others</td>
+            <td class="description last">The action to trigger. Can be play for 'on demand' scenario, on or off for others.</td>
         </tr>
 
     
@@ -2225,7 +2853,7 @@
 
             
 
-            <td class="description last">The delay (optional) to wait before triggering the action. If > 0 then the method will callback just after scheduling of the action</td>
+            <td class="description last">The delay (optional) to wait before triggering the action. If > 0 then the method will callback just after scheduling of the action.</td>
         </tr>
 
     
@@ -2263,7 +2891,9 @@
 
             
 
-            <td class="description last">The function to call with all data, depending on the step of the action macro: in the simplest case (one action, no delay),                                then the result of the call to Myfox. In other cases, an ID to follow with a macro listener                                The callback parameters must follows the same signature as a macro listener (see addMacroListener() method)</td>
+            <td class="description last">The function to call with all data, depending on the step of the action macro: in the simplest case (one action, no delay),
+                                then the result of the call to Myfox. In other cases, an ID to follow with a macro listener
+                                The callback parameters must follows the same signature as a macro listener (see addMacroListener() method).</td>
         </tr>
 
     
@@ -2329,7 +2959,7 @@
 
             
 
-            <td class="description last">The next actions informations, like the first param</td>
+            <td class="description last">The next actions informations, like the first param.</td>
         </tr>
 
     
@@ -2370,7 +3000,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="common-api.js.html">common-api.js</a>, <a href="common-api.js.html#line335">line 335</a>
+        <a href="common-api.js.html">common-api.js</a>, <a href="common-api.js.html#line336">line 336</a>
     </li></ul></dd>
     
 
@@ -2408,7 +3038,9 @@
 
 
 <div class="description">
-    Sends a notification to the macro listeners.Each listener is notified with the arguments described on the addMacroListener() documentation.If the err parameter is not null, the the listeners are not notified. The err will be logged instead.
+    Sends a notification to the macro listeners.
+Each listener is notified with the arguments described on the addMacroListener() documentation.
+If the err parameter is not null, the the listeners are not notified. The err will be logged instead.
 </div>
 
 
@@ -2700,7 +3332,8 @@
 
 
 <div class="description">
-    Removes a listener if it is already registered.The listener is the function previously given to addMacroListener() method.
+    Removes a listener if it is already registered.
+The listener is the function previously given to addMacroListener() method.
 </div>
 
 
@@ -2863,7 +3496,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed Aug 24 2016 18:40:52 GMT+0200 (Paris, Madrid (heure d’été))
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Sep 12 2016 13:29:50 GMT+0200 (CEST)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -96,7 +96,7 @@ class MyfoxWrapperApiCommon {
       status: persistentState('status'),
       alarm: persistentState('alarm'),
       scenarii: persistentState('scenarii'),
-      // domotic: persistentState('domotic'), // No dynamic behavior, so should not be required...
+      domotic: persistentState('domotic'), // No dynamic behavior, but we can store supposed states
       data: persistentState('data'),
       heat: persistentState('heat')
     }
@@ -321,6 +321,7 @@ class MyfoxWrapperApiCommon {
       return console.error(err)
     }
     let now = Date.now()
+    console.info(`Macro state updated on ${id}, sending to ${this.macroListeners.length} listeners...`)
     this.macroListeners.forEach((listener) => {
       if (!listener(id, data, state, remaining, now)) {
         this.removeMacroListener(listener)
@@ -350,15 +351,15 @@ class MyfoxWrapperApiCommon {
    * Calls scenario action (/widget/{siteId}/scenario/{action}/{id}) to turn on/off or to activate a scenario.
    * The possible action depends on the action type (on demand or not).
    *
-   * @param  {Object}   [info]       Information to trigger the event
-   * @param  {integer}  info.id      The unique ID of the scenario to play action against
-   * @param  {string}   info.action  The action to trigger. Can be play for 'on demand' scenario, on or off for others
-   * @param  {integer}  info.delay   The delay (optional) to wait before triggering the action. If > 0 then the method will callback just after scheduling of the action
+   * @param  {Object}   [info]       Information to trigger the event.
+   * @param  {integer}  info.id      The unique ID of the scenario to play action against.
+   * @param  {string}   info.action  The action to trigger. Can be play for 'on demand' scenario, on or off for others.
+   * @param  {integer}  info.delay   The delay (optional) to wait before triggering the action. If > 0 then the method will callback just after scheduling of the action.
    * @param  {function} callback     The function to call with all data, depending on the step of the action macro: in the simplest case (one action, no delay),
    *                                 then the result of the call to Myfox. In other cases, an ID to follow with a macro listener
-   *                                 The callback parameters must follows the same signature as a macro listener (see addMacroListener() method)
+   *                                 The callback parameters must follows the same signature as a macro listener (see addMacroListener() method).
    * @param  {string}   [macroId]    Optional ID to keep track of the action if multiple steps or delay is provided.
-   * @param  {Object[]} [info[]]     The next actions informations, like the first param
+   * @param  {Object[]} [info[]]     The next actions informations, like the first param.
    */
   callScenarioAction ({id, action, delay = 0}, callback, macroId = undefined, ...nextActions) {
     _notImplemented.bind(this)('callScenarioAction', callback)
@@ -367,18 +368,49 @@ class MyfoxWrapperApiCommon {
   /**
    * Calls domotic switch action (/widget/{siteId}/domotic/{action}/{id}) to turn on/off a domotic switch.
    *
-   * @param  {Object}   [info]       Information to trigger the event
-   * @param  {integer}  info.id      The unique ID of the domotic switch to play action against
-   * @param  {string}   info.action  The action to trigger. Can be on or off
-   * @param  {integer}  info.delay   The delay (optional) to wait before triggering the action. If > 0 then the method will callback just after scheduling of the action
+   * @param  {Object}   [info]       Information to trigger the event.
+   * @param  {integer}  info.id      The unique ID of the domotic switch to play action against.
+   * @param  {string}   info.action  The action to trigger. Can be on or off.
+   * @param  {integer}  info.delay   The delay (optional) to wait before triggering the action. If > 0 then the method will callback just after scheduling of the action.
    * @param  {function} callback     The function to call with all data, depending on the step of the action macro: in the simplest case (one action, no delay),
    *                                 then the result of the call to Myfox. In other cases, an ID to follow with a macro listener
-   *                                 The callback parameters must follows the same signature as a macro listener (see addMacroListener() method)
+   *                                 The callback parameters must follows the same signature as a macro listener (see addMacroListener() method).
    * @param  {string}   [macroId]    Optional ID to keep track of the action if multiple steps or delay is provided.
-   * @param  {Object[]} [info[]]     The next actions informations, like the first param
+   * @param  {Object[]} [info[]]     The next actions informations, like the first param.
    */
   callDomoticAction ({id, action, delay = 0}, callback, macroId = undefined, ...nextActions) {
     _notImplemented.bind(this)('callDomoticAction', callback)
+  }
+
+  /**
+   * Calls heating 4 orders piloted (/widget/{siteId}/heating/{action}/{id}) to turn on/eco/frost/off a heating.
+   *
+   * @param  {Object}   [info]       Information to trigger the event.
+   * @param  {integer}  info.id      The unique ID of the heating pilot to play action against.
+   * @param  {string}   info.action  The action to trigger. Can be on, eco, frost or off.
+   * @param  {integer}  info.delay   The delay (optional) to wait before triggering the action. If > 0 then the method will callback just after scheduling of the action.
+   * @param  {function} callback     The function to call with all data, depending on the step of the action macro: in the simplest case (one action, no delay),
+   *                                 then the result of the call to Myfox. In other cases, an ID to follow with a macro listener
+   *                                 The callback parameters must follows the same signature as a macro listener (see addMacroListener() method).
+   * @param  {string}   [macroId]    Optional ID to keep track of the action if multiple steps or delay is provided.
+   * @param  {Object[]} [info[]]     The next actions informations, like the first param.
+   */
+  callHeatingAction ({id, action, delay = 0}, callback, macroId = undefined, ...nextActions) {
+    _notImplemented.bind(this)('callHeatingAction', callback)
+  }
+
+  /**
+   * Modifies the alarm level (off, half, on).
+   *
+   * @param  {Object}   [info]       Information to trigger the event.
+   * @param  {string}   info.action  The level to trigger. Can be on, half or off.
+   * @param  {function} callback     The function to call with all data, depending on the step of the action macro: in the simplest case (one action, no delay),
+   *                                 then the result of the call to Myfox. In other cases, an ID to follow with a macro listener
+   *                                 The callback parameters must follows the same signature as a macro listener (see addMacroListener() method).
+   * @param  {string}   [macroId]    Optional ID to keep track of the action if multiple steps or delay is provided.
+   */
+  callAlarmLevelAction ({action}, callback, macroId = undefined) {
+    _notImplemented.bind(this)('callAlarmLevelAction', callback)
   }
 }
 
@@ -399,7 +431,7 @@ export default MyfoxWrapperApiCommon
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed Aug 24 2016 18:40:52 GMT+0200 (Paris, Madrid (heure d’été))
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Sep 12 2016 13:29:50 GMT+0200 (CEST)
 </footer>
 
 <script> prettyPrint(); </script>
