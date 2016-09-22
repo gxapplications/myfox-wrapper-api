@@ -460,6 +460,8 @@ describe('HTML-api library', () => {
       CommonApi.prototype.notifyMacroListeners.restore()
     })
 
+    // TODO !0: fix tests for password attribute, if lowering level only.
+
     it('to test simple nominative case OFF', (done) => {
       api.callApi.returns(Promise.resolve({data: 'test'}))
 
@@ -538,5 +540,7 @@ describe('HTML-api library', () => {
 
       api.callAlarmLevelAction({action: 'on'}, callback)
     })
+
+    // TODO !0: add failing case when lowering without password will fail.
   })
 })
