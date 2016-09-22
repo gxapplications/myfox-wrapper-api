@@ -121,7 +121,7 @@
     },
     <span class="hljs-string">'post'</span>: {
       <span class="hljs-string">'express'</span>: (req, res, api) =&gt; {
-        api.callAlarmLevelAction({action: req.params.action}, (err, result) =&gt; {
+        api.callAlarmLevelAction({action: req.params.action, password: req.payload.password}, (err, result) =&gt; {
           <span class="hljs-keyword">if</span> (err) {
             <span class="hljs-keyword">return</span> res.status(err.status).send(err.toString())
           }
@@ -129,7 +129,7 @@
         })
       },
       <span class="hljs-string">'hapi'</span>: (req, reply, api) =&gt; {
-        api.callAlarmLevelAction({action: req.params.action}, (err, result) =&gt; {
+        api.callAlarmLevelAction({action: req.params.action, password: req.payload.password}, (err, result) =&gt; {
           <span class="hljs-keyword">if</span> (err) {
             <span class="hljs-keyword">return</span> reply(err.toString()).code(err.status)
           }

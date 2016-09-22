@@ -428,17 +428,21 @@ If scheduled, cannot return the state in the callback: will return an ID to regi
 <ul>
 <li><p><strong>info is optional and must be an Object.</strong><br/>(Information to trigger the event.)</p>
 <ul>
-<li><strong>info.action must be a string.</strong><br/>(The level to trigger. Can be on, half or off.)</li>
+<li><p><strong>info.action must be a string.</strong><br/>(The level to trigger. Can be on, half or off.)</p>
+</li>
+<li><p><strong>info.password must be a string.</strong><br/>(The password, as for authentication process, only if the alarm level must be lowered.)</p>
+</li>
 </ul>
 </li>
 <li><p><strong>callback must be a function.</strong><br/>(The function to call with all data, depending on the step of the action macro: in the simplest case (one action, no delay), then the result of the call to Myfox. In other cases, an ID to follow with a macro listener The callback parameters must follows the same signature as a macro listener (see addMacroListener() method).)</p>
 </li>
 <li><p><strong>macroId is optional and must be a string.</strong><br/>(Optional ID to keep track of the action if multiple steps or delay is provided.)</p>
 </li>
-</ul></div></div><div class="code"><div class="wrapper">  callAlarmLevelAction ({action}, callback, macroId = <span class="hljs-literal">undefined</span>) {</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Validation of parameters</p></div></div><div class="code"><div class="wrapper">    <span class="hljs-keyword">const</span> validator = Joi.object({
+</ul></div></div><div class="code"><div class="wrapper">  callAlarmLevelAction ({action, password = <span class="hljs-literal">undefined</span>}, callback, macroId = <span class="hljs-literal">undefined</span>) {</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Validation of parameters</p></div></div><div class="code"><div class="wrapper">    <span class="hljs-keyword">const</span> validator = Joi.object({
       action: Joi.string().required().valid([<span class="hljs-string">'on'</span>, <span class="hljs-string">'half'</span>, <span class="hljs-string">'off'</span>])
     })
-    Joi.assert({action}, validator)</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Build macroId only if a delay or complex steps are added.
+    Joi.assert({action}, validator)</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>TODO !0: check if action is lower than effective level.
+TODO !0: If true, then check password equality with this.accountCredentials.password. If fails, return forbidden code.</p></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Build macroId only if a delay or complex steps are added.
 macroId = macroId || crypto.randomBytes(20).toString(&#39;hex&#39;)</p></div></div><div class="code"><div class="wrapper">    macroId = <span class="hljs-literal">null</span>
     <span class="hljs-keyword">const</span> actionLevel = action === <span class="hljs-string">'off'</span> ? <span class="hljs-number">1</span> : (action === <span class="hljs-string">'half'</span> ? <span class="hljs-number">2</span> : (action === <span class="hljs-string">'on'</span> ? <span class="hljs-number">4</span> : -<span class="hljs-number">1</span>))
     <span class="hljs-keyword">let</span> url = config.get(<span class="hljs-string">'myfox-wrapper-api.html.myfox.paths.alarm_action'</span>).replace(<span class="hljs-string">'{level}'</span>, actionLevel)
