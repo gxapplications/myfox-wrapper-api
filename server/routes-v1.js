@@ -127,7 +127,7 @@ const routes = {
     },
     'post': {
       'express': (req, res, api) => {
-        api.callAlarmLevelAction({action: req.params.action, password: req.payload.password}, (err, result) => {
+        api.callAlarmLevelAction({action: req.params.action, password: req.payload && req.payload.password}, (err, result) => {
           if (err) {
             return res.status(err.status).send(err.toString())
           }
@@ -135,7 +135,7 @@ const routes = {
         })
       },
       'hapi': (req, reply, api) => {
-        api.callAlarmLevelAction({action: req.params.action, password: req.payload.password}, (err, result) => {
+        api.callAlarmLevelAction({action: req.params.action, password: req.payload && req.payload.password}, (err, result) => {
           if (err) {
             return reply(err.toString()).code(err.status)
           }

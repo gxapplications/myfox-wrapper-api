@@ -452,6 +452,7 @@ describe('HTML-api library', () => {
 
     beforeEach(() => {
       api = HtmlApi(myfoxSiteIds)
+      api.accountCredentials = {password: 'test-pwd'}
       sinon.stub(CommonApi.prototype, 'callApi') // Because the method is in the parent class
       sinon.stub(CommonApi.prototype, 'notifyMacroListeners') // Because the method is in the parent class
     })
@@ -462,7 +463,7 @@ describe('HTML-api library', () => {
 
     // TODO !0: fix tests for password attribute, if lowering level only.
 
-    it('to test simple nominative case OFF', (done) => {
+    it('to test simple nominative case OFF with password', (done) => {
       api.callApi.returns(Promise.resolve({data: 'test'}))
 
       const callback = (a, b) => {
@@ -476,10 +477,10 @@ describe('HTML-api library', () => {
         done()
       }
 
-      api.callAlarmLevelAction({action: 'off'}, callback)
+      api.callAlarmLevelAction({action: 'off', password: 'test-pwd'}, callback)
     })
 
-    it('to test simple nominative case HALF', (done) => {
+    it('to test simple nominative case HALF with password', (done) => {
       api.callApi.returns(Promise.resolve({data: 'test'}))
 
       const callback = (a, b) => {
@@ -493,10 +494,10 @@ describe('HTML-api library', () => {
         done()
       }
 
-      api.callAlarmLevelAction({action: 'half'}, callback)
+      api.callAlarmLevelAction({action: 'half', password: 'test-pwd'}, callback)
     })
 
-    it('to test simple nominative case ON', (done) => {
+    it('to test simple nominative case ON without password', (done) => {
       api.callApi.returns(Promise.resolve({data: 'test'}))
 
       const callback = (a, b) => {
@@ -511,6 +512,23 @@ describe('HTML-api library', () => {
       }
 
       api.callAlarmLevelAction({action: 'on'}, callback)
+    })
+
+    it('to test simple nominative case ON with password', (done) => {
+      api.callApi.returns(Promise.resolve({data: 'test'}))
+
+      const callback = (a, b) => {
+        sinon.assert.notCalled(api.notifyMacroListeners)
+        sinon.assert.calledOnce(api.callApi)
+        sinon.assert.calledWithMatch(api.callApi, /widget\/\{siteId\}\/protection\/seclev\/4/, /GET/)
+
+        expect(a).to.be.null
+        // The id is not domotic ID, but the macro ID! And null because no need to have one, if just 1 step without delay.
+        expect(b).to.deep.equal({id: null, data: 'test', state: 'finished', remaining: 0})
+        done()
+      }
+
+      api.callAlarmLevelAction({action: 'on', password: 'test-pwd'}, callback)
     })
 
     it('to test error case (wrong level given)', (done) => {
@@ -541,6 +559,8 @@ describe('HTML-api library', () => {
       api.callAlarmLevelAction({action: 'on'}, callback)
     })
 
-    // TODO !0: add failing case when lowering without password will fail.
+    it('to test password error case when action is off')
+    it('to test password error case when action is on and password given')
+    // TODO !0: these 2 tests
   })
 })
