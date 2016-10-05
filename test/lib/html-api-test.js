@@ -461,8 +461,6 @@ describe('HTML-api library', () => {
       CommonApi.prototype.notifyMacroListeners.restore()
     })
 
-    // TODO !0: fix tests for password attribute, if lowering level only.
-
     it('to test simple nominative case OFF with password', (done) => {
       api.callApi.returns(Promise.resolve({data: 'test'}))
 
@@ -559,8 +557,46 @@ describe('HTML-api library', () => {
       api.callAlarmLevelAction({action: 'on'}, callback)
     })
 
-    it('to test password error case when action is off')
-    it('to test password error case when action is on and password given')
-    // TODO !0: these 2 tests
+    it('to test password error case when action is off', (done) => {
+      api.callApi.returns(Promise.resolve({data: 'test'}))
+
+      const callback = (a, b) => {
+        sinon.assert.notCalled(api.notifyMacroListeners)
+        sinon.assert.notCalled(api.callApi)
+
+        expect(a).to.be.not.null
+        done()
+      }
+
+      api.callAlarmLevelAction({action: 'off', password: 'wrong-pwd'}, callback)
+    })
+
+    it('to test password undefined when action is off', (done) => {
+      api.callApi.returns(Promise.resolve({data: 'test'}))
+
+      const callback = (a, b) => {
+        sinon.assert.notCalled(api.notifyMacroListeners)
+        sinon.assert.notCalled(api.callApi)
+
+        expect(a).to.be.not.null
+        done()
+      }
+
+      api.callAlarmLevelAction({action: 'off'}, callback)
+    })
+
+    it('to test password error case when action is on and password given', (done) => {
+      api.callApi.returns(Promise.resolve({data: 'test'}))
+
+      const callback = (a, b) => {
+        sinon.assert.notCalled(api.notifyMacroListeners)
+        sinon.assert.notCalled(api.callApi)
+
+        expect(a).to.be.not.null
+        done()
+      }
+
+      api.callAlarmLevelAction({action: 'on', password: 'wrong-pwd'}, callback)
+    })
   })
 })

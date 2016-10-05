@@ -143,6 +143,30 @@ const routes = {
         })
       }
     }
+  },
+  'inspect_scenario_temperature': {
+    'path': {
+      'express': '/scenario_edition/inspect_temperature/:id',
+      'hapi': '/scenario_edition/inspect_temperature/{id}'
+    },
+    'get': {
+      'express': (req, res, api) => {
+        api.inspectScenarioTemperatureSettings(req.params.id, (err, result) => {
+          if (err) {
+            return res.status(err.status).send(err.toString())
+          }
+          res.send(result)
+        })
+      },
+      'hapi': (req, reply, api) => {
+        api.inspectScenarioTemperatureSettings(req.params.id, (err, result) => {
+          if (err) {
+            return reply(err.toString()).code(err.status)
+          }
+          reply(result)
+        })
+      }
+    }
   }
 }
 
