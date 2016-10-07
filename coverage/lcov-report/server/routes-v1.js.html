@@ -22,22 +22,22 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/10</span>
+        <span class='fraction'>0/12</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/32</span>
+        <span class='fraction'>0/40</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/23</span>
+        <span class='fraction'>0/27</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/10</span>
+        <span class='fraction'>0/12</span>
       </div>
     </div>
   </div>
@@ -193,7 +193,31 @@
 148
 149
 150
-151</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -300,6 +324,30 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -472,7 +520,7 @@ const routes = {
     },
     'post': {
       'express': <span class="fstat-no" title="function not covered" >(req, res, api) =&gt; {</span>
-        api.callAlarmLevelAction({action: req.params.action, password: req.payload.password}, <span class="fstat-no" title="function not covered" >(err, result) =&gt; {</span>
+        api.callAlarmLevelAction({action: req.params.action, password: req.payload &amp;&amp; req.payload.password}, <span class="fstat-no" title="function not covered" >(err, result) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >          if (err) {</span>
             return res.status(err.status).send(err.toString())
           }
@@ -480,7 +528,31 @@ const routes = {
         })
       },
       'hapi': <span class="fstat-no" title="function not covered" >(req, reply, api) =&gt; {</span>
-        api.callAlarmLevelAction({action: req.params.action, password: req.payload.password}, <span class="fstat-no" title="function not covered" >(err, result) =&gt; {</span>
+        api.callAlarmLevelAction({action: req.params.action, password: req.payload &amp;&amp; req.payload.password}, <span class="fstat-no" title="function not covered" >(err, result) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >          if (err) {</span>
+            return reply(err.toString()).code(err.status)
+          }
+          reply(result)
+        })
+      }
+    }
+  },
+  'inspect_scenario_temperature': {
+    'path': {
+      'express': '/scenario_edition/inspect_temperature/:id',
+      'hapi': '/scenario_edition/inspect_temperature/{id}'
+    },
+    'get': {
+      'express': <span class="fstat-no" title="function not covered" >(req, res, api) =&gt; {</span>
+        api.inspectScenarioTemperatureSettings(req.params.id, <span class="fstat-no" title="function not covered" >(err, result) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >          if (err) {</span>
+            return res.status(err.status).send(err.toString())
+          }
+          res.send(result)
+        })
+      },
+      'hapi': <span class="fstat-no" title="function not covered" >(req, reply, api) =&gt; {</span>
+        api.inspectScenarioTemperatureSettings(req.params.id, <span class="fstat-no" title="function not covered" >(err, result) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >          if (err) {</span>
             return reply(err.toString()).code(err.status)
           }
@@ -499,7 +571,7 @@ export default routes
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Sep 22 2016 13:59:07 GMT+0200 (CEST)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Oct 07 2016 09:27:37 GMT+0200 (CEST)
 </div>
 </div>
 <script src="../prettify.js"></script>

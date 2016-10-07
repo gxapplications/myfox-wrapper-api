@@ -253,6 +253,26 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                   "foldPrefix": "^",
                   "name": "JavaScript"
                 },
+                "sourcePath": "/home/xavier/git/tests/myfox-wrapper-api/lib/html-parsers/scenario_edition.js",
+                "projectPath": "lib/html-parsers/scenario_edition.js",
+                "targetPath": "lib/html-parsers/scenario_edition",
+                "pageTitle": "lib/html-parsers/scenario_edition",
+                "title": "scenario_edition"
+              },
+              "depth": 3,
+              "outline": []
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".js"],
+                  "pygmentsLexer": "javascript",
+                  "multiLineComment": ["/*", "*", "*/"],
+                  "singleLineComment": ["//"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "JavaScript"
+                },
                 "sourcePath": "/home/xavier/git/tests/myfox-wrapper-api/lib/html-parsers/simple-code-action.js",
                 "projectPath": "lib/html-parsers/simple-code-action.js",
                 "targetPath": "lib/html-parsers/simple-code-action",

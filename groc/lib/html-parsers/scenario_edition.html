@@ -1,0 +1,196 @@
+<!DOCTYPE html><html lang="en"><head><title>lib/html-parsers/scenario_edition</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="lib/html-parsers/scenario_edition"><meta name="groc-project-path" content="lib/html-parsers/scenario_edition.js"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path">lib/html-parsers/scenario_edition.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-pi">'use strict'</span>
+
+<span class="hljs-keyword">import</span> trumpet <span class="hljs-keyword">from</span> <span class="hljs-string">'trumpet'</span>
+<span class="hljs-keyword">import</span> { trumpetAttr, trumpetInnerText } <span class="hljs-keyword">from</span> <span class="hljs-string">'./index'</span></div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Returns a trumpet parser that will get input values to go to the next edition step.</p>
+<p>GET <a href="https://myfox.me/scenario/{homeId}/manage/{scenarioId}/1">https://myfox.me/scenario/{homeId}/manage/{scenarioId}/1</a>
+=&gt; <form id="scenarioForm" action="https://myfox.me/scenario/xxxx/manage/xxxx/2" method="post">
+     <input type="hidden" name="scData" value="xxxx" />
+     <input type="text" name="label" id="scenarioLabel" value="xxxxx" maxlength="30" autocomplete="off" />
+   </form></p>
+<p>Parameters:</p>
+<ul>
+<li><strong>wrapperApi must be a MyfoxWrapperApiCommon.</strong><br/>(The Api instance, to throw events)</li>
+</ul>
+<p><strong>Returns a trumpet</strong><br/>(The trumpet parser to plug on the HTML stream.)</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">step1Parser</span> (<span class="hljs-params">wrapperApi</span>) </span>{
+  <span class="hljs-keyword">const</span> trumpetParser = trumpet()
+  trumpetParser.nextPayload = {}</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>get scData</p></div></div><div class="code"><div class="wrapper">  trumpetParser.select(<span class="hljs-string">'form#scenarioForm input[name="scData"]'</span>, trumpetAttr(<span class="hljs-string">'value'</span>, (value) =&gt; {
+    trumpetParser.nextPayload.scData = value
+  }))</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>get label</p></div></div><div class="code"><div class="wrapper">  trumpetParser.select(<span class="hljs-string">'form#scenarioForm input[name="label"]'</span>, trumpetAttr(<span class="hljs-string">'value'</span>, (value) =&gt; {
+    trumpetParser.nextPayload.label = value
+  }))</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>input submit (button) means end of the parsing</p></div></div><div class="code"><div class="wrapper">  trumpetParser.select(<span class="hljs-string">'form#scenarioForm input[type="submit"]'</span>, () =&gt; {
+    <span class="hljs-keyword">if</span> (!trumpetParser.nextPayload.scData || !trumpetParser.nextPayload.label) {
+      <span class="hljs-keyword">const</span> error = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Scenario edition failed at step 1. Step 1 form not found.'</span>)
+      error.status = <span class="hljs-number">404</span>
+      <span class="hljs-keyword">return</span> trumpetParser.emit(<span class="hljs-string">'error'</span>, error)
+    }
+    trumpetParser.end()
+  })
+
+  <span class="hljs-keyword">return</span> trumpetParser
+}</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Returns a trumpet parser that will get input values to go to the next edition step.</p>
+<p>POST <a href="https://myfox.me/scenario/{homeId}/manage/{scenarioId}/2">https://myfox.me/scenario/{homeId}/manage/{scenarioId}/2</a>
+   with scData: &quot;xxxx&quot;
+        label: &quot;xxxxx&quot;
+=&gt; <form id="scenarioForm" action="https://myfox.me/scenario/xxxx/manage/xxxx/3" method="post">
+     <input type="hidden" name="scData" value="xxxx" />
+     <input type="hidden" id="scenarioType" name="type" value="xxxx" />
+   </form></p>
+<p>Parameters:</p>
+<ul>
+<li><strong>wrapperApi must be a MyfoxWrapperApiCommon.</strong><br/>(The Api instance, to throw events)</li>
+</ul>
+<p><strong>Returns a trumpet</strong><br/>(The trumpet parser to plug on the HTML stream.)</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">step2Parser</span> (<span class="hljs-params">wrapperApi</span>) </span>{
+  <span class="hljs-keyword">const</span> trumpetParser = trumpet()
+  trumpetParser.nextPayload = {}</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>get scData</p></div></div><div class="code"><div class="wrapper">  trumpetParser.select(<span class="hljs-string">'form#scenarioForm input[name="scData"]'</span>, trumpetAttr(<span class="hljs-string">'value'</span>, (value) =&gt; {
+    trumpetParser.nextPayload.scData = value
+  }))</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>get label</p></div></div><div class="code"><div class="wrapper">  trumpetParser.select(<span class="hljs-string">'form#scenarioForm input[name="type"]'</span>, trumpetAttr(<span class="hljs-string">'value'</span>, (value) =&gt; {
+    trumpetParser.nextPayload.type = value
+  }))</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>input submit (button) means end of the parsing</p></div></div><div class="code"><div class="wrapper">  trumpetParser.select(<span class="hljs-string">'form#scenarioForm input[type="submit"]'</span>, () =&gt; {
+    <span class="hljs-keyword">if</span> (!trumpetParser.nextPayload.scData || !trumpetParser.nextPayload.type) {
+      <span class="hljs-keyword">const</span> error = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Scenario edition failed at step 2. Step 2 form not found.'</span>)
+      error.status = <span class="hljs-number">404</span>
+      <span class="hljs-keyword">return</span> trumpetParser.emit(<span class="hljs-string">'error'</span>, error)
+    }
+    trumpetParser.end()
+  })
+
+  <span class="hljs-keyword">return</span> trumpetParser
+}</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Returns a trumpet parser that will inspect form structure searching for temperature condition occurrences.</p>
+<p>POST <a href="https://myfox.me/scenario/{homeId}/manage/{scenarioId}/3">https://myfox.me/scenario/{homeId}/manage/{scenarioId}/3</a>
+   with scData: &quot;xxxx&quot;
+        type: &quot;xxxx&quot;
+=&gt; <form id="scenarioForm" action="https://myfox.me/scenario/xxxx/manage/xxxx/4" method="post">
+     <input type="hidden" name="scData" value="xxxx" />
+     <inputs ...>  (not needed here)
+     <div class="tab-content tab-sensors">
+       <input type="radio" name="_trigger_type" value="4" checked="checked" />   (if checked, keep condition)
+       <div class="settings-tooltip" id="_trigger_4">
+         <div class="settings temperature">
+           <select name="_trigger[4][1][deviceSlaveId]"><option value="xxxx" selected="selected">Capteur SdB</option><option value="xxxx">Capteur Salon</option></select>
+           <input name="_trigger[4][1][value]" value="15" type="text" class="" />
+           <input type="radio" name="_trigger[4][1][operator]" value="1" checked="checked" /> (à la hausse)
+           <input type="radio" name="_trigger[4][1][operator]" value="0" /> (à la baisse)
+         </div>
+       </div>
+     </div>
+     <div class="conditions">
+       <div class="condition condition-4 option-block" data-triggertype="4">
+         <input type="checkbox" name="_condition_4_1" value="4" />
+         <span>Si la température...</span>
+       </div>
+       <div class="condition-inputs choice-4-1">
+         ... du capteur     <select name="_condition[4][1][deviceSlaveId]">
+           <option value="xxxx">Capteur SdB</option>
+           <option value="xxxx" selected="selected">Capteur Salon</option>
+         </select> est     <select name="_condition[4][1][operator]">
+           <option value="0" selected="selected">&lt;</option>
+           <option value="1">&gt;</option>
+           <option value="2">=</option>
+         </select> à <input name="_condition[4][1][value]" value="16" type="text" class="" /> °C
+       </div>
+       <div class="condition choice-4-2">
+         <input type="checkbox" name="_condition_4_2" value="4" />
+         <span>Et si la température...</span>
+       </div>
+       <div class="item condition-inputs">
+         ... du capteur     <select name="_condition[4][2][deviceSlaveId]">
+           <option value="xxxx">Capteur SdB</option>
+           <option value="xxxx" selected="selected">Capteur Salon</option>
+         </select> est     <select name="_condition[4][2][operator]">
+           <option value="0">&lt;</option>
+           <option value="1" selected="selected">&gt;</option>
+           <option value="2">=</option>
+         </select> à <input name="_condition[4][2][value]" value="14" type="text" class="" /> °C
+       </div>
+     </div>
+   </form></p>
+<p>Parameters:</p>
+<ul>
+<li><strong>wrapperApi must be a MyfoxWrapperApiCommon.</strong><br/>(The Api instance, to throw events)</li>
+</ul>
+<p><strong>Returns a trumpet</strong><br/>(The trumpet parser to plug on the HTML stream.)</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">step3TempInspectionParser</span> (<span class="hljs-params">wrapperApi</span>) </span>{
+  <span class="hljs-keyword">const</span> trumpetParser = trumpet()
+  trumpetParser.data = {}
+  trumpetParser.setMaxListeners(<span class="hljs-number">14</span>) <span class="hljs-comment">// We have a lot of stuff to analyze...</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>if input type=&quot;radio&quot; name=&quot;_trigger_type&quot; value=&quot;4&quot; has checked=&quot;checked&quot;, then scan main temperature condition</p></div></div><div class="code"><div class="wrapper">  trumpetParser.select(<span class="hljs-string">'form#scenarioForm input[name="_trigger_type"][value="4"]'</span>, trumpetAttr(<span class="hljs-string">'checked'</span>, (checked) =&gt; {
+    <span class="hljs-keyword">if</span> (checked === <span class="hljs-string">'checked'</span>) {
+      trumpetParser.data.trigger_4 = {}</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>get scenario</p></div></div><div class="code"><div class="wrapper">      trumpetParser.select(
+        <span class="hljs-string">'form#scenarioForm select[name="_trigger[4][1][deviceSlaveId]"] option[selected="selected"]'</span>,
+        trumpetAttr(<span class="hljs-string">'value'</span>, (value) =&gt; {
+          trumpetParser.data.trigger_4 = {deviceSlaveId: value}
+        })
+      )
+      trumpetParser.select(
+        <span class="hljs-string">'form#scenarioForm select[name="_trigger[4][1][deviceSlaveId]"] option[selected="selected"]'</span>,
+        trumpetInnerText((text) =&gt; {
+          trumpetParser.data.trigger_4.deviceSlaveName = text
+        })
+      )</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>get temperature value</p></div></div><div class="code"><div class="wrapper">      trumpetParser.select(
+        <span class="hljs-string">'form#scenarioForm input[name="_trigger[4][1][value]"]'</span>,
+        trumpetAttr(<span class="hljs-string">'value'</span>, (value) =&gt; {
+          trumpetParser.data.trigger_4.value = value
+        })
+      )</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>get operator</p></div></div><div class="code"><div class="wrapper">      trumpetParser.select(
+        <span class="hljs-string">'form#scenarioForm input[name="_trigger[4][1][operator]"][checked="checked"]'</span>,
+        trumpetAttr(<span class="hljs-string">'value'</span>, (value) =&gt; {
+          trumpetParser.data.trigger_4.operator = value
+        })
+      )
+    }
+  }))</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>First secondary condition</p></div></div><div class="code"><div class="wrapper">  trumpetParser.select(
+    <span class="hljs-string">'div.conditions div.choice-4-1 select[name="_condition[4][1][deviceSlaveId]"] option[selected="selected"]'</span>,
+    trumpetAttr(<span class="hljs-string">'value'</span>, (value) =&gt; {
+      trumpetParser.data.condition_4_1 = {deviceSlaveId: value}
+    })
+  )
+  trumpetParser.select(
+    <span class="hljs-string">'div.conditions div.choice-4-1 select[name="_condition[4][1][deviceSlaveId]"] option[selected="selected"]'</span>,
+    trumpetInnerText((text) =&gt; {
+      trumpetParser.data.condition_4_1.deviceSlaveName = text
+    })
+  )
+  trumpetParser.select(
+    <span class="hljs-string">'div.conditions div.choice-4-1 select[name="_condition[4][1][operator]"] option[selected="selected"]'</span>,
+    trumpetAttr(<span class="hljs-string">'value'</span>, (value) =&gt; {
+      <span class="hljs-keyword">if</span> (trumpetParser.data.condition_4_1) {
+        trumpetParser.data.condition_4_1.operator = value
+      }
+    })
+  )
+  trumpetParser.select(
+    <span class="hljs-string">'div.conditions div.choice-4-1 input[name="_condition[4][1][value]"]'</span>,
+    trumpetAttr(<span class="hljs-string">'value'</span>, (value) =&gt; {
+      <span class="hljs-keyword">if</span> (trumpetParser.data.condition_4_1) {
+        trumpetParser.data.condition_4_1.value = value
+      }
+    })
+  )</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Second secondary condition</p></div></div><div class="code"><div class="wrapper">  trumpetParser.select(
+    <span class="hljs-string">'div.conditions div.item.condition-inputs select[name="_condition[4][2][deviceSlaveId]"] option[selected="selected"]'</span>,
+    trumpetAttr(<span class="hljs-string">'value'</span>, (value) =&gt; {
+      trumpetParser.data.condition_4_2 = {deviceSlaveId: value}
+    })
+  )
+  trumpetParser.select(
+    <span class="hljs-string">'div.conditions div.item.condition-inputs select[name="_condition[4][2][deviceSlaveId]"] option[selected="selected"]'</span>,
+    trumpetInnerText((text) =&gt; {
+      trumpetParser.data.condition_4_2.deviceSlaveName = text
+    })
+  )
+  trumpetParser.select(
+    <span class="hljs-string">'div.conditions div.item.condition-inputs select[name="_condition[4][2][operator]"] option[selected="selected"]'</span>,
+    trumpetAttr(<span class="hljs-string">'value'</span>, (value) =&gt; {
+      <span class="hljs-keyword">if</span> (trumpetParser.data.condition_4_2) {
+        trumpetParser.data.condition_4_2.operator = value
+      }
+    })
+  )
+  trumpetParser.select(
+    <span class="hljs-string">'div.conditions div.item.condition-inputs input[name="_condition[4][2][value]"]'</span>,
+    trumpetAttr(<span class="hljs-string">'value'</span>, (value) =&gt; {
+      <span class="hljs-keyword">if</span> (trumpetParser.data.condition_4_2) {
+        trumpetParser.data.condition_4_2.value = value
+      }
+    })
+  )
+
+  <span class="hljs-keyword">return</span> trumpetParser
+}</div></div></div></div></body></html>

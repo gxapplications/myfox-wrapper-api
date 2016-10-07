@@ -362,7 +362,7 @@ The possible action depends on the action type (on demand or not).</p>
 <ul>
 <li><p><strong>info.action must be a string.</strong><br/>(The level to trigger. Can be on, half or off.)</p>
 </li>
-<li><p><strong>info.password must be a string.</strong><br/>(The password, as for authentication process, only if the alarm level must be lowered.)</p>
+<li><p><strong>info.password must be a string.</strong><br/>(The password, as for authentication process, only if the alarm level must be off or half.)</p>
 </li>
 </ul>
 </li>
@@ -372,6 +372,15 @@ The possible action depends on the action type (on demand or not).</p>
 </li>
 </ul></div></div><div class="code"><div class="wrapper">  callAlarmLevelAction ({action, password = <span class="hljs-literal">undefined</span>}, callback, macroId = <span class="hljs-literal">undefined</span>) {
     _notImplemented.bind(<span class="hljs-keyword">this</span>)(<span class="hljs-string">'callAlarmLevelAction'</span>, callback)
+  }</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Uses edition mode to inspect a scenario and get its temperature settings (HTML strategy only)</p>
+<p>Parameters:</p>
+<ul>
+<li><p><strong>scenarioId must be a string.</strong><br/>(The ID of the scenario to inspect. The scenario edition will not modify any parameter.)</p>
+</li>
+<li><p><strong>callback must be a function.</strong><br/>(The function to call with all data.)</p>
+</li>
+</ul></div></div><div class="code"><div class="wrapper">  inspectScenarioTemperatureSettings (scenarioId, callback) {
+    _notImplemented.bind(<span class="hljs-keyword">this</span>)(<span class="hljs-string">'inspectScenarioTemperatureSettings'</span>, callback)
   }
 }
 

@@ -121,7 +121,7 @@
     },
     <span class="hljs-string">'post'</span>: {
       <span class="hljs-string">'express'</span>: (req, res, api) =&gt; {
-        api.callAlarmLevelAction({action: req.params.action, password: req.payload.password}, (err, result) =&gt; {
+        api.callAlarmLevelAction({action: req.params.action, password: req.payload &amp;&amp; req.payload.password}, (err, result) =&gt; {
           <span class="hljs-keyword">if</span> (err) {
             <span class="hljs-keyword">return</span> res.status(err.status).send(err.toString())
           }
@@ -129,7 +129,31 @@
         })
       },
       <span class="hljs-string">'hapi'</span>: (req, reply, api) =&gt; {
-        api.callAlarmLevelAction({action: req.params.action, password: req.payload.password}, (err, result) =&gt; {
+        api.callAlarmLevelAction({action: req.params.action, password: req.payload &amp;&amp; req.payload.password}, (err, result) =&gt; {
+          <span class="hljs-keyword">if</span> (err) {
+            <span class="hljs-keyword">return</span> reply(err.toString()).code(err.status)
+          }
+          reply(result)
+        })
+      }
+    }
+  },
+  <span class="hljs-string">'inspect_scenario_temperature'</span>: {
+    <span class="hljs-string">'path'</span>: {
+      <span class="hljs-string">'express'</span>: <span class="hljs-string">'/scenario_edition/inspect_temperature/:id'</span>,
+      <span class="hljs-string">'hapi'</span>: <span class="hljs-string">'/scenario_edition/inspect_temperature/{id}'</span>
+    },
+    <span class="hljs-string">'get'</span>: {
+      <span class="hljs-string">'express'</span>: (req, res, api) =&gt; {
+        api.inspectScenarioTemperatureSettings(req.params.id, (err, result) =&gt; {
+          <span class="hljs-keyword">if</span> (err) {
+            <span class="hljs-keyword">return</span> res.status(err.status).send(err.toString())
+          }
+          res.send(result)
+        })
+      },
+      <span class="hljs-string">'hapi'</span>: (req, reply, api) =&gt; {
+        api.inspectScenarioTemperatureSettings(req.params.id, (err, result) =&gt; {
           <span class="hljs-keyword">if</span> (err) {
             <span class="hljs-keyword">return</span> reply(err.toString()).code(err.status)
           }
