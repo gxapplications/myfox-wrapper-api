@@ -167,8 +167,31 @@ const routes = {
         })
       }
     }
+  },
+  'update_scenario_temperature': {
+    'path': {
+      'express': '/scenario_edition/update_temperatures/:id',
+      'hapi': '/scenario_edition/update_temperatures/{id}'
+    },
+    'put': {
+      'express': (req, res, api) => {
+        api.updateScenarioTemperatureSettings(req.params.id, req.payload, (err, result) => {
+          if (err) {
+            return res.status(err.status).send(err.toString())
+          }
+          res.send(result)
+        })
+      },
+      'hapi': (req, reply, api) => {
+        api.updateScenarioTemperatureSettings(req.params.id, req.payload, (err, result) => {
+          if (err) {
+            return reply(err.toString()).code(err.status)
+          }
+          reply(result)
+        })
+      }
+    }
   }
 }
 
 export default routes
-
