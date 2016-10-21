@@ -42,7 +42,9 @@
           "alarm_action": "/widget/{siteId}/protection/seclev/{level}",
           "scenario_edition_temp_1": "/scenario/{siteId}/manage/{scenarioId}/1",
           "scenario_edition_temp_2": "/scenario/{siteId}/manage/{scenarioId}/2",
-          "scenario_edition_temp_3": "/scenario/{siteId}/manage/{scenarioId}/3"
+          "scenario_edition_temp_3": "/scenario/{siteId}/manage/{scenarioId}/3",
+          "scenario_edition_temp_4": "/scenario/{siteId}/manage/{scenarioId}/4",
+          "scenario_edition_temp_5": "/scenario/{siteId}/manage/{scenarioId}/5"
         }
       }
     }
