@@ -6,7 +6,8 @@ import fs from 'fs'
 import path from 'path'
 
 import CommonApi from '../../../lib/common-api'
-import { step1Parser, step2Parser, step3TempInspectionParser } from '../../../lib/html-parsers/scenario_edition'
+import { step1Parser, step2Parser, step3TempInspectionParser,
+  step3TempModificationParser } from '../../../lib/html-parsers/scenario_edition'
 
 describe('HTML Scenario edition parser', () => {
   it('can parse the first manager step', (done) => {
@@ -61,6 +62,18 @@ describe('HTML Scenario edition parser', () => {
     })
     tr.on('error', done)
     fs.createReadStream(path.join(__dirname, 'mock-scenario-edition-third-step.html')).pipe(tr)
+  })
+
+  // FIXME !1: remove .only
+  it.only('can parse the full third manager step and return the whole payload in all cases', (done) => {
+    let api = new CommonApi({'myfoxSiteIds': [1234]})
+    let tr = step3TempModificationParser(api)
+    tr.on('end', () => {
+      console.log(tr.nextPayload, '######') // TODO !0: assert to the resulting payload
+      done()
+    })
+    tr.on('error', done)
+    fs.createReadStream(path.join(__dirname, 'mock-scenario-edition-third-step-full-1.html')).pipe(tr)
   })
 })
 
