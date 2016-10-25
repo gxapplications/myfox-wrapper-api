@@ -139,7 +139,7 @@ describe('HTML Scenario edition parser', () => {
     fs.createReadStream(path.join(__dirname, 'mock-scenario-edition-third-step-full-3.html')).pipe(tr)
   })
 
-  it.only('can fix a step 3 payload with temperature settings', () => {
+  it('can fix a step 3 payload with temperature settings', () => {
     const settings = {
 
     }
@@ -149,9 +149,9 @@ describe('HTML Scenario edition parser', () => {
     expect(step3TempFixer(payload, settings)).to.deep.equal({
 
     })
-    // TODO !0: a partir d'un jeu de settings avec les 3 types de conditions,
+    // TODO !2: a partir d'un jeu de settings avec les 3 types de conditions,
     // et une payload vue dans un test au-dessus, que doit-on avoir ?
     // (temperature avec des delta +/- 1° ???)
+    // Tester le cas des temperatures a virgule (ou a point ?)
   })
 })
-
