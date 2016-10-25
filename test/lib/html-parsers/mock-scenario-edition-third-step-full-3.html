@@ -21,7 +21,7 @@
           </li>
           <li class="seclev-2">
             <span ...><span ...>
-              <input type="checkbox" name="_trigger[3][2]" value="1" checked="checked" />
+              <input type="checkbox" name="_trigger[3][2]" value="1" />
             </span></span>
           </li>
           <li class="seclev-1">
@@ -43,7 +43,7 @@
           </li>
           <li class="risk-16 option-block">
             <span ...><span ...>
-              <input type="radio" name="_trigger[2]" value="16" checked="checked" />
+              <input type="radio" name="_trigger[2]" value="16" />
             </span></span>
           </li>
           <li class="risk-4 option-block">
@@ -70,7 +70,7 @@
         <li class="sensors sensors-4 option-block" data-triggertype="4">
           <div class="choice">
             <span ...><span ...>
-              <input type="radio" name="_trigger_type" value="4" checked="checked" />
+              <input type="radio" name="_trigger_type" value="4" />
             </span></span>
           </div>
           <div class="settings-tooltip" id="_trigger_4">
@@ -100,7 +100,7 @@
         <li class="sensors sensors-5 option-block" data-triggertype="5">
           <div class="choice">
             <span class="input-radio trigger-choice" data-default="" data-group="_trigger_type" data-cancel="1"><span class="icon">
-              <input type="radio" name="_trigger_type" value="5" />
+              <input type="radio" name="_trigger_type" value="5" checked="checked" />
             </span></span>
           </div>
           <div class="settings-tooltip" id="_trigger_5">
@@ -108,11 +108,11 @@
               <div class="settings light">
                   <table>
                     <tr><td>Capteur</td><td>
-                    <select name="_trigger[5][1][deviceSlaveId]"><option value="4567890">Capteur SdB</option><option value="xxxxxxx">Capteur Salon</option></select>
+                    <select name="_trigger[5][1][deviceSlaveId]"><option value="4567890" selected="selected">Capteur SdB</option><option value="xxxxxxx">Capteur Salon</option></select>
                     </td></tr><tr><td>Luminosité</td><td>
                       <select name="_trigger[5][1][value]">
                         <option value="1">Pleine lumière</option>
-                        <option value="2">Lumière du jour</option>
+                        <option value="2" selected="selected">Lumière du jour</option>
                         <option value="4">Lumière basse</option>
                         <option value="5">Pénombre</option>
                         <option value="6">Obscurité</option>
@@ -140,7 +140,7 @@
                   <tr><td>Capteur</td><td>
                   <select name="_trigger[7]">
                     <option value="xxx">Porte d'entrée</option>
-                    <option value="xxxx">Mouvement garage</option>
+                    <option value="98712345" selected="selected">Mouvement garage</option>
                     <option value="xxxx">Fenêtre salon</option>
                     <option value="xxxx">Mouvement salon</option>
                     <option value="xx">Porte du garage</option>
@@ -168,7 +168,7 @@
     <div class="condition condition-3 option-block" data-triggertype="3">
       <div class="title">
         <span class="input-checkbox condition-choice condition-3-choice" data-default=""><span class="icon">
-          <input type="checkbox" name="_condition_3" value="3" checked="checked" />
+          <input type="checkbox" name="_condition_3" value="3" />
         </span></span>
       </div>
       <div class="item condition-inputs security-level">
@@ -195,7 +195,7 @@
     <div class="condition condition-1 option-block" data-triggertype="1">
       <div class="title">
         <span class="input-checkbox condition-choice condition-1-choice" data-default=""><span class="icon">
-          <input type="checkbox" name="_condition_1" value="1" checked="checked" />
+          <input type="checkbox" name="_condition_1" value="1" />
         </span></span>
       </div>
       <div class="item condition-inputs">
@@ -224,7 +224,7 @@
     <div class="condition condition-4 option-block" data-triggertype="4">
       <div class="title">
         <span class="input-checkbox condition-choice condition-Limited 4-1" data-default="4"><span class="icon">
-          <input type="checkbox" name="_condition_4_1" value="4" checked="checked" />
+          <input type="checkbox" name="_condition_4_1" value="4" />
         </span></span>
         <span>Si la température...</span>
       </div>
@@ -246,7 +246,7 @@
         <div class="condition choice-4-2">
           <div class="title">
             <span class="input-checkbox condition-choice condition-Limited 4-2" data-default="4"><span class="icon">
-              <input type="checkbox" name="_condition_4_2" value="4" checked="checked" />
+              <input type="checkbox" name="_condition_4_2" value="4" />
             </span></span>
             <span>Et si la température...</span>
           </div>
@@ -271,7 +271,7 @@
     <div class="condition condition-5 option-block" data-triggertype="5">
       <div class="title">
         <span class="input-checkbox condition-choice condition-Limited 5-1" data-default=""><span class="icon">
-          <input type="checkbox" name="_condition_5_1" value="5" checked="checked" />
+          <input type="checkbox" name="_condition_5_1" value="5" />
         </span></span>
         <span>Si la luminosité...</span>
       </div>
@@ -279,7 +279,7 @@
         <div class="condition-inputs choice-5-1"> ... du capteur
           <select name="_condition[5][1][deviceSlaveId]">
             <option value="xxx">Capteur SdB</option>
-            <option value="xxx" selected="selected">Capteur Salon</option>
+            <option value="xxx">Capteur Salon</option>
           </select>
           <select name="_condition[5][1][operator]">
             <option value="0" selected="selected"><</option>
@@ -291,18 +291,18 @@
             <option value="2">Lumière du jour</option>
             <option value="4">Lumière basse</option>
             <option value="5">Pénombre</option>
-            <option value="6" selected="selected">Obscurité</option>
+            <option value="6">Obscurité</option>
           </select>
         </div>
         <div class="condition choice-5-2">
           <div class="title">
             <span class="input-checkbox condition-choice condition-Limited 5-2" data-default=""><span class="icon">
-              <input type="checkbox" name="_condition_5_2" value="5" checked="checked" />
+              <input type="checkbox" name="_condition_5_2" value="5" />
             </span></span>
           </div>
           <div class="item condition-inputs"> ... du capteur
             <select name="_condition[5][2][deviceSlaveId]">
-              <option value="xxx" selected="selected">Capteur SdB</option>
+              <option value="xxx">Capteur SdB</option>
               <option value="xxx">Capteur Salon</option>
             </select>
             <select name="_condition[5][2][operator]">
@@ -313,7 +313,7 @@
             <select name="_condition[5][2][value]">
               <option value="1">Pleine lumière</option>
               <option value="2">Lumière du jour</option>
-              <option value="4" selected="selected">Lumière basse</option>
+              <option value="4">Lumière basse</option>
               <option value="5">Pénombre</option>
               <option value="6">Obscurité</option>
             </select>
