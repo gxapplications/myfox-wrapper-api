@@ -7,7 +7,7 @@ import path from 'path'
 
 import CommonApi from '../../../lib/common-api'
 import { step1Parser, step2Parser, step3TempInspectionParser,
-  step3TempModificationParser, step3TempFixer } from '../../../lib/html-parsers/scenario_edition'
+  step3TempModificationParser, step3TempFixer, step4Parser } from '../../../lib/html-parsers/scenario_edition'
 
 describe('HTML Scenario edition parser', () => {
   it('can parse the first manager step', (done) => {
@@ -140,9 +140,9 @@ describe('HTML Scenario edition parser', () => {
   })
 
   it('can fix a step 3 payload with temperature settings', () => {
-    const settings = {
+    const settings = [{
 
-    }
+    }]
     const payload = {
 
     }
@@ -153,5 +153,22 @@ describe('HTML Scenario edition parser', () => {
     // et une payload vue dans un test au-dessus, que doit-on avoir ?
     // (temperature avec des delta +/- 1° ???)
     // Tester le cas des temperatures a virgule (ou a point ?)
+  })
+
+  it('can parse the full fourth manager step and return the whole payload in all cases (1)', (done) => {
+    let api = new CommonApi({'myfoxSiteIds': [1234]})
+    let tr = step4Parser(api)
+    tr.on('end', () => {
+      expect(tr.nextPayload).to.deep.equal({
+        '_action[d][75689]': '1',
+        '_action[d][7897789]': '0',
+        'delayPlay': '32',
+        'ringtone': true,
+        'scData': 'xxxxxxx'
+      })
+      done()
+    })
+    tr.on('error', done)
+    fs.createReadStream(path.join(__dirname, 'mock-scenario-edition-fourth-step-1.html')).pipe(tr)
   })
 })

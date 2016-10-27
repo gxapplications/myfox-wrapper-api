@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Scenario edition parser test</title>
+</head>
+<body class="myfox" cz-shortcut-listen="true">
+  <form id="scenarioForm" action="https://myfox.me/scenario/xxxx/manage/xxx/5" method="post">
+    <input type="hidden" name="scData" value="xxxxxxx" />
+    <h2>
+        <span class="icon"></span>
+        Choisissez les actions à effectuer
+        <a href="#" class="tooltip-trigger" data-powertip="Sélectionnez les actions qui seront exécutées par le scénario : vous pouvez<br/>sélectionner de multiples actions au sein d'un seul scénario.">
+            <span class="tooltip-icon"></span>
+        </a>
+    </h2>
+    <div class="tabs-list">
+        <ul>
+            <li class="tab-security"><a href="#">	<span class="misc misc-65"><span class="icon"></span></span><span class="text">Sécurité</span></a></li>
+            <li class="tab-domotic"><a href="#">	<span class="misc misc-65"><span class="icon"></span></span><span class="text">Equipements<br />
+électriques</span></a></li>
+            <li class="tab-video"><a href="#">	<span class="misc misc-65"><span class="icon"></span></span><span class="text">Caméras</span></a></li>
+            <li class="tab-automatism"><a href="#">	<span class="misc misc-65"><span class="icon"></span></span><span class="text">Volets</span></a></li>
+            <li class="tab-scenario"><a href="#">	<span class="misc misc-65"><span class="icon"></span></span><span class="text">Déclenchement<br />
+de scénario</span></a></li>
+        </ul>
+        <div class="clear"></div>
+    </div>
+    <div class="tabs-contents">
+        <div class="tab-content tab-security"><div class="item security-level">
+            <ul class="reset">
+                <li class="seclev-4">
+                    <div class="item option-block">
+                        <span class="misc misc-65"><span class="icon"></span></span>
+                        <span class="text">Armement total</span>
+                        <span class="input-radio " data-default="" data-group="_action_securityLevel_" data-cancel="1"><span class="icon"><input type="radio" name="_action[securityLevel]" value="4" /></span></span>
+                    </div>
+                </li>
+                <li class="seclev-2">
+                    <div class="item option-block">
+                        <span class="misc misc-65"><span class="icon"></span></span>
+                        <span class="text">Armement partiel</span>
+                        <span class="input-radio " data-default="" data-group="_action_securityLevel_" data-cancel="1"><span class="icon"><input type="radio" name="_action[securityLevel]" value="2" /></span></span>
+                    </div>
+                </li>
+                <li class="seclev-1">
+                    <div class="item option-block">
+                        <span class="misc misc-65"><span class="icon"></span></span>
+                        <span class="text">Désarmement</span>
+                        <span class="input-radio " data-default="" data-group="_action_securityLevel_" data-cancel="1"><span class="icon"><input type="radio" name="_action[securityLevel]" value="1" /></span></span>
+                    </div>
+                </li>
+            </ul>
+            <div class="clear"></div>
+        </div>
+        </div>
+        <div class="tab-content tab-domotic">					<div class="item option-block">
+		<span class="input-checkbox action-choice" data-default=""><span class="icon"><input
+                type="checkbox"
+                name="_cbx696324"
+                value="1"
+                /></span></span>
+            Grp simulateurs de présence
+            <div class="options">				<span class="switch switch-set switch-set-oo" data-default="" data-input="_action[g][786786]" data-labelposition="left"><span class="label"></span><span class="buttons"><span data-value="1" data-label="Allumer">ON</span><span data-value="0" data-label="Éteindre">OFF</span></span><input type="hidden" name="_action[g][756756]" value="" /></span>
+
+            </div>
+        </div>
+            <div class="item option-block">
+		<span class="input-checkbox action-choice" data-default=""><span class="icon"><input
+                type="checkbox"
+                name="_cbx238165"
+                value="1"
+                /></span></span>
+                Grp à éteindre si départ
+                <div class="options">				<span class="switch switch-set switch-set-oo" data-default="" data-input="_action[g][75786]" data-labelposition="left"><span class="label"></span><span class="buttons"><span data-value="1" data-label="Allumer">ON</span><span data-value="0" data-label="Éteindre">OFF</span></span><input type="hidden" name="_action[g][75675]" value="" /></span>
+
+                </div>
+            </div>
+            <div class="item option-block">
+		<span class="input-checkbox action-choice" data-default=""><span class="icon"><input
+                type="checkbox"
+                name="_cbx304675"
+                value="1"
+                /></span></span>
+                Grp à allumer si arrivée
+                <div class="options">				<span class="switch switch-set switch-set-oo" data-default="" data-input="_action[g][786786]" data-labelposition="left"><span class="label"></span><span class="buttons"><span data-value="1" data-label="Allumer">ON</span><span data-value="0" data-label="Éteindre">OFF</span></span><input type="hidden" name="_action[g][786786]" value="" /></span>
+
+                </div>
+            </div>
+            <div class="item option-block">
+		<span class="input-checkbox action-choice" data-default=""><span class="icon"><input
+                type="checkbox"
+                name="_cbx833267"
+                value="1"
+                /></span></span>
+                Variateur guirlande Lauren
+                <div class="options">
+                    <span class="switch switch-set switch-set-oo" data-default="" data-input="_action[d][963963]" data-labelposition="left"><span class="label"></span><span class="buttons"><span data-value="1" data-label="Allumer">ON</span><span data-value="0" data-label="Éteindre">OFF</span></span><input type="hidden" name="_action[d][963963]" value="" /></span>
+
+
+                </div>
+            </div>
+            <div class="item option-block">
+		<span class="input-checkbox action-choice" data-default=""><span class="icon"><input
+                type="checkbox"
+                name="_cbx929213"
+                value="1"
+                /></span></span>
+                Variateur lampe Lauren
+                <div class="options">
+                    <span class="switch switch-set switch-set-oo" data-default="" data-input="_action[d][963963]" data-labelposition="left"><span class="label"></span><span class="buttons"><span data-value="1" data-label="Allumer">ON</span><span data-value="0" data-label="Éteindre">OFF</span></span><input type="hidden" name="_action[d][9639639]" value="" /></span>
+
+
+                </div>
+            </div>
+            <div class="item option-block">
+		<span class="input-checkbox action-choice" data-default=""><span class="icon"><input
+                type="checkbox"
+                name="_cbx559159"
+                value="1"
+                /></span></span>
+                Variateur itinérant 3
+                <div class="options">
+                    <span class="switch switch-set switch-set-oo" data-default="" data-input="_action[d][123123123]" data-labelposition="left"><span class="label"></span><span class="buttons"><span data-value="1" data-label="Allumer">ON</span><span data-value="0" data-label="Éteindre">OFF</span></span><input type="hidden" name="_action[d][123123123]" value="" /></span>
+
+
+                </div>
+            </div>
+            <div class="item option-block">
+		<span class="input-checkbox action-choice" data-default="1"><span class="icon"><input
+                type="checkbox"
+                name="_cbx389353"
+                value="1"
+                /></span></span>
+                Interrupteur itinérant 2a
+                <div class="options">
+                    <span class="switch switch-set switch-set-oo" data-default="1" data-input="_action[d][85675]" data-labelposition="left"><span class="label"></span><span class="buttons"><span data-value="1" data-label="Allumer">ON</span><span data-value="0" data-label="Éteindre">OFF</span></span><input type="hidden" name="_action[d][75689]" value="1" /></span>
+
+
+                </div>
+            </div>
+            <div class="item option-block">
+		<span class="input-checkbox action-choice" data-default="1"><span class="icon"><input
+                type="checkbox"
+                name="_cbx658633"
+                value="1"
+                /></span></span>
+                Interrupteur itinérant 2b
+                <div class="options">
+                    <span class="switch switch-set switch-set-oo" data-default="0" data-input="_action[d][4567789]" data-labelposition="left"><span class="label"></span><span class="buttons"><span data-value="1" data-label="Allumer">ON</span><span data-value="0" data-label="Éteindre">OFF</span></span><input type="hidden" name="_action[d][7897789]" value="0" /></span>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="tab-content tab-video">		<div class="item">Vous n'avez aucune caméra installée.</div>
+        </div>
+        <div class="tab-content tab-automatism">		<div class="item">Vous n'avez aucun automatisme installé.</div>
+        </div>
+        <div class="tab-content tab-scenario">			<!-- Jouer une sonnerie à l'exécution du scénario -->
+            <div class="item option-block">
+				<span class="input-checkbox " data-default="1"><span class="icon"><input
+                        type="checkbox"
+                        name="ringtone"
+                        value="1"
+                        /></span></span>
+                Jouer une sonnerie au déclenchement du scénario
+                <a href="#" class="tooltip-trigger" data-powertip="Au déclenchement de ce scénario, toutes les sirènes du système joueront une sonnerie.">
+                    <span class="tooltip-icon"></span>
+                </a>
+            </div>
+            <!-- Différer l'exécution du scénario -->
+            <div class="item option-block">
+				<span class="input-checkbox action-choice" data-default="1"><span class="icon"><input
+                        type="checkbox"
+                        name="_cbx476513"
+                        value="1"
+                        /></span></span>
+                Différer l'exécution du scénario
+			<span class="options">
+				<span class="hl">de <input type="text" name="delayPlay" value="32" class="seconds" /> secondes</span>
+			</span>
+                <a href="#" class="tooltip-trigger" data-powertip="Vous pouvez décider que ce scénario soit joué seulement après un temps déterminé.">
+                    <span class="tooltip-icon"></span>
+                </a>
+            </div>
+            <!-- Lancer le scénario inverse -->
+            <div class="item option-block">
+				<span class="input-checkbox action-choice" data-default=""><span class="icon"><input
+                        type="checkbox"
+                        name="_cbx499014"
+                        value="1"
+                        /></span></span>
+                Exécuter le scénario inverse
+			<span class="options">
+				<span class="hl">après <input type="text" name="delayReverse" value="30" class="seconds" /> secondes</span>
+			</span>
+                <a href="#" class="tooltip-trigger" data-powertip="Une fois le scénario exécuté (allumer une lampe par exemple), vous pouvez décider de<br/>l'inverser automatiquement (éteindre la même lampe)  après un temps déterminé.">
+                    <span class="tooltip-icon"></span>
+                </a>
+            </div>
+            <!-- Lancer un autre scénario -->
+            <div class="item option-block">
+				<span class="input-checkbox action-choice" data-default=""><span class="icon"><input
+                        type="checkbox"
+                        name="_cbx853231"
+                        value="1"
+                        /></span></span>
+                Exécuter un scénario
+                <a href="#" class="tooltip-trigger" data-powertip="A la fin de l'exécution de ce scénario, vous pouvez exécuter automatiquement un autre<br/>scénario (à sélectionner parmi vos scénarios à la demande déjà créés).">
+                    <span class="tooltip-icon"></span>
+                </a>
+                <div class="options">
+                    <select name="_action[runScenarioId]"><option value="" selected="selected">Choisissez un de vos scénarios à la demande</option><option value="4445758">AA test rien</option><option value="44748533">Ch Chbres Confort 2h</option></select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-buttons">
+        <a href="#"
+           class="btn-previousStep"
+                ><span class="arrow"></span><input type="submit" name="sbt" value="Étape précédente" /><span class="text">Étape précédente</span></a>
+        <a href="#"
+           class="btn-nextStep"
+                ><input type="submit" name="sbt" value="Étape suivante" /><span class="text">Étape suivante</span><span class="arrow"></span></a>
+    </div>
+  </form>
+</body>
+</html>
+
