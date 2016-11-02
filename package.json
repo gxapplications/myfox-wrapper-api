@@ -1,6 +1,6 @@
 {
   "name": "myfox-wrapper-api",
-  "version": "0.3.17",
+  "version": "0.3.19",
   "description": "API wrapper (through official API, with more features and tools) for Myfox domotics",
   "author": "Xavier Gouley <gxapplications@gmail.com>",
   "contributors": [],
@@ -68,6 +68,7 @@
   },
   "dependencies": {
     "JSONStream": "^1.1.1",
+    "assign-deep": "^0.4.5",
     "babel-core": "^6.4.5",
     "babel-eslint": "^6.0.0",
     "babel-preset-es2015": "^6.3.13",
