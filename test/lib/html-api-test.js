@@ -83,7 +83,7 @@ describe('HTML-api library', () => {
       const callback = (a, b) => {
         sinon.assert.notCalled(api.notifyMacroListeners)
         sinon.assert.calledOnce(api.callApi)
-        sinon.assert.calledWithMatch(api.callApi, /widget\/\{siteId\}\/scenario\/play\/456\?_=/, /GET/)
+        sinon.assert.calledWithMatch(api.callApi, /widget\/\{siteId\}\/scenario\/play\/456/, /POST/)
 
         expect(a).to.be.null
         // The id is not scenario ID, but the macro ID! And null because no need to have one, if just 1 step without delay.
@@ -109,7 +109,7 @@ describe('HTML-api library', () => {
           sinon.assert.calledOnce(api.notifyMacroListeners)
           sinon.assert.calledOn(api.notifyMacroListeners, api)
           sinon.assert.calledOnce(api.callApi)
-          sinon.assert.calledWithMatch(api.callApi, /widget\/\{siteId\}\/scenario\/play\/456\?_=/, /GET/)
+          sinon.assert.calledWithMatch(api.callApi, /widget\/\{siteId\}\/scenario\/play\/456/, /POST/)
           done()
         }, 100)
       }
@@ -149,7 +149,7 @@ describe('HTML-api library', () => {
       const callback = (a, b) => {
         sinon.assert.notCalled(api.notifyMacroListeners)
         sinon.assert.calledOnce(api.callApi)
-        sinon.assert.calledWithMatch(api.callApi, /widget\/\{siteId\}\/scenario\/play\/456\?_=/, /GET/)
+        sinon.assert.calledWithMatch(api.callApi, /widget\/\{siteId\}\/scenario\/play\/456/, /POST/)
 
         expect(a).to.be.not.null
         done()
