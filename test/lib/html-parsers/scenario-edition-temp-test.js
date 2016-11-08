@@ -141,18 +141,62 @@ describe('HTML Scenario edition parser', () => {
 
   it('can fix a step 3 payload with temperature settings', () => {
     const settings = [{
-
+      toTemperature: 17.2,
+      controls: [
+        {
+          condition: 'trigger_4',
+          deviceSlaveId: '123333',
+          value: '1234', // don't care
+          operator: '321', // don't care
+          checked: true  // don't care ???
+        },
+        {
+          condition: 'condition_4_1',
+          deviceSlaveId: '456666',
+          value: '1234', // don't care
+          operator: '321', // don't care
+          checked: true // don't care ???
+        },
+        {
+          condition: 'condition_4_2',
+          deviceSlaveId: '789999',
+          value: '1234', // don't care
+          operator: '321', // don't care
+          checked: true // don't care ???
+        }
+      ]
     }]
     const payload = {
-
+      '_trigger_type': '4',
+      '_trigger[4][1][deviceSlaveId]': '123333',
+      '_trigger[4][1][value]': '19',
+      '_trigger[4][1][operator]': '1',
+      '_condition_4_1': '4',
+      '_condition_4_2': '4',
+      '_condition[4][1][deviceSlaveId]': '456666',
+      '_condition[4][1][operator]': '0',
+      '_condition[4][1][value]': '15.6',
+      '_condition[4][2][deviceSlaveId]': '789999',
+      '_condition[4][2][operator]': '2',
+      '_condition[4][2][value]': '11.2'
     }
-    expect(step3TempFixer(payload, settings)).to.deep.equal({
 
+    expect(step3TempFixer(payload, settings)).to.deep.equal({
+      '_trigger_type': '4',
+      '_trigger[4][1][deviceSlaveId]': '123333',
+      '_trigger[4][1][value]': '17.7',
+      '_trigger[4][1][operator]': '1',
+      '_condition_4_1': '4',
+      '_condition_4_2': '4',
+      '_condition[4][1][deviceSlaveId]': '456666',
+      '_condition[4][1][operator]': '0',
+      '_condition[4][1][value]': '16.7',
+      '_condition[4][2][deviceSlaveId]': '789999',
+      '_condition[4][2][operator]': '2',
+      '_condition[4][2][value]': '17.2'
     })
-    // TODO !2: a partir d'un jeu de settings avec les 3 types de conditions,
-    // et une payload vue dans un test au-dessus, que doit-on avoir ?
-    // (temperature avec des delta +/- 1° ???)
-    // Tester le cas des temperatures a virgule (ou a point ?)
+    // operators trigger_4: up_to:1, down_to:0
+    // operators condition_4_*: <:0, >:1, =:2
   })
 
   it('can parse the full fourth manager step and return the whole payload in all cases (1)', (done) => {
