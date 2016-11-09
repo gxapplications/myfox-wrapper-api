@@ -199,6 +199,66 @@ describe('HTML Scenario edition parser', () => {
     // operators condition_4_*: <:0, >:1, =:2
   })
 
+  it('cannot fix a wrong step 3 payload and rejects it', () => {
+    const settings = [{
+      toTemperature: 17.2,
+      controls: [
+        {
+          condition: 'trigger_4',
+          deviceSlaveId: '123333',
+          value: '1234', // don't care
+          operator: '321', // don't care
+          checked: true  // don't care ???
+        },
+        {
+          condition: 'condition_4_1',
+          deviceSlaveId: '456666',
+          value: '1234', // don't care
+          operator: '321', // don't care
+          checked: true // don't care ???
+        }
+      ]
+    }]
+    const payload = {
+      '_trigger_type': '4',
+      '_trigger[4][1][deviceSlaveId]': 'DIFFERENT-ID-!',
+      '_trigger[4][1][value]': '19',
+      '_trigger[4][1][operator]': '1'
+    }
+
+    expect(step3TempFixer.bind(null, payload, settings)).to.throw(Error, /Scenario settings mismatch/)
+  })
+
+  it('cannot accept a wrong step 3 settings and rejects it', () => {
+    const settings = [{
+      toTemperature: 17.2,
+      controls: [
+        {
+          condition: 'BAD-CONDITION-KEY',
+          deviceSlaveId: '123333',
+          value: '1234', // don't care
+          operator: '321', // don't care
+          checked: true  // don't care ???
+        },
+        {
+          condition: 'condition_4_1',
+          deviceSlaveId: '456666',
+          value: '1234', // don't care
+          operator: '321', // don't care
+          checked: true // don't care ???
+        }
+      ]
+    }]
+    const payload = {
+      '_trigger_type': '4',
+      '_trigger[4][1][deviceSlaveId]': '123333',
+      '_trigger[4][1][value]': '19',
+      '_trigger[4][1][operator]': '1'
+    }
+
+    expect(step3TempFixer.bind(null, payload, settings)).to.throw(Error, /Unknown condition to control/)
+  })
+
   it('can parse the full fourth manager step and return the whole payload in all cases (1)', (done) => {
     let api = new CommonApi({'myfoxSiteIds': [1234]})
     let tr = step4Parser(api)
