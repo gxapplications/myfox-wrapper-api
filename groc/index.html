@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><title>index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content=""><meta name="groc-document-path" content="index"><meta name="groc-project-path" content="README.md"><link rel="stylesheet" type="text/css" media="all" href="assets/style.css"><script type="text/javascript" src="assets/behavior.js"></script><body><div id="meta"><div class="file-path">README.md</div></div><div id="document"><div class="segment"><div class="comments "><div class="wrapper"><p><img src="https://raw.githubusercontent.com/gxapplications/myfox-wrapper-api/master/lib/assets/logo.png" alt="myfox-wrapper-logo"></p>
 <p><em>An API layer to Myfox services to add easy usable features &amp; tools, written in NodeJS.</em></p>
-<p><strong>The current release is a working version of a minimalist lib. Not ready for production for now.</strong></p>
+<p><strong>The current release is a working version of a minimalist lib. Rest API strategy is not ready for use. Works only with HTML API strategy</strong></p>
 <p><a href="http://travis-ci.org/gxapplications/myfox-wrapper-api"><img src="https://travis-ci.org/gxapplications/myfox-wrapper-api.svg" alt="Build Status"></a>
 <a href="http://standardjs.com/"><img src="https://img.shields.io/badge/code%20style-standard-brightgreen.svg" alt="js-standard-style"></a>
 <a href="https://github.com/gxapplications/myfox-wrapper-api/releases"><img src="https://img.shields.io/github/release/gxapplications/myfox-wrapper-api.svg" alt="Github release"></a></p>
@@ -43,7 +43,11 @@ That means one server instance can serve only 1 Myfox account at runtime!</p>
 The default built-in server is made over hapi. There is an express server for example/test purpose only (do not use directly because the I/O data format is not checked and then not protected against attacks). </p>
 <hr>
 <h2 id="use-the-build-in-server-in-production">Use the build-in server in production</h2>
-<p><code>TODO</code> use the server for production purposes, how and what limitations (only one account per server!)</p>
+<p>For now, build-in server can be used in real use case, but be aware that the server is not protected at all: no authentication
+is needed to connect to the API. Even if the Myfox password is required at startup, once the right password is given and pushed into the stateful
+instance of the wrapper, then any request that follows the first one will be possible without any authentication.
+As the server uses a stateful wrapper instance, a server can handle only 1 myfox account at a time.
+This wrapper is best fitted in a private trusted network, like in a private house network, without any door/mapping opened to the www.</p>
 <hr>
 <h2 id="use-this-project-as-a-library">Use this project as a library</h2>
 <p><code>TODO</code> direct use as library (not the included server, so how to dev)</p>

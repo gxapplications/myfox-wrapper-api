@@ -504,7 +504,7 @@ This overrides the default constructor to add HTML parameters to the configurati
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="html-api.js.html">html-api.js</a>, <a href="html-api.js.html#line35">line 35</a>
+        <a href="html-api.js.html">html-api.js</a>, <a href="html-api.js.html#line36">line 36</a>
     </li></ul></dd>
     
 
@@ -699,7 +699,7 @@ Do not use this method directly to login to Myfox services: the auth will not be
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="html-api.js.html">html-api.js</a>, <a href="html-api.js.html#line52">line 52</a>
+        <a href="html-api.js.html">html-api.js</a>, <a href="html-api.js.html#line53">line 53</a>
     </li></ul></dd>
     
 
@@ -980,7 +980,7 @@ Do not use this method directly to login to Myfox services: the auth will not be
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="html-api.js.html">html-api.js</a>, <a href="html-api.js.html#line455">line 455</a>
+        <a href="html-api.js.html">html-api.js</a>, <a href="html-api.js.html#line453">line 453</a>
     </li></ul></dd>
     
 
@@ -1296,7 +1296,7 @@ Do not use this method directly to call Myfox services. Prefer use this.callApi(
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="html-api.js.html">html-api.js</a>, <a href="html-api.js.html#line113">line 113</a>
+        <a href="html-api.js.html">html-api.js</a>, <a href="html-api.js.html#line114">line 114</a>
     </li></ul></dd>
     
 
@@ -1633,7 +1633,7 @@ Do not use this method directly to call Myfox services. Prefer use this.callApi(
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="html-api.js.html">html-api.js</a>, <a href="html-api.js.html#line282">line 282</a>
+        <a href="html-api.js.html">html-api.js</a>, <a href="html-api.js.html#line280">line 280</a>
     </li></ul></dd>
     
 
@@ -1970,7 +1970,7 @@ Do not use this method directly to call Myfox services. Prefer use this.callApi(
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="html-api.js.html">html-api.js</a>, <a href="html-api.js.html#line369">line 369</a>
+        <a href="html-api.js.html">html-api.js</a>, <a href="html-api.js.html#line367">line 367</a>
     </li></ul></dd>
     
 
@@ -2110,7 +2110,7 @@ and in case of change, a persistantState listener can be called.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="html-api.js.html">html-api.js</a>, <a href="html-api.js.html#line159">line 159</a>
+        <a href="html-api.js.html">html-api.js</a>, <a href="html-api.js.html#line160">line 160</a>
     </li></ul></dd>
     
 
@@ -2448,7 +2448,7 @@ The possible action depends on the action type (on demand or not).
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="html-api.js.html">html-api.js</a>, <a href="html-api.js.html#line191">line 191</a>
+        <a href="html-api.js.html">html-api.js</a>, <a href="html-api.js.html#line192">line 192</a>
     </li></ul></dd>
     
 
@@ -2602,7 +2602,189 @@ The possible action depends on the action type (on demand or not).
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="html-api.js.html">html-api.js</a>, <a href="html-api.js.html#line499">line 499</a>
+        <a href="html-api.js.html">html-api.js</a>, <a href="html-api.js.html#line497">line 497</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="updateScenarioTemperatureSettings"><span class="type-signature"></span>updateScenarioTemperatureSettings<span class="signature">(scenarioId, settings, callback)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Uses edition mode to inspect and modify a scenario, in order to change temperature conditions values (HTML strategy only)
+
+The temperature conditions are hard coded and supports 3 conditions, described by their HTML names here:
+- trigger_4: the main trigger of the scenario: you can find it in the tabs of events that will execute the scenario
+- condition_4_1: the first condition that you can add after the main trigger: you can find it in a list of checkable conditions.
+- condition_4_2: the second sub-condition that appears when the condition_4_1 is already checked and set.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>scenarioId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The ID of the scenario to modify. The scenario edition WILL modify parameters depending on the settings given.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>settings</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;Object></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">An array of temperature values to modify, associated to the conditions to look in.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The function to call with all data.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="html-api.js.html">html-api.js</a>, <a href="html-api.js.html#line529">line 529</a>
     </li></ul></dd>
     
 
@@ -2650,7 +2832,7 @@ The possible action depends on the action type (on demand or not).
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Oct 07 2016 09:27:30 GMT+0200 (CEST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed Nov 09 2016 11:30:52 GMT+0100 (CET)
 </footer>
 
 <script> prettyPrint(); </script>

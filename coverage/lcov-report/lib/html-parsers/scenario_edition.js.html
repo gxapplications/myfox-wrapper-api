@@ -22,22 +22,22 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>11/11</span>
+        <span class='fraction'>25/25</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">61.11% </span>
+        <span class="strong">65% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>11/18</span>
+        <span class='fraction'>39/60</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">96.08% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>22/22</span>
+        <span class='fraction'>49/51</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>11/11</span>
+        <span class='fraction'>25/25</span>
       </div>
     </div>
   </div>
@@ -285,7 +285,899 @@
 240
 241
 242
-243</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549
+550
+551
+552
+553
+554
+555
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568
+569
+570
+571
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589
+590
+591
+592
+593
+594
+595
+596
+597
+598
+599
+600
+601
+602
+603
+604
+605
+606
+607
+608
+609
+610
+611
+612
+613
+614
+615
+616
+617
+618
+619
+620
+621
+622
+623
+624
+625
+626
+627
+628
+629
+630
+631
+632
+633
+634
+635
+636
+637
+638
+639
+640
+641
+642
+643
+644
+645
+646
+647
+648
+649
+650
+651
+652
+653
+654
+655
+656
+657
+658
+659
+660
+661
+662
+663
+664
+665
+666
+667
+668
+669
+670
+671
+672
+673
+674
+675
+676
+677
+678
+679
+680
+681
+682
+683
+684
+685
+686
+687
+688
+689
+690
+691
+692
+693
+694
+695
+696
+697
+698
+699
+700
+701
+702
+703
+704
+705
+706
+707
+708
+709
+710
+711
+712
+713
+714
+715
+716
+717
+718
+719
+720
+721
+722
+723
+724
+725
+726
+727
+728
+729
+730
+731
+732
+733
+734
+735
+736
+737
+738
+739
+740
+741
+742
+743
+744
+745
+746
+747
+748
+749
+750
+751
+752
+753
+754
+755
+756
+757
+758
+759
+760
+761
+762
+763
+764
+765
+766
+767
+768
+769
+770
+771
+772
+773
+774
+775
+776
+777
+778
+779
+780
+781
+782
+783
+784
+785
+786
+787
+788
+789
+790
+791
+792
+793
+794
+795
+796
+797
+798
+799
+800
+801
+802
+803
+804
+805
+806
+807
+808
+809
+810
+811
+812
+813
+814
+815
+816
+817
+818
+819
+820
+821
+822
+823
+824
+825
+826
+827
+828
+829
+830
+831
+832
+833
+834
+835
+836
+837
+838
+839
+840
+841
+842
+843
+844
+845
+846
+847
+848
+849
+850
+851
+852
+853
+854
+855
+856
+857
+858
+859
+860
+861
+862
+863
+864
+865
+866
+867
+868
+869
+870
+871
+872
+873
+874
+875
+876
+877
+878
+879
+880
+881
+882
+883
+884
+885
+886
+887
+888
+889
+890
+891
+892
+893
+894
+895
+896
+897
+898
+899
+900
+901
+902
+903
+904
+905
+906
+907
+908
+909
+910
+911
+912
+913
+914
+915
+916
+917
+918
+919
+920
+921
+922
+923
+924
+925
+926
+927
+928
+929
+930
+931
+932
+933
+934
+935
+936
+937
+938
+939
+940
+941
+942
+943
+944
+945
+946
+947
+948
+949
+950
+951
+952
+953
+954
+955
+956
+957
+958
+959
+960
+961
+962
+963
+964
+965
+966
+967
+968
+969
+970
+971
+972
+973
+974
+975
+976
+977
+978
+979
+980
+981
+982
+983
+984
+985
+986
+987
+988
+989
+990
+991
+992
+993
+994
+995
+996
+997
+998
+999
+1000
+1001
+1002
+1003
+1004
+1005
+1006
+1007
+1008
+1009
+1010
+1011
+1012
+1013
+1014
+1015
+1016
+1017
+1018
+1019
+1020
+1021
+1022
+1023
+1024
+1025
+1026
+1027
+1028
+1029
+1030
+1031
+1032
+1033
+1034
+1035
+1036
+1037
+1038
+1039
+1040
+1041
+1042
+1043
+1044
+1045
+1046
+1047
+1048
+1049
+1050
+1051
+1052
+1053
+1054
+1055
+1056
+1057
+1058
+1059
+1060
+1061
+1062
+1063
+1064
+1065
+1066
+1067
+1068
+1069
+1070
+1071
+1072
+1073
+1074
+1075
+1076
+1077
+1078
+1079
+1080
+1081
+1082
+1083
+1084
+1085
+1086
+1087
+1088
+1089
+1090
+1091
+1092
+1093
+1094
+1095
+1096
+1097
+1098
+1099
+1100
+1101
+1102
+1103
+1104
+1105
+1106
+1107
+1108
+1109
+1110
+1111
+1112
+1113
+1114
+1115
+1116
+1117
+1118
+1119
+1120
+1121
+1122
+1123
+1124
+1125
+1126
+1127
+1128
+1129
+1130
+1131
+1132
+1133
+1134
+1135</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -430,6 +1322,93 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -481,6 +1460,835 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -496,30 +2304,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -530,7 +2314,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict'
 &nbsp;
 import trumpet from 'trumpet'
-import { trumpetAttr, trumpetInnerText } from './index'
+import { trumpetAttr, trumpetInnerText, trumpetAffectValue } from './index'
 &nbsp;
 /**
  * Returns a trumpet parser that will get input values to go to the next edition step.
@@ -671,41 +2455,39 @@ export function step3TempInspectionParser (wrapperApi) {
   trumpetParser.setMaxListeners(14) // We have a lot of stuff to analyze...
 &nbsp;
   // if input type="radio" name="_trigger_type" value="4" has checked="checked", then scan main temperature condition
-  trumpetParser.select('form#scenarioForm input[name="_trigger_type"][value="4"]', trumpetAttr('checked', (checked) =&gt; {
-    <span class="missing-if-branch" title="else path not taken" >E</span>if (checked === 'checked') {
-      trumpetParser.data.trigger_4 = {}
+  trumpetParser.select('form#scenarioForm input[name="_trigger_type"][value="4"][checked="checked"]', (element) =&gt; {
+    trumpetParser.data.trigger_4 = {}
 &nbsp;
-      // get scenario
-      trumpetParser.select(
-        'form#scenarioForm select[name="_trigger[4][1][deviceSlaveId]"] option[selected="selected"]',
-        trumpetAttr('value', (value) =&gt; {
-          trumpetParser.data.trigger_4 = {deviceSlaveId: value}
-        })
-      )
-      trumpetParser.select(
-        'form#scenarioForm select[name="_trigger[4][1][deviceSlaveId]"] option[selected="selected"]',
-        trumpetInnerText((text) =&gt; {
-          trumpetParser.data.trigger_4.deviceSlaveName = text
-        })
-      )
+    // get scenario
+    trumpetParser.select(
+      'form#scenarioForm select[name="_trigger[4][1][deviceSlaveId]"] option[selected="selected"]',
+      trumpetAttr('value', (value) =&gt; {
+        trumpetParser.data.trigger_4 = {deviceSlaveId: value}
+      })
+    )
+    trumpetParser.select(
+      'form#scenarioForm select[name="_trigger[4][1][deviceSlaveId]"] option[selected="selected"]',
+      trumpetInnerText((text) =&gt; {
+        trumpetParser.data.trigger_4.deviceSlaveName = text
+      })
+    )
 &nbsp;
-      // get temperature value
-      trumpetParser.select(
-        'form#scenarioForm input[name="_trigger[4][1][value]"]',
-        trumpetAttr('value', (value) =&gt; {
-          trumpetParser.data.trigger_4.value = value
-        })
-      )
+    // get temperature value
+    trumpetParser.select(
+      'form#scenarioForm input[name="_trigger[4][1][value]"]',
+      trumpetAttr('value', (value) =&gt; {
+        trumpetParser.data.trigger_4.value = value
+      })
+    )
 &nbsp;
-      // get operator
-      trumpetParser.select(
-        'form#scenarioForm input[name="_trigger[4][1][operator]"][checked="checked"]',
-        trumpetAttr('value', (value) =&gt; {
-          trumpetParser.data.trigger_4.operator = value
-        })
-      )
-    }
-  }))
+    // get operator
+    trumpetParser.select(
+      'form#scenarioForm input[name="_trigger[4][1][operator]"][checked="checked"]',
+      trumpetAttr('value', (value) =&gt; {
+        trumpetParser.data.trigger_4.operator = value
+      })
+    )
+  })
 &nbsp;
   // First secondary condition
   trumpetParser.select(
@@ -769,13 +2551,907 @@ export function step3TempInspectionParser (wrapperApi) {
 &nbsp;
   return trumpetParser
 }
+&nbsp;
+/**
+ * Returns a trumpet parser that will inspect and modify form structure searching for temperature condition occurrences.
+ *
+ * POST https://myfox.me/scenario/{homeId}/manage/{scenarioId}/3
+ *    with scData: "xxxx"
+ *         type: "xxxx"
+ * =&gt; &lt;form id="scenarioForm" action="https://myfox.me/scenario/xxx/manage/xxxxxx/4" method="post"&gt;
+ *      &lt;input type="hidden" name="scData" value="xxxxx" /&gt;
+ *      &lt;h2&gt;...&lt;/h2&gt;
+ *      &lt;div class="tabs-list"&gt;...&lt;/div&gt;
+ *      &lt;div class="tabs-contents"&gt;
+ *
+ *        &lt;div class="tab-content tab-securityLevel"&gt;
+ *          &lt;div class="item security-level"&gt;
+ *            &lt;ul class="..."&gt;
+ *              &lt;li class="seclev-4"&gt;
+ *                &lt;span ...&gt;&lt;span ...&gt;
+ *                  &lt;input type="checkbox" name="_trigger[3][4]" value="1" /&gt;
+ *                &lt;/span&gt;&lt;/span&gt;
+ *              &lt;/li&gt;
+ *              &lt;li class="seclev-2"&gt;
+ *                &lt;span ...&gt;&lt;span ...&gt;
+ *                  &lt;input type="checkbox" name="_trigger[3][2]" value="1" /&gt;
+ *                &lt;/span&gt;&lt;/span&gt;
+ *              &lt;/li&gt;
+ *              &lt;li class="seclev-1"&gt;
+ *                &lt;span ...&gt;&lt;span ...&gt;
+ *                  &lt;input type="checkbox" name="_trigger[3][1]" value="1" /&gt;
+ *                &lt;/span&gt;&lt;/span&gt;
+ *              &lt;/li&gt;
+ *            &lt;/ul&gt;
+ *          &lt;/div&gt;
+ *        &lt;/div&gt;
+ *
+ *        &lt;div class="tab-content tab-risks"&gt;
+ *          &lt;div class="item"&gt;
+ *            &lt;ul class="reset"&gt;
+ *              &lt;li class="risk-10 option-block"&gt;
+ *                &lt;span ...&gt;&lt;span ...&gt;
+ *                    &lt;input type="radio" name="_trigger[2]" value="10" /&gt;
+ *                &lt;/span&gt;&lt;/span&gt;
+ *              &lt;/li&gt;
+ *              &lt;li class="risk-16 option-block"&gt;
+ *                &lt;span ...&gt;&lt;span ...&gt;
+ *                  &lt;input type="radio" name="_trigger[2]" value="16" /&gt;
+ *                &lt;/span&gt;&lt;/span&gt;
+ *              &lt;/li&gt;
+ *              &lt;li class="risk-4 option-block"&gt;
+ *                &lt;span ...&gt;&lt;span ...&gt;
+ *                  &lt;input type="radio" name="_trigger[2]" value="4" /&gt;
+ *                &lt;/span&gt;&lt;/span&gt;
+ *              &lt;/li&gt;
+ *              &lt;li class="risk-512 option-block"&gt;
+ *                &lt;span ...&gt;&lt;span ...&gt;
+ *                  &lt;input type="radio" name="_trigger[2]" value="512" /&gt;
+ *                &lt;/span&gt;&lt;/span&gt;
+ *              &lt;/li&gt;
+ *              &lt;li class="risk-2048 option-block"&gt;
+ *                &lt;span ...&gt;&lt;span ...&gt;
+ *                  &lt;input type="radio" name="_trigger[2]" value="2048" /&gt;
+ *                &lt;/span&gt;&lt;/span&gt;
+ *              &lt;/li&gt;
+ *            &lt;/ul&gt;
+ *          &lt;/div&gt;
+ *        &lt;/div&gt;
+ *
+ *        &lt;div class="tab-content tab-sensors"&gt;&lt;div class="item"&gt;
+ *          &lt;ul class="reset"&gt;
+ *            &lt;li class="sensors sensors-4 option-block" data-triggertype="4"&gt;
+ *              &lt;div class="choice"&gt;
+ *                &lt;span ...&gt;&lt;span ...&gt;
+ *                  &lt;input type="radio" name="_trigger_type" value="4" checked="checked" /&gt;
+ *                &lt;/span&gt;&lt;/span&gt;
+ *              &lt;/div&gt;
+ *              &lt;div class="settings-tooltip" id="_trigger_4"&gt;
+ *                &lt;div class="settings-tooltip-body"&gt;
+ *                  &lt;div class="settings temperature"&gt;
+ *                      &lt;table&gt;
+ *                        &lt;tr&gt;&lt;td&gt;Capteur&lt;/td&gt;&lt;td&gt;
+ *                          &lt;select name="_trigger[4][1][deviceSlaveId]"&gt;
+ *                            &lt;option value="xxxxxx" selected="selected"&gt;Capteur SdB&lt;/option&gt;&lt;option value="xxxxxx"&gt;Capteur Salon&lt;/option&gt;
+ *                          &lt;/select&gt;
+ *                        &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Température&lt;/td&gt;&lt;td&gt;&lt;span class="input input-temperature"&gt;
+ *                          &lt;input name="_trigger[4][1][value]" value="15" type="text" class="" /&gt;
+ *                        &lt;/span&gt; °C	&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Franchissement&lt;/td&gt;&lt;td&gt;&lt;span class="input-radio " data-default="1" data-group="_trigger_4__1__operator_" data-cancel="0"&gt;
+ *                          &lt;span class="icon"&gt;
+ *                            &lt;input type="radio" name="_trigger[4][1][operator]" value="1" checked="checked" /&gt;
+ *                          &lt;/span&gt;
+ *                        &lt;/span&gt; à la hausse &amp;nbsp; &amp;nbsp; &lt;span class="input-radio " data-default="1" data-group="_trigger_4__1__operator_" data-cancel="0"&gt;
+ *                          &lt;span class="icon"&gt;
+ *                            &lt;input type="radio" name="_trigger[4][1][operator]" value="0" /&gt;
+ *                          &lt;/span&gt;
+ *                        &lt;/span&gt; à la baisse &lt;/td&gt;&lt;/tr&gt;
+ *                      &lt;/table&gt;
+ *                  &lt;/div&gt;
+ *                &lt;/div&gt;&lt;!-- End tooltip body --&gt;
+ *              &lt;/div&gt;
+ *            &lt;/li&gt;
+ *            &lt;li class="sensors sensors-5 option-block" data-triggertype="5"&gt;
+ *              &lt;div class="choice"&gt;
+ *                &lt;span class="input-radio trigger-choice" data-default="" data-group="_trigger_type" data-cancel="1"&gt;&lt;span class="icon"&gt;
+ *                  &lt;input type="radio" name="_trigger_type" value="5" /&gt;
+ *                &lt;/span&gt;&lt;/span&gt;
+ *              &lt;/div&gt;
+ *              &lt;div class="settings-tooltip" id="_trigger_5"&gt;
+ *                &lt;div class="settings-tooltip-body"&gt;
+ *                  &lt;div class="settings light"&gt;
+ *                      &lt;table&gt;
+ *                        &lt;tr&gt;&lt;td&gt;Capteur&lt;/td&gt;&lt;td&gt;
+ *                        &lt;select name="_trigger[5][1][deviceSlaveId]"&gt;&lt;option value="xxxxxx"&gt;Capteur SdB&lt;/option&gt;&lt;option value="xxxxxxx"&gt;Capteur Salon&lt;/option&gt;&lt;/select&gt;
+ *                        &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Luminosité&lt;/td&gt;&lt;td&gt;
+ *                          &lt;select name="_trigger[5][1][value]"&gt;
+ *                            &lt;option value="1"&gt;Pleine lumière&lt;/option&gt;
+ *                            &lt;option value="2"&gt;Lumière du jour&lt;/option&gt;
+ *                            &lt;option value="4"&gt;Lumière basse&lt;/option&gt;
+ *                            &lt;option value="5"&gt;Pénombre&lt;/option&gt;
+ *                            &lt;option value="6"&gt;Obscurité&lt;/option&gt;
+ *                          &lt;/select&gt;
+ *                        &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Franchissement&lt;/td&gt;&lt;td&gt;&lt;span class="input-radio " data-default="1" data-group="_trigger_5__1__operator_" data-cancel="0"&gt;&lt;span class="icon"&gt;
+ *                          &lt;input type="radio" name="_trigger[5][1][operator]" value="1" checked="checked" /&gt;
+ *                        &lt;/span&gt;&lt;/span&gt; à la hausse &amp;nbsp; &amp;nbsp; &lt;span class="input-radio " data-default="1" data-group="_trigger_5__1__operator_" data-cancel="0"&gt;&lt;span class="icon"&gt;
+ *                          &lt;input type="radio" name="_trigger[5][1][operator]" value="0" /&gt;
+ *                        &lt;/span&gt;&lt;/span&gt; à la baisse &lt;/td&gt;&lt;/tr&gt;
+ *                      &lt;/table&gt;
+ *                  &lt;/div&gt;
+ *                &lt;/div&gt;&lt;!-- End tooltip body --&gt;
+ *              &lt;/div&gt;
+ *            &lt;/li&gt;
+ *            &lt;li class="sensors sensors-7 option-block" data-triggertype="7"&gt;
+ *              &lt;div class="choice"&gt;
+ *                &lt;span class="input-radio trigger-choice" data-default="" data-group="_trigger_type" data-cancel="1"&gt;&lt;span class="icon"&gt;
+ *                  &lt;input type="radio" name="_trigger_type" value="7" /&gt;
+ *                &lt;/span&gt;&lt;/span&gt;
+ *              &lt;/div&gt;
+ *              &lt;div class="settings-tooltip" id="_trigger_7"&gt;
+ *                &lt;div class="settings-tooltip-body"&gt;
+ *                  &lt;div class="settings device"&gt;
+ *                      &lt;table&gt;
+ *                      &lt;tr&gt;&lt;td&gt;Capteur&lt;/td&gt;&lt;td&gt;
+ *                      &lt;select name="_trigger[7]"&gt;
+ *                        &lt;option value="xxx"&gt;Porte d'entrée&lt;/option&gt;
+ *                        &lt;option value="xxxx"&gt;Mouvement garage&lt;/option&gt;
+ *                        &lt;option value="xxxx"&gt;Fenêtre salon&lt;/option&gt;
+ *                        &lt;option value="xxxx"&gt;Mouvement salon&lt;/option&gt;
+ *                        &lt;option value="xx"&gt;Porte du garage&lt;/option&gt;
+ *                      &lt;/select&gt;
+ *                      &lt;/td&gt;&lt;/tr&gt;
+ *                      &lt;/table&gt;
+ *                  &lt;/div&gt;
+ *                &lt;/div&gt;&lt;!-- End tooltip body --&gt;
+ *              &lt;/div&gt;
+ *            &lt;/li&gt;
+ *          &lt;/ul&gt;
+ *        &lt;/div&gt;
+ *
+ *      &lt;/div&gt;
+ *
+ *      &lt;div class="form-buttons collapse"&gt;
+ *        &lt;a href="#" class="btn-nextStep" &gt;
+ *          &lt;input type="submit" name="sbt" value="Étape suivante" /&gt;&lt;span class="text"&gt;Étape suivante&lt;/span&gt;
+ *        &lt;/a&gt;
+ *      &lt;/div&gt;
+ *
+ *      &lt;h2&gt;Choisissez des conditions facultatives&lt;/h2&gt;
+ *      &lt;div class="conditions"&gt;
+ *
+ *        &lt;div class="condition condition-3 option-block" data-triggertype="3"&gt;
+ *          &lt;div class="title"&gt;
+ *            &lt;span class="input-checkbox condition-choice condition-3-choice" data-default=""&gt;&lt;span class="icon"&gt;
+ *              &lt;input type="checkbox" name="_condition_3" value="3" /&gt;
+ *            &lt;/span&gt;&lt;/span&gt;
+ *          &lt;/div&gt;
+ *          &lt;div class="item condition-inputs security-level"&gt;
+ *            &lt;ul class="reset"&gt;
+ *              &lt;li class="seclev-4"&gt;
+ *                &lt;span class="input-radio " data-default="" data-group="trigger-3" data-cancel="1"&gt;&lt;span class="icon"&gt;
+ *                  &lt;input type="radio" name="_condition[3][4]" value="1" /&gt;
+ *                &lt;/span&gt;&lt;/span&gt;
+ *              &lt;/li&gt;
+ *              &lt;li class="seclev-2"&gt;
+ *                &lt;span class="input-radio " data-default="" data-group="trigger-3" data-cancel="1"&gt;&lt;span class="icon"&gt;
+ *                  &lt;input type="radio" name="_condition[3][2]" value="1" /&gt;
+ *                &lt;/span&gt;&lt;/span&gt;
+ *              &lt;/li&gt;
+ *              &lt;li class="seclev-1"&gt;
+ *                &lt;span class="input-radio " data-default="" data-group="trigger-3" data-cancel="1"&gt;&lt;span class="icon"&gt;
+ *                  &lt;input type="radio" name="_condition[3][1]" value="1" /&gt;
+ *                &lt;/span&gt;&lt;/span&gt;
+ *              &lt;/li&gt;
+ *            &lt;/ul&gt;
+ *          &lt;/div&gt;
+ *        &lt;/div&gt;
+ *
+ *        &lt;div class="condition condition-1 option-block" data-triggertype="1"&gt;
+ *          &lt;div class="title"&gt;
+ *            &lt;span class="input-checkbox condition-choice condition-1-choice" data-default=""&gt;&lt;span class="icon"&gt;
+ *              &lt;input type="checkbox" name="_condition_1" value="1" /&gt;
+ *            &lt;/span&gt;&lt;/span&gt;
+ *          &lt;/div&gt;
+ *          &lt;div class="item condition-inputs"&gt;
+ *            &lt;div class="scenario-schedule scenario-schedule-range" data-field="scheduleRule"&gt;
+ *              &lt;table&gt;...&lt;/table&gt;
+ *              &lt;div class="ws-prompt input-disabled"&gt;
+ *                &lt;div class="ws-prompt-inner"&gt;
+ *                  &lt;div class="ws-prompt-row"&gt;
+ *                      &lt;table&gt;
+ *                        &lt;tr&gt;&lt;th&gt;&lt;label for="schedule1"&gt;Heure de début&lt;/label&gt;&lt;/th&gt;&lt;td&gt;&lt;span class="input input-time" id="input-schedule1"&gt;&lt;span class="icon"&gt;&lt;/span&gt;
+ *                          &lt;input id="schedule1" name="time1" class="ws-prompt-time" placeholder="HH:mm" type="text" /&gt;
+ *                        &lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;&lt;label for="schedule2"&gt;Heure de fin&lt;/label&gt;&lt;/th&gt;&lt;td&gt;&lt;span class="input input-time" id="input-schedule2"&gt;&lt;span class="icon"&gt;&lt;/span&gt;
+ *                          &lt;input id="schedule2" name="time2" class="ws-prompt-time" placeholder="HH:mm" type="text" /&gt;
+ *                        &lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+ *                      &lt;/table&gt;
+ *                  &lt;/div&gt;
+ *                  &lt;input type="hidden" name="day" /&gt;
+ *                  &lt;input type="hidden" name="idx" /&gt;
+ *                &lt;/div&gt;
+ *              &lt;/div&gt;
+ *              &lt;input type="hidden" name="_condition[1]" id="scheduleRule" value="" /&gt;
+ *            &lt;/div&gt;
+ *          &lt;/div&gt;
+ *        &lt;/div&gt;
+ *
+ *        &lt;div class="condition condition-4 option-block" data-triggertype="4"&gt;
+ *          &lt;div class="title"&gt;
+ *            &lt;span class="input-checkbox condition-choice condition-Limited 4-1" data-default="4"&gt;&lt;span class="icon"&gt;
+ *              &lt;input type="checkbox" name="_condition_4_1" value="4" /&gt;
+ *            &lt;/span&gt;&lt;/span&gt;
+ *            &lt;span&gt;Si la température...&lt;/span&gt;
+ *          &lt;/div&gt;
+ *          &lt;div class="item"&gt;
+ *            &lt;div class="condition-inputs choice-4-1"&gt;... du capteur
+ *              &lt;select name="_condition[4][1][deviceSlaveId]"&gt;
+ *                &lt;option value="xxx"&gt;Capteur SdB&lt;/option&gt;
+ *                &lt;option value="xxx" selected="selected"&gt;Capteur Salon&lt;/option&gt;
+ *              &lt;/select&gt;
+ *              &lt;select name="_condition[4][1][operator]"&gt;
+ *                &lt;option value="0" selected="selected"&gt;&lt;&lt;/option&gt;
+ *                &lt;option value="1"&gt;&gt;&lt;/option&gt;
+ *                &lt;option value="2"&gt;=&lt;/option&gt;
+ *              &lt;/select&gt;
+ *              à &lt;span class="input input-temperature"&gt;
+ *                &lt;input name="_condition[4][1][value]" value="16" type="text" class="" /&gt;
+ *              &lt;/span&gt;°C.
+ *            &lt;/div&gt;
+ *            &lt;div class="condition choice-4-2"&gt;
+ *              &lt;div class="title"&gt;
+ *                &lt;span class="input-checkbox condition-choice condition-Limited 4-2" data-default="4"&gt;&lt;span class="icon"&gt;
+ *                  &lt;input type="checkbox" name="_condition_4_2" value="4" /&gt;
+ *                &lt;/span&gt;&lt;/span&gt;
+ *                &lt;span&gt;Et si la température...&lt;/span&gt;
+ *              &lt;/div&gt;
+ *              &lt;div class="item condition-inputs"&gt;... du capteur
+ *                &lt;select name="_condition[4][2][deviceSlaveId]"&gt;
+ *                  &lt;option value="xxx"&gt;Capteur SdB&lt;/option&gt;
+ *                  &lt;option value="xxx" selected="selected"&gt;Capteur Salon&lt;/option&gt;
+ *                &lt;/select&gt;
+ *                &lt;select name="_condition[4][2][operator]"&gt;
+ *                  &lt;option value="0"&gt;&lt;&lt;/option&gt;
+ *                  &lt;option value="1" selected="selected"&gt;&gt;&lt;/option&gt;
+ *                  &lt;option value="2"&gt;=&lt;/option&gt;
+ *                &lt;/select&gt;
+ *                à &lt;span class="input input-temperature"&gt;
+ *                  &lt;input name="_condition[4][2][value]" value="14" type="text" class="" /&gt;
+ *                &lt;/span&gt;°C.
+ *              &lt;/div&gt;
+ *            &lt;/div&gt;
+ *          &lt;/div&gt;
+ *        &lt;/div&gt;
+ *
+ *        &lt;div class="condition condition-5 option-block" data-triggertype="5"&gt;
+ *          &lt;div class="title"&gt;
+ *            &lt;span class="input-checkbox condition-choice condition-Limited 5-1" data-default=""&gt;&lt;span class="icon"&gt;
+ *              &lt;input type="checkbox" name="_condition_5_1" value="5" /&gt;
+ *            &lt;/span&gt;&lt;/span&gt;
+ *            &lt;span&gt;Si la luminosité...&lt;/span&gt;
+ *          &lt;/div&gt;
+ *          &lt;div class="item"&gt;
+ *            &lt;div class="condition-inputs choice-5-1"&gt; ... du capteur
+ *              &lt;select name="_condition[5][1][deviceSlaveId]"&gt;
+ *                &lt;option value="xxx"&gt;Capteur SdB&lt;/option&gt;
+ *                &lt;option value="xxx"&gt;Capteur Salon&lt;/option&gt;
+ *              &lt;/select&gt;
+ *              &lt;select name="_condition[5][1][operator]"&gt;
+ *                &lt;option value="0" selected="selected"&gt;&lt;&lt;/option&gt;
+ *                &lt;option value="1"&gt;&gt;&lt;/option&gt;
+ *                &lt;option value="2"&gt;=&lt;/option&gt;
+ *              &lt;/select&gt;
+ *              &lt;select name="_condition[5][1][value]"&gt;
+ *                &lt;option value="1"&gt;Pleine lumière&lt;/option&gt;
+ *                &lt;option value="2"&gt;Lumière du jour&lt;/option&gt;
+ *                &lt;option value="4"&gt;Lumière basse&lt;/option&gt;
+ *                &lt;option value="5"&gt;Pénombre&lt;/option&gt;
+ *                &lt;option value="6"&gt;Obscurité&lt;/option&gt;
+ *              &lt;/select&gt;
+ *            &lt;/div&gt;
+ *            &lt;div class="condition choice-5-2"&gt;
+ *              &lt;div class="title"&gt;
+ *                &lt;span class="input-checkbox condition-choice condition-Limited 5-2" data-default=""&gt;&lt;span class="icon"&gt;
+ *                  &lt;input type="checkbox" name="_condition_5_2" value="5" /&gt;
+ *                &lt;/span&gt;&lt;/span&gt;
+ *              &lt;/div&gt;
+ *              &lt;div class="item condition-inputs"&gt; ... du capteur
+ *                &lt;select name="_condition[5][2][deviceSlaveId]"&gt;
+ *                  &lt;option value="xxx"&gt;Capteur SdB&lt;/option&gt;
+ *                  &lt;option value="xxx"&gt;Capteur Salon&lt;/option&gt;
+ *                &lt;/select&gt;
+ *                &lt;select name="_condition[5][2][operator]"&gt;
+ *                  &lt;option value="0" selected="selected"&gt;&lt;&lt;/option&gt;
+ *                  &lt;option value="1"&gt;&gt;&lt;/option&gt;
+ *                  &lt;option value="2"&gt;=&lt;/option&gt;
+ *                &lt;/select&gt;
+ *                &lt;select name="_condition[5][2][value]"&gt;
+ *                  &lt;option value="1"&gt;Pleine lumière&lt;/option&gt;
+ *                  &lt;option value="2"&gt;Lumière du jour&lt;/option&gt;
+ *                  &lt;option value="4"&gt;Lumière basse&lt;/option&gt;
+ *                  &lt;option value="5"&gt;Pénombre&lt;/option&gt;
+ *                  &lt;option value="6"&gt;Obscurité&lt;/option&gt;
+ *                &lt;/select&gt;
+ *              &lt;/div&gt;
+ *            &lt;/div&gt;
+ *          &lt;/div&gt;
+ *        &lt;/div&gt;
+ *
+ *      &lt;/div&gt;
+ *
+ *      &lt;div class="form-buttons"&gt;
+ *        &lt;input type="submit" name="sbt" value="Étape suivante" /&gt;
+ *      &lt;/div&gt;
+ *    &lt;/form&gt;
+ *
+ * =======================================
+ * Form elements are classified like this:
+ * =======================================
+ *
+ * &lt;input type="hidden" name="scData" value="xxxxx" /&gt;
+ * Trigger alarm :
+ *   &lt;input type="checkbox" name="_trigger[3][4]" value="1" /&gt;
+ *   &lt;input type="checkbox" name="_trigger[3][2]" value="1" /&gt;
+ *   &lt;input type="checkbox" name="_trigger[3][1]" value="1" /&gt;
+ * Trigger risks :
+ *   &lt;input type="radio" name="_trigger[2]" value="10" /&gt; x5
+ * Trigger sensors 4:
+ *   &lt;input type="radio" name="_trigger_type" value="4" checked="checked" /&gt;
+ *   &lt;select name="_trigger[4][1][deviceSlaveId]"&gt;
+ *     &lt;option value="xxxxxx" selected="selected"&gt;Capteur SdB&lt;/option&gt;
+ *     ....
+ *   &lt;/select&gt;
+ *   &lt;input name="_trigger[4][1][value]" value="15" type="text" class="" /&gt;
+ *   &lt;input type="radio" name="_trigger[4][1][operator]" value="1" checked="checked" /&gt;
+ *   &lt;input type="radio" name="_trigger[4][1][operator]" value="0" /&gt;
+ * Trigger sensors 5 :
+ *   &lt;input type="radio" name="_trigger_type" value="5" /&gt;
+ *   &lt;select name="_trigger[5][1][deviceSlaveId]"&gt;
+ *     &lt;option value="xxxxxx"&gt;Capteur SdB&lt;/option&gt;
+ *     ...
+ *   &lt;/select&gt;
+ *   &lt;select name="_trigger[5][1][value]"&gt;
+ *     &lt;option value="1"&gt;Pleine lumière&lt;/option&gt;
+ *     ...
+ *     &lt;option value="6"&gt;Obscurité&lt;/option&gt;
+ *   &lt;/select&gt;
+ *   &lt;input type="radio" name="_trigger[5][1][operator]" value="1" checked="checked" /&gt;
+ *   &lt;input type="radio" name="_trigger[5][1][operator]" value="0" /&gt;
+ * Trigger sensors 7 :
+ *   &lt;input type="radio" name="_trigger_type" value="7" /&gt;
+ *   &lt;select name="_trigger[7]"&gt;
+ *     &lt;option value="xxx"&gt;Porte d'entrée&lt;/option&gt;
+ *     ...
+ *   &lt;/select&gt;
+ * CONDITIONS :
+ *   &lt;div class="conditions"&gt;
+ *     Alarm:
+ *       &lt;span class="input-checkbox condition-choice condition-3-choice" data-default="3"&gt;
+ *         &lt;input...&gt;  &lt;-- don't care, see data-default in above span instead
+ *       &lt;/span&gt;
+ *       &lt;input type="radio" name="_condition[3][4]" value="1" /&gt;
+ *       &lt;input type="radio" name="_condition[3][2]" value="1" /&gt;
+ *       &lt;input type="radio" name="_condition[3][1]" value="1" /&gt;
+ *
+ *     Time conditions:
+ *       &lt;span class="input-checkbox condition-choice condition-1-choice" data-default="1"&gt;
+ *         &lt;input...&gt;  &lt;-- don't care, see data-default in above span instead
+ *       &lt;/span&gt;
+ *       &lt;input type="hidden" name="_condition[1]" id="scheduleRule" value="" /&gt;
+ *       Not useful to save:
+ *         &lt;input id="schedule1" name="time1" class="ws-prompt-time" placeholder="HH:mm" type="text" /&gt;
+ *         &lt;input id="schedule2" name="time2" class="ws-prompt-time" placeholder="HH:mm" type="text" /&gt;
+ *         &lt;input type="hidden" name="day" /&gt;
+ *         &lt;input type="hidden" name="idx" /&gt;
+ *
+ *     Temperature conditions:
+ *       &lt;span class="input-checkbox condition-choice condition-Limited 4-1" data-default="4"&gt;
+ *         &lt;input ...&gt;  &lt;-- don't care, see data-default in above span instead
+ *       &lt;/span&gt;
+ *       &lt;select name="_condition[4][1][deviceSlaveId]"&gt;
+ *         &lt;option value="xxx" selected="selected"&gt;Capteur Salon&lt;/option&gt;
+ *       &lt;/select&gt;
+ *       &lt;select name="_condition[4][1][operator]"&gt;
+ *         &lt;option value="0" selected="selected"&gt;&lt;&lt;/option&gt;
+ *         &lt;option value="1"&gt;&gt;&lt;/option&gt;
+ *         &lt;option value="2"&gt;=&lt;/option&gt;
+ *       &lt;/select&gt;
+ *       &lt;input name="_condition[4][1][value]" value="16" type="text" class="" /&gt;
+ *       &lt;span class="input-checkbox condition-choice condition-Limited 4-2" data-default="4"&gt;
+ *         &lt;input ...&gt;  &lt;-- don't care, see data-default in above span instead
+ *       &lt;/span&gt;
+ *       &lt;select name="_condition[4][2][deviceSlaveId]"&gt;
+ *         &lt;option value="xxx" selected="selected"&gt;Capteur Salon&lt;/option&gt;
+ *       &lt;/select&gt;
+ *       &lt;select name="_condition[4][2][operator]"&gt;
+ *         &lt;option value="0"&gt;&lt;&lt;/option&gt;
+ *         &lt;option value="1" selected="selected"&gt;&gt;&lt;/option&gt;
+ *         &lt;option value="2"&gt;=&lt;/option&gt;
+ *       &lt;/select&gt;
+ *       &lt;input name="_condition[4][2][value]" value="14" type="text" class="" /&gt;
+ *
+ *     Lightning conditions:
+ *       &lt;span class="input-checkbox condition-choice condition-Limited 5-1" data-default="5"&gt;
+ *         &lt;input ...&gt;  &lt;-- don't care, see data-default in above span instead
+ *       &lt;/span&gt;
+ *       &lt;select name="_condition[5][1][deviceSlaveId]"&gt;
+ *         &lt;option value="xxx"&gt;Capteur SdB&lt;/option&gt;
+ *       &lt;/select&gt;
+ *       &lt;select name="_condition[5][1][operator]"&gt;
+ *         &lt;option value="0" selected="selected"&gt;&lt;&lt;/option&gt;
+ *         &lt;option value="1"&gt;&gt;&lt;/option&gt;
+ *         &lt;option value="2"&gt;=&lt;/option&gt;
+ *       &lt;/select&gt;
+ *       &lt;select name="_condition[5][1][value]"&gt;
+ *         &lt;option value="1"&gt;Pleine lumière&lt;/option&gt;
+ *         ...
+ *         &lt;option value="6"&gt;Obscurité&lt;/option&gt;
+ *       &lt;/select&gt;
+ *       &lt;span class="input-checkbox condition-choice condition-Limited 5-2" data-default="5"&gt;
+ *         &lt;input ...&gt;  &lt;-- don't care, see data-default in above span instead
+ *       &lt;/span&gt;
+ *       &lt;select name="_condition[5][2][deviceSlaveId]"&gt;
+ *         &lt;option value="xxx"&gt;Capteur SdB&lt;/option&gt;
+ *       &lt;/select&gt;
+ *       &lt;select name="_condition[5][2][operator]"&gt;
+ *         &lt;option value="0" selected="selected"&gt;&lt;&lt;/option&gt;
+ *         &lt;option value="1"&gt;&gt;&lt;/option&gt;
+ *         &lt;option value="2"&gt;=&lt;/option&gt;
+ *       &lt;/select&gt;
+ *       &lt;select name="_condition[5][2][value]"&gt;
+ *         &lt;option value="1"&gt;Pleine lumière&lt;/option&gt;
+ *         ...
+ *         &lt;option value="6"&gt;Obscurité&lt;/option&gt;
+ *       &lt;/select&gt;
+ *   &lt;/div&gt;
+ * Submit:
+ *   &lt;input type="submit" name="sbt" value="Étape suivante" /&gt;
+ *
+ *
+ *
+ * @param  {MyfoxWrapperApiCommon}  wrapperApi  The Api instance, to throw events
+ * @return {trumpet}                The trumpet parser to plug on the HTML stream.
+ */
+export function step3TempModificationParser (wrapperApi) {
+  const trumpetParser = trumpet()
+  trumpetParser.nextPayload = {}
+  trumpetParser.setMaxListeners(30) // We have a lot of stuff to analyze...
+&nbsp;
+  // get scData ✔
+  trumpetParser.select(
+    'form#scenarioForm input[name="scData"]',
+    trumpetAffectValue(trumpetParser.nextPayload)
+  )
+&nbsp;
+  // Alarm trigger ✔
+  trumpetParser.selectAll('form#scenarioForm input[type="checkbox"][name^="_trigger[3]"][checked="checked"]', trumpetAttr('name', (name) =&gt; {
+    trumpetParser.nextPayload[name] = '1'
+  }))
+&nbsp;
+  // Risks trigger ✔
+  trumpetParser.select(
+    'form#scenarioForm input[type="radio"][name="_trigger[2]"][checked="checked"]',
+    trumpetAffectValue(trumpetParser.nextPayload)
+  )
+&nbsp;
+  // Sensor 4 trigger (temperatures) OR Sensor 5 trigger (lightning) -&gt; same structure ✔ ✔
+  trumpetParser.select('form#scenarioForm input[type="radio"][name="_trigger_type"][checked="checked"]', trumpetAttr('value', (triggerType) =&gt; {
+    trumpetParser.nextPayload['_trigger_type'] = triggerType
+    // tab is selected, add more parsers
+&nbsp;
+    // get scenario ✔
+    trumpetParser.select(
+      `form#scenarioForm select[name="_trigger[${triggerType}][1][deviceSlaveId]"] option[selected="selected"]`,
+      trumpetAffectValue(trumpetParser.nextPayload, `_trigger[${triggerType}][1][deviceSlaveId]`)
+    )
+&nbsp;
+    // get temperature value ✔
+    trumpetParser.select(
+      `form#scenarioForm input[name="_trigger[${triggerType}][1][value]"]`,
+      trumpetAffectValue(trumpetParser.nextPayload, `_trigger[${triggerType}][1][value]`)
+    )
+&nbsp;
+    // get lightning value ✔
+    trumpetParser.select(
+      `form#scenarioForm select[name="_trigger[${triggerType}][1][value]"] option[selected="selected"]`,
+      trumpetAffectValue(trumpetParser.nextPayload, `_trigger[${triggerType}][1][value]`)
+    )
+&nbsp;
+    // get operator ✔
+    trumpetParser.select(
+      `form#scenarioForm input[name="_trigger[${triggerType}][1][operator]"][checked="checked"]`,
+      trumpetAffectValue(trumpetParser.nextPayload, `_trigger[${triggerType}][1][operator]`)
+    )
+  }))
+&nbsp;
+  // Sensor 7 trigger (intrusion) ✔
+  trumpetParser.select('form#scenarioForm input[type="radio"][name="_trigger_type"][value="7"]', trumpetAttr('checked', (checked) =&gt; {
+    if (checked === 'checked') {
+      trumpetParser.nextPayload['_trigger_type'] = '7'
+      // tab is selected, add more parsers
+&nbsp;
+      // sensor ID
+      trumpetParser.select(
+        'form#scenarioForm select[name="_trigger[7]"] option[selected="selected"]',
+        trumpetAffectValue(trumpetParser.nextPayload, '_trigger[7]')
+      )
+    }
+  }))
+&nbsp;
+  // Condition: Alarm level ✔
+  trumpetParser.select('form#scenarioForm div.conditions span.input-checkbox.condition-choice.condition-3-choice[data-default="3"]', (element) =&gt; {
+    trumpetParser.nextPayload['_condition_3'] = '3'
+    trumpetParser.select(
+      'form#scenarioForm div.conditions input[type="radio"][name^="_condition[3]"][checked="checked"]',
+      trumpetAttr('name', (name) =&gt; {
+        trumpetParser.nextPayload[name] = '1'
+      })
+    )
+  })
+&nbsp;
+  // Condition: time ✔
+  trumpetParser.select('form#scenarioForm div.conditions span.input-checkbox.condition-choice.condition-1-choice[data-default="1"]', (element) =&gt; {
+    trumpetParser.nextPayload['_condition_1'] = '1'
+    trumpetParser.select(
+      'form#scenarioForm div.conditions input[type="hidden"][name="_condition[1]"]',
+      trumpetAffectValue(trumpetParser.nextPayload)
+    )
+  })
+&nbsp;
+  // Condition: temperatures ✔
+  trumpetParser.select('form#scenarioForm div.conditions span.input-checkbox.condition-choice.condition-Limited.4-1[data-default="4"]', (element) =&gt; {
+    trumpetParser.nextPayload['_condition_4_1'] = '4'
+    // checked, add more parsers
+&nbsp;
+    trumpetParser.select(
+      'form#scenarioForm div.conditions select[name="_condition[4][1][deviceSlaveId]"] option[selected="selected"]',
+      trumpetAffectValue(trumpetParser.nextPayload, '_condition[4][1][deviceSlaveId]')
+    )
+    trumpetParser.select(
+      'form#scenarioForm div.conditions select[name="_condition[4][1][operator]"] option[selected="selected"]',
+      trumpetAffectValue(trumpetParser.nextPayload, '_condition[4][1][operator]')
+    )
+    trumpetParser.select(
+      'form#scenarioForm div.conditions input[name="_condition[4][1][value]"]',
+      trumpetAffectValue(trumpetParser.nextPayload)
+    )
+&nbsp;
+    trumpetParser.select('form#scenarioForm div.conditions span.input-checkbox.condition-choice.condition-Limited.4-2[data-default="4"]', (element) =&gt; {
+      trumpetParser.nextPayload['_condition_4_2'] = '4'
+      // checked, add more parsers
+&nbsp;
+      trumpetParser.select(
+        'form#scenarioForm div.conditions select[name="_condition[4][2][deviceSlaveId]"] option[selected="selected"]',
+        trumpetAffectValue(trumpetParser.nextPayload, '_condition[4][2][deviceSlaveId]')
+      )
+      trumpetParser.select(
+        'form#scenarioForm div.conditions select[name="_condition[4][2][operator]"] option[selected="selected"]',
+        trumpetAffectValue(trumpetParser.nextPayload, '_condition[4][2][operator]')
+      )
+      trumpetParser.select(
+        'form#scenarioForm div.conditions input[name="_condition[4][2][value]"]',
+        trumpetAffectValue(trumpetParser.nextPayload)
+      )
+    })
+  })
+&nbsp;
+  // Condition: lightnings ✔
+  trumpetParser.select('form#scenarioForm div.conditions span.input-checkbox.condition-choice.condition-Limited.5-1[data-default="5"]', (element) =&gt; {
+    trumpetParser.nextPayload['_condition_5_1'] = '5'
+    // checked, add more parsers
+&nbsp;
+    trumpetParser.select(
+      'form#scenarioForm div.conditions select[name="_condition[5][1][deviceSlaveId]"] option[selected="selected"]',
+      trumpetAffectValue(trumpetParser.nextPayload, '_condition[5][1][deviceSlaveId]')
+    )
+    trumpetParser.select(
+      'form#scenarioForm div.conditions select[name="_condition[5][1][operator]"] option[selected="selected"]',
+      trumpetAffectValue(trumpetParser.nextPayload, '_condition[5][1][operator]')
+    )
+    trumpetParser.select(
+      'form#scenarioForm div.conditions select[name="_condition[5][1][value]"] option[selected="selected"]',
+      trumpetAffectValue(trumpetParser.nextPayload, '_condition[5][1][value]')
+    )
+&nbsp;
+    trumpetParser.select('form#scenarioForm div.conditions span.input-checkbox.condition-choice.condition-Limited.5-2[data-default="5"]', (element) =&gt; {
+      trumpetParser.nextPayload['_condition_5_2'] = '5'
+      // checked, add more parsers
+&nbsp;
+      trumpetParser.select(
+        'form#scenarioForm div.conditions select[name="_condition[5][2][deviceSlaveId]"] option[selected="selected"]',
+        trumpetAffectValue(trumpetParser.nextPayload, '_condition[5][2][deviceSlaveId]')
+      )
+      trumpetParser.select(
+        'form#scenarioForm div.conditions select[name="_condition[5][2][operator]"] option[selected="selected"]',
+        trumpetAffectValue(trumpetParser.nextPayload, '_condition[5][2][operator]')
+      )
+      trumpetParser.select(
+        'form#scenarioForm div.conditions select[name="_condition[5][2][value]"] option[selected="selected"]',
+        trumpetAffectValue(trumpetParser.nextPayload, '_condition[5][2][value]')
+      )
+    })
+  })
+&nbsp;
+  return trumpetParser
+}
+&nbsp;
+/**
+ * Returns a trumpet parser that will inspect form structure to post with no modification
+ *
+ * POST https://myfox.me/scenario/{homeId}/manage/{scenarioId}/4
+ *    with all data obtained by this.step3TempModificationParser() in the payload
+ * =&gt; &lt;form id="scenarioForm" action="https://myfox.me/scenario/7718/manage/183349/5" method="post"&gt;
+ *      &lt;input type="hidden" name="scData" value="..."&gt;
+ *      &lt;h2&gt;...&lt;/h2&gt;
+ *      &lt;div class="tabs-contents" style="min-height: 209px;"&gt;
+ *
+ *        &lt;div class="tab-content tab-security" style="display: block;"&gt;
+ *          &lt;div class="item security-level"&gt;
+ *            &lt;input type="radio" name="_action[securityLevel]" value="4" disabled="disabled"&gt;
+ *            &lt;input type="radio" name="_action[securityLevel]" value="2" disabled="disabled"&gt;
+ *            &lt;input type="radio" name="_action[securityLevel]" value="1" disabled="disabled"&gt;
+ *          &lt;/div&gt;
+ *        &lt;/div&gt;
+ *
+ *        &lt;div class="tab-content tab-domotic"&gt;
+ *          &lt;input type="checkbox" name="_cbx161355" value="1" disabled="disabled"&gt;
+ *          &lt;input type="hidden" name="_action[g][2856]" value="" disabled="disabled"&gt;
+ *          &lt;input type="checkbox" name="_cbx825488" value="1" disabled="disabled"&gt;
+ *          &lt;input type="hidden" name="_action[d][71394]" value="" disabled="disabled"&gt;
+ *        &lt;/div&gt;
+ *
+ * Probleme, je n'ai pas d'exemple ici:
+ *        &lt;div class="tab-content tab-video"&gt;
+ *          &lt;div class="item"&gt;Vous n'avez aucune caméra installée.&lt;/div&gt;
+ *        &lt;/div&gt;
+ *        &lt;div class="tab-content tab-automatism"&gt;
+ *          &lt;div class="item"&gt;Vous n'avez aucun automatisme installé.&lt;/div&gt;
+ *        &lt;/div&gt;
+ *
+ *
+ *        &lt;div class="tab-content tab-scenario"&gt;
+ *
+ *          &lt;!-- Jouer une sonnerie à l'exécution du scénario --&gt;
+ *          &lt;input type="checkbox" name="ringtone" value="1" disabled="disabled"&gt;
+ *
+ *          &lt;!-- Différer l'exécution du scénario --&gt;
+ *          &lt;input type="checkbox" name="_cbx836372" value="1" disabled="disabled"&gt;
+ *          de
+ *          &lt;input type="text" name="delayPlay" value="30" class="seconds" disabled="disabled"&gt;
+ *          secondes
+ *
+ *          &lt;!-- Lancer le scénario inverse --&gt;
+ *          &lt;input type="checkbox" name="_cbx866445" value="1" disabled="disabled"&gt;
+ *          après
+ *          &lt;input type="text" name="delayReverse" value="30" class="seconds" disabled="disabled"&gt;
+ *          secondes
+ *
+ *          &lt;!-- Lancer un autre scénario --&gt;
+ *          &lt;input type="checkbox" name="_cbx294634" value="1" checked="checked"&gt;
+ *          &lt;select name="_action[runScenarioId]"&gt;
+ *            &lt;option value=""&gt;Choisissez un de vos scénarios à la demande&lt;/option&gt;
+ *            &lt;option value="143997" selected="selected"&gt;AA test rien&lt;/option&gt;
+ *            &lt;option value="39004"&gt;Ch Chbres Confort 2h&lt;/option&gt;
+ *          &lt;/select&gt;
+ *
+ *        &lt;/div&gt;
+ *
+ *      &lt;/div&gt;
+ *      &lt;div class="form-buttons"&gt;
+ *        &lt;a href="#" class="btn-previousStep"&gt;&lt;span class="arrow"&gt;&lt;/span&gt;&lt;input type="submit" name="sbt" value="Étape précédente"&gt;&lt;span class="text"&gt;Étape précédente&lt;/span&gt;&lt;/a&gt;
+ *        &lt;a href="#" class="btn-nextStep"&gt;&lt;input type="submit" name="sbt" value="Étape suivante"&gt;&lt;span class="text"&gt;Étape suivante&lt;/span&gt;&lt;span class="arrow"&gt;&lt;/span&gt;&lt;/a&gt;
+ *      &lt;/div&gt;
+ *    &lt;/form&gt;
+ *
+ *
+ * =======================================
+ * Form elements are classified like this:
+ * =======================================
+ *
+ * &lt;input type="hidden" name="scData" value="..."&gt;
+ *
+ * Alarm levels:
+ *   &lt;input type="radio" name="_action[securityLevel]" value="4" disabled="disabled"&gt;
+ *   &lt;input type="radio" name="_action[securityLevel]" value="2" disabled="disabled"&gt;
+ *   &lt;input type="radio" name="_action[securityLevel]" value="1" disabled="disabled"&gt;
+ *
+ * Domotic/groups/other commands ON/OFF
+ *   &lt;div class="tab-content tab-domotic"&gt;
+ *     &lt;span class="input-checkbox action-choice" data-default="1"&gt;  &lt;-- if data-default is == "1", then checked
+ *       &lt;input type="checkbox" name="_cbxXXXXX" value="1"&gt;  &lt;-- don't care
+ *     &lt;/span&gt;
+ *     &lt;input type="hidden" name="_action[g][XXXXX]" value=""&gt;  &lt;-- to take only if data-default == "1" above
+ *
+ *     &lt;span class="input-checkbox action-choice" data-default=""&gt;  &lt;-- example unchecked
+ *       &lt;input type="checkbox" name="_cbxXXXXX" value="1"&gt;  &lt;-- don't care
+ *     &lt;/span&gt;
+ *     &lt;input type="hidden" name="_action[d][XXXXX]" value=""&gt;  &lt;-- do not take it (unchecked)
+ *   &lt;/div&gt;
+ *
+ * Camera, automatism: PROBLEM, I HAVE NO SAMPLE !
+ *   &lt;div class="tab-content tab-video"&gt;
+ *     &lt;div class="item"&gt;Vous n'avez aucune caméra installée.&lt;/div&gt;
+ *   &lt;/div&gt;
+ *   &lt;div class="tab-content tab-automatism"&gt;
+ *     &lt;div class="item"&gt;Vous n'avez aucun automatisme installé.&lt;/div&gt;
+ *   &lt;/div&gt;
+ * ==&gt; To do, one day maybe...
+ *
+ * Ringtone:
+ *   &lt;span class="input-checkbox action-choice" data-default="1"&gt;  &lt;-- if data-default is == "1", then checked
+ *     &lt;input type="checkbox" name="ringtone" value="1"&gt;  &lt;-- don't care
+ *   &lt;/span&gt;
+ *
+ * Scenario play:
+ *   &lt;span class="input-checkbox action-choice" data-default="1"&gt;  &lt;-- if data-default is == "1", then checked
+ *     &lt;input type="checkbox" name="_cbxXXXXX" value="1"&gt;  &lt;-- don't care
+ *   &lt;/span&gt; de
+ *   &lt;input type="text" name="delayPlay" value="30" class="seconds" disabled="disabled"&gt;  &lt;-- to take only if data-default == "1" above
+ *
+ *   &lt;span class="input-checkbox action-choice" data-default="1"&gt;  &lt;-- if data-default is == "1", then checked
+ *     &lt;input type="checkbox" name="_cbxXXXXX" value="1"&gt;  &lt;-- don't care
+ *   &lt;/span&gt; après
+ *   &lt;input type="text" name="delayReverse" value="30" class="seconds" disabled="disabled"&gt;  &lt;-- to take only if data-default == "1" above
+ *
+ *   &lt;span class="input-checkbox action-choice" data-default="1"&gt;  &lt;-- if data-default is == "1", then checked
+ *     &lt;input type="checkbox" name="_cbxXXXXX" value="1"&gt;  &lt;-- don't care
+ *   &lt;/span&gt;
+ *   &lt;select name="_action[runScenarioId]"&gt;
+ *     &lt;option value=""&gt;Choisissez un de vos scénarios à la demande&lt;/option&gt;
+ *     &lt;option value="xxxxx" selected="selected"&gt;AA test rien&lt;/option&gt;
+ *     &lt;option value="xxxxxx"&gt;Ch Chbres Confort 2h&lt;/option&gt;
+ *   &lt;/select&gt;
+ *
+ * @param  {MyfoxWrapperApiCommon}  wrapperApi  The Api instance, to throw events
+ * @return {trumpet}                The trumpet parser to plug on the HTML stream.
+ */
+export function step4Parser (wrapperApi) {
+  const trumpetParser = trumpet()
+  trumpetParser.nextPayload = {}
+  trumpetParser.setMaxListeners(10) // We have a lot of stuff to analyze...
+&nbsp;
+  // get scData ✔
+  trumpetParser.select(
+    'form#scenarioForm input[name="scData"]',
+    trumpetAffectValue(trumpetParser.nextPayload)
+  )
+&nbsp;
+  // Alarm levels
+  trumpetParser.select(
+    'form#scenarioForm input[type="radio"][name="_action[securityLevel]"][checked="checked"]',
+    trumpetAffectValue(trumpetParser.nextPayload)
+  )
+&nbsp;
+  // Domotic/groups/other commands ON/OFF
+  let nextInputForDomotic = false
+  trumpetParser.selectAll(
+    'form#scenarioForm div.tab-domotic span.input-checkbox.action-choice',
+    trumpetAttr('data-default', (dataDefault) =&gt; {
+      nextInputForDomotic = (dataDefault === '1')
+    })
+  )
+  trumpetParser.selectAll(
+    'form#scenarioForm div.tab-domotic input[type="hidden"][name^="_action"]',
+    (element) =&gt; {
+      element.getAttributes((attributes) =&gt; {
+        if (nextInputForDomotic &amp;&amp; attributes['value'] &amp;&amp; attributes['value'] !== '') {
+          trumpetParser.nextPayload[attributes['name']] = attributes['value']
+        }
+      })
+    }
+  )
+&nbsp;
+  // Camera, automatism
+  // To do later, when sample available!
+&nbsp;
+  // Scenario play
+  let nextInputForScenarioPlay = false
+  trumpetParser.selectAll(
+    'form#scenarioForm div.tab-scenario span.input-checkbox',
+    trumpetAttr('data-default', (dataDefault) =&gt; {
+      nextInputForScenarioPlay = (dataDefault === '1')
+    })
+  )
+  trumpetParser.select(
+    'form#scenarioForm div.tab-scenario input[type="checkbox"][name="ringtone"]',
+    (element) =&gt; {
+      element.getAttributes((attributes) =&gt; {
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (nextInputForScenarioPlay) {
+          trumpetParser.nextPayload['ringtone'] = true
+        }
+      })
+    }
+  )
+  trumpetParser.select(
+    'form#scenarioForm div.tab-scenario input[type="text"][name="delayPlay"]',
+    (element) =&gt; {
+      element.getAttributes((attributes) =&gt; {
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (nextInputForScenarioPlay &amp;&amp; attributes['value'] &amp;&amp; attributes['value'] !== '') {
+          trumpetParser.nextPayload['delayPlay'] = attributes['value']
+        }
+      })
+    }
+  )
+  trumpetParser.select(
+    'form#scenarioForm div.tab-scenario input[type="text"][name="delayReverse"]',
+    (element) =&gt; {
+      element.getAttributes((attributes) =&gt; {
+        <span class="missing-if-branch" title="if path not taken" >I</span>i</span>f (n</span>extInputForScenarioPlay &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >attributes['value'] &amp;&amp; <span class="branch-2 cbranch-no" title="branch not covered" >attributes['value'] !== '') {
+          trumpetParser.nextPayload['delayReverse'] = attributes['value']
+        }
+      })
+    }
+  )
+  trumpetParser.select(
+    'form#scenarioForm div.tab-scenario select[name="_action[runScenarioId]"] option[selected="selected"]',
+    (element) =&gt; {
+      element.getAttributes((attributes) =&gt; {
+        <span class="missing-if-branch" title="if path not taken" >I</span>i</span>f (n</span>extInputForScenarioPlay &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >attributes['value'] &amp;&amp; <span class="branch-2 cbranch-no" title="branch not covered" >attributes['value'] !== '') {
+          trumpetParser.nextPayload['_action[runScenarioId]'] = attributes['value']
+        }
+      })
+    }
+  )
+&nbsp;
+  return trumpetParser
+}
+&nbsp;
+export <span class="fstat-no" title="function not covered" >function step5Parser (wrapperApi) {</span>
+  const trumpetParser = trumpet()
+  trumpetParser.data = {status: 'ko'}
+&nbsp;
+  trumpetParser.select('div.ended p.message-normal', <span class="fstat-no" title="function not covered" >() =&gt; {</span>
+    trumpetParser.data.status = 'ok'
+    trumpetParser.end()
+  })
+&nbsp;
+  return trumpetParser
+}
+&nbsp;
+export function step3TempFixer (payload, settings) {
+  // operators trigger_4: up_to:1, down_to:0
+  // operators condition_4_*: &lt;:0, &gt;:1, =:2
+  // DELTA to apply: operator 0 : -0.5°  ;  operator 1 : +0.5°  ;  operator 2 : +0°
+  settings.forEach((setting) =&gt; {
+    const {toTemperature, controls} = setting
+    controls.forEach((control) =&gt; {
+      let delta = 0
+      switch (control.condition) {
+        case 'trigger_4':
+          if (payload['_trigger[4][1][deviceSlaveId]'] !== control.deviceSlaveId) {
+            throw new Error('Scenario settings mismatch.')
+          }
+          d</span>elta = (payload['_trigger[4][1][operator]'] === '1') ? 0.5 : <span class="branch-1 cbranch-no" title="branch not covered" >-0.5
+          payload['_trigger[4][1][value]'] = Number(toTemperature) + delta + ''
+          break
+        case 'condition_4_1':
+          <span class="missing-if-branch" title="if path not taken" >I</span>if (payload['_condition[4][1][deviceSlaveId]'] !== control.deviceSlaveId) {
+            throw new Error('Scenario settings mismatch.')
+          }
+          delta = (payload['_condition[4][1][operator]'] === '1')
+              ? <span class="branch-0 cbranch-no" title="branch not covered" >0.5 : ((payload['_condition[4][1][operator]'] === '0') ? -0.5 : <span class="branch-1 cbranch-no" title="branch not covered" >0)</span></span>
+          payload['_condition[4][1][value]'] = Number(toTemperature) + delta + ''
+          break
+        case 'condition_4_2':
+          <span class="missing-if-branch" title="if path not taken" >I</span>if (payload['_condition[4][2][deviceSlaveId]'] !== control.deviceSlaveId) {
+            throw new Error('Scenario settings mismatch.')
+          }
+          delta = (payload['_condition[4][2][operator]'] === '1')
+              ? <span class="branch-0 cbranch-no" title="branch not covered" >0.5 : ((</span>payload['_condition[4][2][operator]'] === '0') ? <span class="branch-0 cbranch-no" title="branch not covered" >-0.5 : 0)</span>
+          payload['_condition[4][2][value]'] = Number(toTemperature) + delta + ''
+          break
+        default:
+          throw new Error('Unknown condition to control.')
+      }
+    })
+  })
+  return payload
+}
 &nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Oct 07 2016 09:27:37 GMT+0200 (CEST)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Nov 09 2016 11:31:00 GMT+0100 (CET)
 </div>
 </div>
 <script src="../../prettify.js"></script>

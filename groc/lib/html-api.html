@@ -9,7 +9,8 @@
 <span class="hljs-keyword">import</span> MyfoxWrapperApiCommon <span class="hljs-keyword">from</span> <span class="hljs-string">'./common-api'</span>
 <span class="hljs-keyword">import</span> { httpsRequest } <span class="hljs-keyword">from</span> <span class="hljs-string">'./html-parsers'</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Html parsers</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">import</span> homeParser <span class="hljs-keyword">from</span> <span class="hljs-string">'./html-parsers/home'</span>
 <span class="hljs-keyword">import</span> simpleCodeActionParser <span class="hljs-keyword">from</span> <span class="hljs-string">'./html-parsers/simple-code-action'</span>
-<span class="hljs-keyword">import</span> { step1Parser, step2Parser, step3TempInspectionParser } <span class="hljs-keyword">from</span> <span class="hljs-string">'./html-parsers/scenario_edition'</span>
+<span class="hljs-keyword">import</span> { step1Parser, step2Parser, step3TempInspectionParser, step3TempModificationParser,
+    step3TempFixer, step4Parser, step5Parser } <span class="hljs-keyword">from</span> <span class="hljs-string">'./html-parsers/scenario_edition'</span>
 
 class MyfoxWrapperApiHtml extends MyfoxWrapperApiCommon {</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Html version constructor.
 This overrides the default constructor to add HTML parameters to the configuration.</p>
@@ -237,10 +238,7 @@ If scheduled, cannot return the state in the callback: will return an ID to regi
       callback(<span class="hljs-literal">null</span>, { id: macroId, state: <span class="hljs-string">'delayed'</span>, remaining: nextActions.length })
     } <span class="hljs-keyword">else</span> {
       <span class="hljs-keyword">let</span> url = config.get(<span class="hljs-string">'myfox-wrapper-api.html.myfox.paths.scenario_action'</span>).replace(<span class="hljs-string">'{action}'</span>, action).replace(<span class="hljs-string">'{id}'</span>, id)
-      <span class="hljs-keyword">if</span> (action === <span class="hljs-string">'play'</span>) {
-        url += <span class="hljs-string">'?_='</span> + (<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>()).getTime()
-      }
-      <span class="hljs-keyword">this</span>.callApi(url, (action === <span class="hljs-string">'play'</span>) ? <span class="hljs-string">'GET'</span> : <span class="hljs-string">'POST'</span>, simpleCodeActionParser(<span class="hljs-keyword">this</span>), {}, {}, {})
+      <span class="hljs-keyword">this</span>.callApi(url, <span class="hljs-string">'POST'</span>, simpleCodeActionParser(<span class="hljs-keyword">this</span>), {}, {}, {})
         .then((parser) =&gt; {</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>If action succeed and on/off, then must update persistentStates</p></div></div><div class="code"><div class="wrapper">          <span class="hljs-keyword">if</span> (parser.status === <span class="hljs-string">'ok'</span> &amp;&amp; action !== <span class="hljs-string">'play'</span>) {
             <span class="hljs-keyword">const</span> scenarii = cloneDeep(<span class="hljs-keyword">this</span>.persistentStates.scenarii.value)
             scenarii[id].active = (action === <span class="hljs-string">'on'</span>) ? <span class="hljs-string">'1'</span> : <span class="hljs-string">'0'</span>
@@ -489,6 +487,56 @@ macroId = macroId || crypto.randomBytes(20).toString(&#39;hex&#39;)</p></div></d
       })
       .then((parser3) =&gt; {
         callback(<span class="hljs-literal">null</span>, parser3.data)
+      })
+      .catch((err) =&gt; {
+        <span class="hljs-built_in">console</span>.error(err)
+        callback(err)
+      })
+  }</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Uses edition mode to inspect and modify a scenario, in order to change temperature conditions values (HTML strategy only)</p>
+<p>The temperature conditions are hard coded and supports 3 conditions, described by their HTML names here:</p>
+<ul>
+<li>trigger_4: the main trigger of the scenario: you can find it in the tabs of events that will execute the scenario</li>
+<li>condition_4_1: the first condition that you can add after the main trigger: you can find it in a list of checkable conditions.</li>
+<li>condition_4_2: the second sub-condition that appears when the condition_4_1 is already checked and set.</li>
+</ul>
+<p>Parameters:</p>
+<ul>
+<li><p><strong>scenarioId must be a string.</strong><br/>(The ID of the scenario to modify. The scenario edition WILL modify parameters depending on the settings given.)</p>
+</li>
+<li><p><strong>settings must be an Array of Objects.</strong><br/>(An array of temperature values to modify, associated to the conditions to look in.)</p>
+</li>
+<li><p><strong>callback must be a function.</strong><br/>(The function to call with all data.)</p>
+</li>
+</ul></div></div><div class="code"><div class="wrapper">  updateScenarioTemperatureSettings (scenarioId, settings, callback) {</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Validation of parameters</p></div></div><div class="code"><div class="wrapper">    Joi.assert(scenarioId, Joi.string().required())
+    <span class="hljs-keyword">const</span> validator = Joi.array().items(Joi.object({
+      toTemperature: Joi.number(),
+      controls: Joi.array().items(Joi.object({
+        condition: Joi.string().required().valid([<span class="hljs-string">'trigger_4'</span>, <span class="hljs-string">'condition_4_1'</span>, <span class="hljs-string">'condition_4_2'</span>]),
+        deviceSlaveId: Joi.string().required(),
+        checked: Joi.boolean().optional()
+      }).unknown())
+    }))
+    Joi.assert(settings, validator)</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Launch edition posts</p></div></div><div class="code"><div class="wrapper">    <span class="hljs-keyword">const</span> url1 = config.get(<span class="hljs-string">'myfox-wrapper-api.html.myfox.paths.scenario_edition_temp_1'</span>).replace(<span class="hljs-string">'{scenarioId}'</span>, scenarioId)
+    <span class="hljs-keyword">const</span> url2 = config.get(<span class="hljs-string">'myfox-wrapper-api.html.myfox.paths.scenario_edition_temp_2'</span>).replace(<span class="hljs-string">'{scenarioId}'</span>, scenarioId)
+    <span class="hljs-keyword">const</span> url3 = config.get(<span class="hljs-string">'myfox-wrapper-api.html.myfox.paths.scenario_edition_temp_3'</span>).replace(<span class="hljs-string">'{scenarioId}'</span>, scenarioId)
+    <span class="hljs-keyword">const</span> url4 = config.get(<span class="hljs-string">'myfox-wrapper-api.html.myfox.paths.scenario_edition_temp_4'</span>).replace(<span class="hljs-string">'{scenarioId}'</span>, scenarioId)
+    <span class="hljs-keyword">const</span> url5 = config.get(<span class="hljs-string">'myfox-wrapper-api.html.myfox.paths.scenario_edition_temp_5'</span>).replace(<span class="hljs-string">'{scenarioId}'</span>, scenarioId)
+    <span class="hljs-keyword">this</span>.callApi(url1, <span class="hljs-string">'GET'</span>, step1Parser(<span class="hljs-keyword">this</span>), {}, {}, {})
+      .then((parser1) =&gt; {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.callApi(url2, <span class="hljs-string">'POST'</span>, step2Parser(<span class="hljs-keyword">this</span>), {}, {}, parser1.nextPayload)
+      })
+      .then((parser2) =&gt; {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.callApi(url3, <span class="hljs-string">'POST'</span>, step3TempModificationParser(<span class="hljs-keyword">this</span>), {}, {}, parser2.nextPayload)
+      })
+      .then((parser3) =&gt; {
+        <span class="hljs-keyword">const</span> fixedPayload = step3TempFixer(parser3.nextPayload, settings)
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.callApi(url4, <span class="hljs-string">'POST'</span>, step4Parser(<span class="hljs-keyword">this</span>), {}, {}, fixedPayload)
+      })
+      .then((parser4) =&gt; {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.callApi(url5, <span class="hljs-string">'POST'</span>, step5Parser(<span class="hljs-keyword">this</span>), {}, {}, parser4.nextPayload)
+      })
+      .then((parser5) =&gt; {
+        callback(<span class="hljs-literal">null</span>, parser5.data)
       })
       .catch((err) =&gt; {
         <span class="hljs-built_in">console</span>.error(err)

@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="en"><head><title>lib/html-parsers/scenario_edition</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="lib/html-parsers/scenario_edition"><meta name="groc-project-path" content="lib/html-parsers/scenario_edition.js"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path">lib/html-parsers/scenario_edition.js</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-pi">'use strict'</span>
 
 <span class="hljs-keyword">import</span> trumpet <span class="hljs-keyword">from</span> <span class="hljs-string">'trumpet'</span>
-<span class="hljs-keyword">import</span> { trumpetAttr, trumpetInnerText } <span class="hljs-keyword">from</span> <span class="hljs-string">'./index'</span></div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Returns a trumpet parser that will get input values to go to the next edition step.</p>
+<span class="hljs-keyword">import</span> { trumpetAttr, trumpetInnerText, trumpetAffectValue } <span class="hljs-keyword">from</span> <span class="hljs-string">'./index'</span></div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Returns a trumpet parser that will get input values to go to the next edition step.</p>
 <p>GET <a href="https://myfox.me/scenario/{homeId}/manage/{scenarioId}/1">https://myfox.me/scenario/{homeId}/manage/{scenarioId}/1</a>
 =&gt; <form id="scenarioForm" action="https://myfox.me/scenario/xxxx/manage/xxxx/2" method="post">
      <input type="hidden" name="scData" value="xxxx" />
@@ -111,32 +111,30 @@
 <p><strong>Returns a trumpet</strong><br/>(The trumpet parser to plug on the HTML stream.)</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">step3TempInspectionParser</span> (<span class="hljs-params">wrapperApi</span>) </span>{
   <span class="hljs-keyword">const</span> trumpetParser = trumpet()
   trumpetParser.data = {}
-  trumpetParser.setMaxListeners(<span class="hljs-number">14</span>) <span class="hljs-comment">// We have a lot of stuff to analyze...</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>if input type=&quot;radio&quot; name=&quot;_trigger_type&quot; value=&quot;4&quot; has checked=&quot;checked&quot;, then scan main temperature condition</p></div></div><div class="code"><div class="wrapper">  trumpetParser.select(<span class="hljs-string">'form#scenarioForm input[name="_trigger_type"][value="4"]'</span>, trumpetAttr(<span class="hljs-string">'checked'</span>, (checked) =&gt; {
-    <span class="hljs-keyword">if</span> (checked === <span class="hljs-string">'checked'</span>) {
-      trumpetParser.data.trigger_4 = {}</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>get scenario</p></div></div><div class="code"><div class="wrapper">      trumpetParser.select(
-        <span class="hljs-string">'form#scenarioForm select[name="_trigger[4][1][deviceSlaveId]"] option[selected="selected"]'</span>,
-        trumpetAttr(<span class="hljs-string">'value'</span>, (value) =&gt; {
-          trumpetParser.data.trigger_4 = {deviceSlaveId: value}
-        })
-      )
-      trumpetParser.select(
-        <span class="hljs-string">'form#scenarioForm select[name="_trigger[4][1][deviceSlaveId]"] option[selected="selected"]'</span>,
-        trumpetInnerText((text) =&gt; {
-          trumpetParser.data.trigger_4.deviceSlaveName = text
-        })
-      )</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>get temperature value</p></div></div><div class="code"><div class="wrapper">      trumpetParser.select(
-        <span class="hljs-string">'form#scenarioForm input[name="_trigger[4][1][value]"]'</span>,
-        trumpetAttr(<span class="hljs-string">'value'</span>, (value) =&gt; {
-          trumpetParser.data.trigger_4.value = value
-        })
-      )</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>get operator</p></div></div><div class="code"><div class="wrapper">      trumpetParser.select(
-        <span class="hljs-string">'form#scenarioForm input[name="_trigger[4][1][operator]"][checked="checked"]'</span>,
-        trumpetAttr(<span class="hljs-string">'value'</span>, (value) =&gt; {
-          trumpetParser.data.trigger_4.operator = value
-        })
-      )
-    }
-  }))</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>First secondary condition</p></div></div><div class="code"><div class="wrapper">  trumpetParser.select(
+  trumpetParser.setMaxListeners(<span class="hljs-number">14</span>) <span class="hljs-comment">// We have a lot of stuff to analyze...</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>if input type=&quot;radio&quot; name=&quot;_trigger_type&quot; value=&quot;4&quot; has checked=&quot;checked&quot;, then scan main temperature condition</p></div></div><div class="code"><div class="wrapper">  trumpetParser.select(<span class="hljs-string">'form#scenarioForm input[name="_trigger_type"][value="4"][checked="checked"]'</span>, (element) =&gt; {
+    trumpetParser.data.trigger_4 = {}</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>get scenario</p></div></div><div class="code"><div class="wrapper">    trumpetParser.select(
+      <span class="hljs-string">'form#scenarioForm select[name="_trigger[4][1][deviceSlaveId]"] option[selected="selected"]'</span>,
+      trumpetAttr(<span class="hljs-string">'value'</span>, (value) =&gt; {
+        trumpetParser.data.trigger_4 = {deviceSlaveId: value}
+      })
+    )
+    trumpetParser.select(
+      <span class="hljs-string">'form#scenarioForm select[name="_trigger[4][1][deviceSlaveId]"] option[selected="selected"]'</span>,
+      trumpetInnerText((text) =&gt; {
+        trumpetParser.data.trigger_4.deviceSlaveName = text
+      })
+    )</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>get temperature value</p></div></div><div class="code"><div class="wrapper">    trumpetParser.select(
+      <span class="hljs-string">'form#scenarioForm input[name="_trigger[4][1][value]"]'</span>,
+      trumpetAttr(<span class="hljs-string">'value'</span>, (value) =&gt; {
+        trumpetParser.data.trigger_4.value = value
+      })
+    )</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>get operator</p></div></div><div class="code"><div class="wrapper">    trumpetParser.select(
+      <span class="hljs-string">'form#scenarioForm input[name="_trigger[4][1][operator]"][checked="checked"]'</span>,
+      trumpetAttr(<span class="hljs-string">'value'</span>, (value) =&gt; {
+        trumpetParser.data.trigger_4.operator = value
+      })
+    )
+  })</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>First secondary condition</p></div></div><div class="code"><div class="wrapper">  trumpetParser.select(
     <span class="hljs-string">'div.conditions div.choice-4-1 select[name="_condition[4][1][deviceSlaveId]"] option[selected="selected"]'</span>,
     trumpetAttr(<span class="hljs-string">'value'</span>, (value) =&gt; {
       trumpetParser.data.condition_4_1 = {deviceSlaveId: value}
@@ -193,4 +191,796 @@
   )
 
   <span class="hljs-keyword">return</span> trumpetParser
+}</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Returns a trumpet parser that will inspect and modify form structure searching for temperature condition occurrences.</p>
+<p>POST <a href="https://myfox.me/scenario/{homeId}/manage/{scenarioId}/3">https://myfox.me/scenario/{homeId}/manage/{scenarioId}/3</a>
+   with scData: &quot;xxxx&quot;
+        type: &quot;xxxx&quot;
+=&gt; <form id="scenarioForm" action="https://myfox.me/scenario/xxx/manage/xxxxxx/4" method="post">
+     <input type="hidden" name="scData" value="xxxxx" />
+     <h2>...</h2>
+     <div class="tabs-list">...</div>
+     <div class="tabs-contents"></p>
+<pre><code>   &lt;div class=&quot;tab-content tab-securityLevel&quot;&gt;
+     &lt;div class=&quot;item security-level&quot;&gt;
+       &lt;ul class=&quot;...&quot;&gt;
+         &lt;li class=&quot;seclev-4&quot;&gt;
+           &lt;span ...&gt;&lt;span ...&gt;
+             &lt;input type=&quot;checkbox&quot; name=&quot;_trigger[3][4]&quot; value=&quot;1&quot; /&gt;
+           &lt;/span&gt;&lt;/span&gt;
+         &lt;/li&gt;
+         &lt;li class=&quot;seclev-2&quot;&gt;
+           &lt;span ...&gt;&lt;span ...&gt;
+             &lt;input type=&quot;checkbox&quot; name=&quot;_trigger[3][2]&quot; value=&quot;1&quot; /&gt;
+           &lt;/span&gt;&lt;/span&gt;
+         &lt;/li&gt;
+         &lt;li class=&quot;seclev-1&quot;&gt;
+           &lt;span ...&gt;&lt;span ...&gt;
+             &lt;input type=&quot;checkbox&quot; name=&quot;_trigger[3][1]&quot; value=&quot;1&quot; /&gt;
+           &lt;/span&gt;&lt;/span&gt;
+         &lt;/li&gt;
+       &lt;/ul&gt;
+     &lt;/div&gt;
+   &lt;/div&gt;
+
+   &lt;div class=&quot;tab-content tab-risks&quot;&gt;
+     &lt;div class=&quot;item&quot;&gt;
+       &lt;ul class=&quot;reset&quot;&gt;
+         &lt;li class=&quot;risk-10 option-block&quot;&gt;
+           &lt;span ...&gt;&lt;span ...&gt;
+               &lt;input type=&quot;radio&quot; name=&quot;_trigger[2]&quot; value=&quot;10&quot; /&gt;
+           &lt;/span&gt;&lt;/span&gt;
+         &lt;/li&gt;
+         &lt;li class=&quot;risk-16 option-block&quot;&gt;
+           &lt;span ...&gt;&lt;span ...&gt;
+             &lt;input type=&quot;radio&quot; name=&quot;_trigger[2]&quot; value=&quot;16&quot; /&gt;
+           &lt;/span&gt;&lt;/span&gt;
+         &lt;/li&gt;
+         &lt;li class=&quot;risk-4 option-block&quot;&gt;
+           &lt;span ...&gt;&lt;span ...&gt;
+             &lt;input type=&quot;radio&quot; name=&quot;_trigger[2]&quot; value=&quot;4&quot; /&gt;
+           &lt;/span&gt;&lt;/span&gt;
+         &lt;/li&gt;
+         &lt;li class=&quot;risk-512 option-block&quot;&gt;
+           &lt;span ...&gt;&lt;span ...&gt;
+             &lt;input type=&quot;radio&quot; name=&quot;_trigger[2]&quot; value=&quot;512&quot; /&gt;
+           &lt;/span&gt;&lt;/span&gt;
+         &lt;/li&gt;
+         &lt;li class=&quot;risk-2048 option-block&quot;&gt;
+           &lt;span ...&gt;&lt;span ...&gt;
+             &lt;input type=&quot;radio&quot; name=&quot;_trigger[2]&quot; value=&quot;2048&quot; /&gt;
+           &lt;/span&gt;&lt;/span&gt;
+         &lt;/li&gt;
+       &lt;/ul&gt;
+     &lt;/div&gt;
+   &lt;/div&gt;
+
+   &lt;div class=&quot;tab-content tab-sensors&quot;&gt;&lt;div class=&quot;item&quot;&gt;
+     &lt;ul class=&quot;reset&quot;&gt;
+       &lt;li class=&quot;sensors sensors-4 option-block&quot; data-triggertype=&quot;4&quot;&gt;
+         &lt;div class=&quot;choice&quot;&gt;
+           &lt;span ...&gt;&lt;span ...&gt;
+             &lt;input type=&quot;radio&quot; name=&quot;_trigger_type&quot; value=&quot;4&quot; checked=&quot;checked&quot; /&gt;
+           &lt;/span&gt;&lt;/span&gt;
+         &lt;/div&gt;
+         &lt;div class=&quot;settings-tooltip&quot; id=&quot;_trigger_4&quot;&gt;
+           &lt;div class=&quot;settings-tooltip-body&quot;&gt;
+             &lt;div class=&quot;settings temperature&quot;&gt;
+                 &lt;table&gt;
+                   &lt;tr&gt;&lt;td&gt;Capteur&lt;/td&gt;&lt;td&gt;
+                     &lt;select name=&quot;_trigger[4][1][deviceSlaveId]&quot;&gt;
+                       &lt;option value=&quot;xxxxxx&quot; selected=&quot;selected&quot;&gt;Capteur SdB&lt;/option&gt;&lt;option value=&quot;xxxxxx&quot;&gt;Capteur Salon&lt;/option&gt;
+                     &lt;/select&gt;
+                   &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Température&lt;/td&gt;&lt;td&gt;&lt;span class=&quot;input input-temperature&quot;&gt;
+                     &lt;input name=&quot;_trigger[4][1][value]&quot; value=&quot;15&quot; type=&quot;text&quot; class=&quot;&quot; /&gt;
+                   &lt;/span&gt; °C    &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Franchissement&lt;/td&gt;&lt;td&gt;&lt;span class=&quot;input-radio &quot; data-default=&quot;1&quot; data-group=&quot;_trigger_4__1__operator_&quot; data-cancel=&quot;0&quot;&gt;
+                     &lt;span class=&quot;icon&quot;&gt;
+                       &lt;input type=&quot;radio&quot; name=&quot;_trigger[4][1][operator]&quot; value=&quot;1&quot; checked=&quot;checked&quot; /&gt;
+                     &lt;/span&gt;
+                   &lt;/span&gt; à la hausse &amp;nbsp; &amp;nbsp; &lt;span class=&quot;input-radio &quot; data-default=&quot;1&quot; data-group=&quot;_trigger_4__1__operator_&quot; data-cancel=&quot;0&quot;&gt;
+                     &lt;span class=&quot;icon&quot;&gt;
+                       &lt;input type=&quot;radio&quot; name=&quot;_trigger[4][1][operator]&quot; value=&quot;0&quot; /&gt;
+                     &lt;/span&gt;
+                   &lt;/span&gt; à la baisse &lt;/td&gt;&lt;/tr&gt;
+                 &lt;/table&gt;
+             &lt;/div&gt;
+           &lt;/div&gt;&lt;!-- End tooltip body --&gt;
+         &lt;/div&gt;
+       &lt;/li&gt;
+       &lt;li class=&quot;sensors sensors-5 option-block&quot; data-triggertype=&quot;5&quot;&gt;
+         &lt;div class=&quot;choice&quot;&gt;
+           &lt;span class=&quot;input-radio trigger-choice&quot; data-default=&quot;&quot; data-group=&quot;_trigger_type&quot; data-cancel=&quot;1&quot;&gt;&lt;span class=&quot;icon&quot;&gt;
+             &lt;input type=&quot;radio&quot; name=&quot;_trigger_type&quot; value=&quot;5&quot; /&gt;
+           &lt;/span&gt;&lt;/span&gt;
+         &lt;/div&gt;
+         &lt;div class=&quot;settings-tooltip&quot; id=&quot;_trigger_5&quot;&gt;
+           &lt;div class=&quot;settings-tooltip-body&quot;&gt;
+             &lt;div class=&quot;settings light&quot;&gt;
+                 &lt;table&gt;
+                   &lt;tr&gt;&lt;td&gt;Capteur&lt;/td&gt;&lt;td&gt;
+                   &lt;select name=&quot;_trigger[5][1][deviceSlaveId]&quot;&gt;&lt;option value=&quot;xxxxxx&quot;&gt;Capteur SdB&lt;/option&gt;&lt;option value=&quot;xxxxxxx&quot;&gt;Capteur Salon&lt;/option&gt;&lt;/select&gt;
+                   &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Luminosité&lt;/td&gt;&lt;td&gt;
+                     &lt;select name=&quot;_trigger[5][1][value]&quot;&gt;
+                       &lt;option value=&quot;1&quot;&gt;Pleine lumière&lt;/option&gt;
+                       &lt;option value=&quot;2&quot;&gt;Lumière du jour&lt;/option&gt;
+                       &lt;option value=&quot;4&quot;&gt;Lumière basse&lt;/option&gt;
+                       &lt;option value=&quot;5&quot;&gt;Pénombre&lt;/option&gt;
+                       &lt;option value=&quot;6&quot;&gt;Obscurité&lt;/option&gt;
+                     &lt;/select&gt;
+                   &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Franchissement&lt;/td&gt;&lt;td&gt;&lt;span class=&quot;input-radio &quot; data-default=&quot;1&quot; data-group=&quot;_trigger_5__1__operator_&quot; data-cancel=&quot;0&quot;&gt;&lt;span class=&quot;icon&quot;&gt;
+                     &lt;input type=&quot;radio&quot; name=&quot;_trigger[5][1][operator]&quot; value=&quot;1&quot; checked=&quot;checked&quot; /&gt;
+                   &lt;/span&gt;&lt;/span&gt; à la hausse &amp;nbsp; &amp;nbsp; &lt;span class=&quot;input-radio &quot; data-default=&quot;1&quot; data-group=&quot;_trigger_5__1__operator_&quot; data-cancel=&quot;0&quot;&gt;&lt;span class=&quot;icon&quot;&gt;
+                     &lt;input type=&quot;radio&quot; name=&quot;_trigger[5][1][operator]&quot; value=&quot;0&quot; /&gt;
+                   &lt;/span&gt;&lt;/span&gt; à la baisse &lt;/td&gt;&lt;/tr&gt;
+                 &lt;/table&gt;
+             &lt;/div&gt;
+           &lt;/div&gt;&lt;!-- End tooltip body --&gt;
+         &lt;/div&gt;
+       &lt;/li&gt;
+       &lt;li class=&quot;sensors sensors-7 option-block&quot; data-triggertype=&quot;7&quot;&gt;
+         &lt;div class=&quot;choice&quot;&gt;
+           &lt;span class=&quot;input-radio trigger-choice&quot; data-default=&quot;&quot; data-group=&quot;_trigger_type&quot; data-cancel=&quot;1&quot;&gt;&lt;span class=&quot;icon&quot;&gt;
+             &lt;input type=&quot;radio&quot; name=&quot;_trigger_type&quot; value=&quot;7&quot; /&gt;
+           &lt;/span&gt;&lt;/span&gt;
+         &lt;/div&gt;
+         &lt;div class=&quot;settings-tooltip&quot; id=&quot;_trigger_7&quot;&gt;
+           &lt;div class=&quot;settings-tooltip-body&quot;&gt;
+             &lt;div class=&quot;settings device&quot;&gt;
+                 &lt;table&gt;
+                 &lt;tr&gt;&lt;td&gt;Capteur&lt;/td&gt;&lt;td&gt;
+                 &lt;select name=&quot;_trigger[7]&quot;&gt;
+                   &lt;option value=&quot;xxx&quot;&gt;Porte d&#39;entrée&lt;/option&gt;
+                   &lt;option value=&quot;xxxx&quot;&gt;Mouvement garage&lt;/option&gt;
+                   &lt;option value=&quot;xxxx&quot;&gt;Fenêtre salon&lt;/option&gt;
+                   &lt;option value=&quot;xxxx&quot;&gt;Mouvement salon&lt;/option&gt;
+                   &lt;option value=&quot;xx&quot;&gt;Porte du garage&lt;/option&gt;
+                 &lt;/select&gt;
+                 &lt;/td&gt;&lt;/tr&gt;
+                 &lt;/table&gt;
+             &lt;/div&gt;
+           &lt;/div&gt;&lt;!-- End tooltip body --&gt;
+         &lt;/div&gt;
+       &lt;/li&gt;
+     &lt;/ul&gt;
+   &lt;/div&gt;
+
+ &lt;/div&gt;
+
+ &lt;div class=&quot;form-buttons collapse&quot;&gt;
+   &lt;a href=&quot;#&quot; class=&quot;btn-nextStep&quot; &gt;
+     &lt;input type=&quot;submit&quot; name=&quot;sbt&quot; value=&quot;Étape suivante&quot; /&gt;&lt;span class=&quot;text&quot;&gt;Étape suivante&lt;/span&gt;
+   &lt;/a&gt;
+ &lt;/div&gt;
+
+ &lt;h2&gt;Choisissez des conditions facultatives&lt;/h2&gt;
+ &lt;div class=&quot;conditions&quot;&gt;
+
+   &lt;div class=&quot;condition condition-3 option-block&quot; data-triggertype=&quot;3&quot;&gt;
+     &lt;div class=&quot;title&quot;&gt;
+       &lt;span class=&quot;input-checkbox condition-choice condition-3-choice&quot; data-default=&quot;&quot;&gt;&lt;span class=&quot;icon&quot;&gt;
+         &lt;input type=&quot;checkbox&quot; name=&quot;_condition_3&quot; value=&quot;3&quot; /&gt;
+       &lt;/span&gt;&lt;/span&gt;
+     &lt;/div&gt;
+     &lt;div class=&quot;item condition-inputs security-level&quot;&gt;
+       &lt;ul class=&quot;reset&quot;&gt;
+         &lt;li class=&quot;seclev-4&quot;&gt;
+           &lt;span class=&quot;input-radio &quot; data-default=&quot;&quot; data-group=&quot;trigger-3&quot; data-cancel=&quot;1&quot;&gt;&lt;span class=&quot;icon&quot;&gt;
+             &lt;input type=&quot;radio&quot; name=&quot;_condition[3][4]&quot; value=&quot;1&quot; /&gt;
+           &lt;/span&gt;&lt;/span&gt;
+         &lt;/li&gt;
+         &lt;li class=&quot;seclev-2&quot;&gt;
+           &lt;span class=&quot;input-radio &quot; data-default=&quot;&quot; data-group=&quot;trigger-3&quot; data-cancel=&quot;1&quot;&gt;&lt;span class=&quot;icon&quot;&gt;
+             &lt;input type=&quot;radio&quot; name=&quot;_condition[3][2]&quot; value=&quot;1&quot; /&gt;
+           &lt;/span&gt;&lt;/span&gt;
+         &lt;/li&gt;
+         &lt;li class=&quot;seclev-1&quot;&gt;
+           &lt;span class=&quot;input-radio &quot; data-default=&quot;&quot; data-group=&quot;trigger-3&quot; data-cancel=&quot;1&quot;&gt;&lt;span class=&quot;icon&quot;&gt;
+             &lt;input type=&quot;radio&quot; name=&quot;_condition[3][1]&quot; value=&quot;1&quot; /&gt;
+           &lt;/span&gt;&lt;/span&gt;
+         &lt;/li&gt;
+       &lt;/ul&gt;
+     &lt;/div&gt;
+   &lt;/div&gt;
+
+   &lt;div class=&quot;condition condition-1 option-block&quot; data-triggertype=&quot;1&quot;&gt;
+     &lt;div class=&quot;title&quot;&gt;
+       &lt;span class=&quot;input-checkbox condition-choice condition-1-choice&quot; data-default=&quot;&quot;&gt;&lt;span class=&quot;icon&quot;&gt;
+         &lt;input type=&quot;checkbox&quot; name=&quot;_condition_1&quot; value=&quot;1&quot; /&gt;
+       &lt;/span&gt;&lt;/span&gt;
+     &lt;/div&gt;
+     &lt;div class=&quot;item condition-inputs&quot;&gt;
+       &lt;div class=&quot;scenario-schedule scenario-schedule-range&quot; data-field=&quot;scheduleRule&quot;&gt;
+         &lt;table&gt;...&lt;/table&gt;
+         &lt;div class=&quot;ws-prompt input-disabled&quot;&gt;
+           &lt;div class=&quot;ws-prompt-inner&quot;&gt;
+             &lt;div class=&quot;ws-prompt-row&quot;&gt;
+                 &lt;table&gt;
+                   &lt;tr&gt;&lt;th&gt;&lt;label for=&quot;schedule1&quot;&gt;Heure de début&lt;/label&gt;&lt;/th&gt;&lt;td&gt;&lt;span class=&quot;input input-time&quot; id=&quot;input-schedule1&quot;&gt;&lt;span class=&quot;icon&quot;&gt;&lt;/span&gt;
+                     &lt;input id=&quot;schedule1&quot; name=&quot;time1&quot; class=&quot;ws-prompt-time&quot; placeholder=&quot;HH:mm&quot; type=&quot;text&quot; /&gt;
+                   &lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th&gt;&lt;label for=&quot;schedule2&quot;&gt;Heure de fin&lt;/label&gt;&lt;/th&gt;&lt;td&gt;&lt;span class=&quot;input input-time&quot; id=&quot;input-schedule2&quot;&gt;&lt;span class=&quot;icon&quot;&gt;&lt;/span&gt;
+                     &lt;input id=&quot;schedule2&quot; name=&quot;time2&quot; class=&quot;ws-prompt-time&quot; placeholder=&quot;HH:mm&quot; type=&quot;text&quot; /&gt;
+                   &lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+                 &lt;/table&gt;
+             &lt;/div&gt;
+             &lt;input type=&quot;hidden&quot; name=&quot;day&quot; /&gt;
+             &lt;input type=&quot;hidden&quot; name=&quot;idx&quot; /&gt;
+           &lt;/div&gt;
+         &lt;/div&gt;
+         &lt;input type=&quot;hidden&quot; name=&quot;_condition[1]&quot; id=&quot;scheduleRule&quot; value=&quot;&quot; /&gt;
+       &lt;/div&gt;
+     &lt;/div&gt;
+   &lt;/div&gt;
+
+   &lt;div class=&quot;condition condition-4 option-block&quot; data-triggertype=&quot;4&quot;&gt;
+     &lt;div class=&quot;title&quot;&gt;
+       &lt;span class=&quot;input-checkbox condition-choice condition-Limited 4-1&quot; data-default=&quot;4&quot;&gt;&lt;span class=&quot;icon&quot;&gt;
+         &lt;input type=&quot;checkbox&quot; name=&quot;_condition_4_1&quot; value=&quot;4&quot; /&gt;
+       &lt;/span&gt;&lt;/span&gt;
+       &lt;span&gt;Si la température...&lt;/span&gt;
+     &lt;/div&gt;
+     &lt;div class=&quot;item&quot;&gt;
+       &lt;div class=&quot;condition-inputs choice-4-1&quot;&gt;... du capteur
+         &lt;select name=&quot;_condition[4][1][deviceSlaveId]&quot;&gt;
+           &lt;option value=&quot;xxx&quot;&gt;Capteur SdB&lt;/option&gt;
+           &lt;option value=&quot;xxx&quot; selected=&quot;selected&quot;&gt;Capteur Salon&lt;/option&gt;
+         &lt;/select&gt;
+         &lt;select name=&quot;_condition[4][1][operator]&quot;&gt;
+           &lt;option value=&quot;0&quot; selected=&quot;selected&quot;&gt;&lt;&lt;/option&gt;
+           &lt;option value=&quot;1&quot;&gt;&gt;&lt;/option&gt;
+           &lt;option value=&quot;2&quot;&gt;=&lt;/option&gt;
+         &lt;/select&gt;
+         à &lt;span class=&quot;input input-temperature&quot;&gt;
+           &lt;input name=&quot;_condition[4][1][value]&quot; value=&quot;16&quot; type=&quot;text&quot; class=&quot;&quot; /&gt;
+         &lt;/span&gt;°C.
+       &lt;/div&gt;
+       &lt;div class=&quot;condition choice-4-2&quot;&gt;
+         &lt;div class=&quot;title&quot;&gt;
+           &lt;span class=&quot;input-checkbox condition-choice condition-Limited 4-2&quot; data-default=&quot;4&quot;&gt;&lt;span class=&quot;icon&quot;&gt;
+             &lt;input type=&quot;checkbox&quot; name=&quot;_condition_4_2&quot; value=&quot;4&quot; /&gt;
+           &lt;/span&gt;&lt;/span&gt;
+           &lt;span&gt;Et si la température...&lt;/span&gt;
+         &lt;/div&gt;
+         &lt;div class=&quot;item condition-inputs&quot;&gt;... du capteur
+           &lt;select name=&quot;_condition[4][2][deviceSlaveId]&quot;&gt;
+             &lt;option value=&quot;xxx&quot;&gt;Capteur SdB&lt;/option&gt;
+             &lt;option value=&quot;xxx&quot; selected=&quot;selected&quot;&gt;Capteur Salon&lt;/option&gt;
+           &lt;/select&gt;
+           &lt;select name=&quot;_condition[4][2][operator]&quot;&gt;
+             &lt;option value=&quot;0&quot;&gt;&lt;&lt;/option&gt;
+             &lt;option value=&quot;1&quot; selected=&quot;selected&quot;&gt;&gt;&lt;/option&gt;
+             &lt;option value=&quot;2&quot;&gt;=&lt;/option&gt;
+           &lt;/select&gt;
+           à &lt;span class=&quot;input input-temperature&quot;&gt;
+             &lt;input name=&quot;_condition[4][2][value]&quot; value=&quot;14&quot; type=&quot;text&quot; class=&quot;&quot; /&gt;
+           &lt;/span&gt;°C.
+         &lt;/div&gt;
+       &lt;/div&gt;
+     &lt;/div&gt;
+   &lt;/div&gt;
+
+   &lt;div class=&quot;condition condition-5 option-block&quot; data-triggertype=&quot;5&quot;&gt;
+     &lt;div class=&quot;title&quot;&gt;
+       &lt;span class=&quot;input-checkbox condition-choice condition-Limited 5-1&quot; data-default=&quot;&quot;&gt;&lt;span class=&quot;icon&quot;&gt;
+         &lt;input type=&quot;checkbox&quot; name=&quot;_condition_5_1&quot; value=&quot;5&quot; /&gt;
+       &lt;/span&gt;&lt;/span&gt;
+       &lt;span&gt;Si la luminosité...&lt;/span&gt;
+     &lt;/div&gt;
+     &lt;div class=&quot;item&quot;&gt;
+       &lt;div class=&quot;condition-inputs choice-5-1&quot;&gt; ... du capteur
+         &lt;select name=&quot;_condition[5][1][deviceSlaveId]&quot;&gt;
+           &lt;option value=&quot;xxx&quot;&gt;Capteur SdB&lt;/option&gt;
+           &lt;option value=&quot;xxx&quot;&gt;Capteur Salon&lt;/option&gt;
+         &lt;/select&gt;
+         &lt;select name=&quot;_condition[5][1][operator]&quot;&gt;
+           &lt;option value=&quot;0&quot; selected=&quot;selected&quot;&gt;&lt;&lt;/option&gt;
+           &lt;option value=&quot;1&quot;&gt;&gt;&lt;/option&gt;
+           &lt;option value=&quot;2&quot;&gt;=&lt;/option&gt;
+         &lt;/select&gt;
+         &lt;select name=&quot;_condition[5][1][value]&quot;&gt;
+           &lt;option value=&quot;1&quot;&gt;Pleine lumière&lt;/option&gt;
+           &lt;option value=&quot;2&quot;&gt;Lumière du jour&lt;/option&gt;
+           &lt;option value=&quot;4&quot;&gt;Lumière basse&lt;/option&gt;
+           &lt;option value=&quot;5&quot;&gt;Pénombre&lt;/option&gt;
+           &lt;option value=&quot;6&quot;&gt;Obscurité&lt;/option&gt;
+         &lt;/select&gt;
+       &lt;/div&gt;
+       &lt;div class=&quot;condition choice-5-2&quot;&gt;
+         &lt;div class=&quot;title&quot;&gt;
+           &lt;span class=&quot;input-checkbox condition-choice condition-Limited 5-2&quot; data-default=&quot;&quot;&gt;&lt;span class=&quot;icon&quot;&gt;
+             &lt;input type=&quot;checkbox&quot; name=&quot;_condition_5_2&quot; value=&quot;5&quot; /&gt;
+           &lt;/span&gt;&lt;/span&gt;
+         &lt;/div&gt;
+         &lt;div class=&quot;item condition-inputs&quot;&gt; ... du capteur
+           &lt;select name=&quot;_condition[5][2][deviceSlaveId]&quot;&gt;
+             &lt;option value=&quot;xxx&quot;&gt;Capteur SdB&lt;/option&gt;
+             &lt;option value=&quot;xxx&quot;&gt;Capteur Salon&lt;/option&gt;
+           &lt;/select&gt;
+           &lt;select name=&quot;_condition[5][2][operator]&quot;&gt;
+             &lt;option value=&quot;0&quot; selected=&quot;selected&quot;&gt;&lt;&lt;/option&gt;
+             &lt;option value=&quot;1&quot;&gt;&gt;&lt;/option&gt;
+             &lt;option value=&quot;2&quot;&gt;=&lt;/option&gt;
+           &lt;/select&gt;
+           &lt;select name=&quot;_condition[5][2][value]&quot;&gt;
+             &lt;option value=&quot;1&quot;&gt;Pleine lumière&lt;/option&gt;
+             &lt;option value=&quot;2&quot;&gt;Lumière du jour&lt;/option&gt;
+             &lt;option value=&quot;4&quot;&gt;Lumière basse&lt;/option&gt;
+             &lt;option value=&quot;5&quot;&gt;Pénombre&lt;/option&gt;
+             &lt;option value=&quot;6&quot;&gt;Obscurité&lt;/option&gt;
+           &lt;/select&gt;
+         &lt;/div&gt;
+       &lt;/div&gt;
+     &lt;/div&gt;
+   &lt;/div&gt;
+
+ &lt;/div&gt;
+
+ &lt;div class=&quot;form-buttons&quot;&gt;
+   &lt;input type=&quot;submit&quot; name=&quot;sbt&quot; value=&quot;Étape suivante&quot; /&gt;
+ &lt;/div&gt;</code></pre>
+<p>   </form></p>
+<p>=======================================</p>
+<h1 id="form-elements-are-classified-like-this">Form elements are classified like this:</h1>
+<p><input type="hidden" name="scData" value="xxxxx" />
+Trigger alarm :
+  <input type="checkbox" name="_trigger[3][4]" value="1" />
+  <input type="checkbox" name="_trigger[3][2]" value="1" />
+  <input type="checkbox" name="_trigger[3][1]" value="1" />
+Trigger risks :
+  <input type="radio" name="_trigger[2]" value="10" /> x5
+Trigger sensors 4:
+  <input type="radio" name="_trigger_type" value="4" checked="checked" />
+  <select name="_trigger[4][1][deviceSlaveId]">
+    <option value="xxxxxx" selected="selected">Capteur SdB</option>
+    ....
+  </select>
+  <input name="_trigger[4][1][value]" value="15" type="text" class="" />
+  <input type="radio" name="_trigger[4][1][operator]" value="1" checked="checked" />
+  <input type="radio" name="_trigger[4][1][operator]" value="0" />
+Trigger sensors 5 :
+  <input type="radio" name="_trigger_type" value="5" />
+  <select name="_trigger[5][1][deviceSlaveId]">
+    <option value="xxxxxx">Capteur SdB</option>
+    ...
+  </select>
+  <select name="_trigger[5][1][value]">
+    <option value="1">Pleine lumière</option>
+    ...
+    <option value="6">Obscurité</option>
+  </select>
+  <input type="radio" name="_trigger[5][1][operator]" value="1" checked="checked" />
+  <input type="radio" name="_trigger[5][1][operator]" value="0" />
+Trigger sensors 7 :
+  <input type="radio" name="_trigger_type" value="7" />
+  <select name="_trigger[7]">
+    <option value="xxx">Porte d&#39;entrée</option>
+    ...
+  </select>
+CONDITIONS :
+  <div class="conditions">
+    Alarm:
+      <span class="input-checkbox condition-choice condition-3-choice" data-default="3">
+        <input...>  &lt;-- don&#39;t care, see data-default in above span instead
+      </span>
+      <input type="radio" name="_condition[3][4]" value="1" />
+      <input type="radio" name="_condition[3][2]" value="1" />
+      <input type="radio" name="_condition[3][1]" value="1" /></p>
+<pre><code>Time conditions:
+  &lt;span class=&quot;input-checkbox condition-choice condition-1-choice&quot; data-default=&quot;1&quot;&gt;
+    &lt;input...&gt;  &lt;-- don&#39;t care, see data-default in above span instead
+  &lt;/span&gt;
+  &lt;input type=&quot;hidden&quot; name=&quot;_condition[1]&quot; id=&quot;scheduleRule&quot; value=&quot;&quot; /&gt;
+  Not useful to save:
+    &lt;input id=&quot;schedule1&quot; name=&quot;time1&quot; class=&quot;ws-prompt-time&quot; placeholder=&quot;HH:mm&quot; type=&quot;text&quot; /&gt;
+    &lt;input id=&quot;schedule2&quot; name=&quot;time2&quot; class=&quot;ws-prompt-time&quot; placeholder=&quot;HH:mm&quot; type=&quot;text&quot; /&gt;
+    &lt;input type=&quot;hidden&quot; name=&quot;day&quot; /&gt;
+    &lt;input type=&quot;hidden&quot; name=&quot;idx&quot; /&gt;
+
+Temperature conditions:
+  &lt;span class=&quot;input-checkbox condition-choice condition-Limited 4-1&quot; data-default=&quot;4&quot;&gt;
+    &lt;input ...&gt;  &lt;-- don&#39;t care, see data-default in above span instead
+  &lt;/span&gt;
+  &lt;select name=&quot;_condition[4][1][deviceSlaveId]&quot;&gt;
+    &lt;option value=&quot;xxx&quot; selected=&quot;selected&quot;&gt;Capteur Salon&lt;/option&gt;
+  &lt;/select&gt;
+  &lt;select name=&quot;_condition[4][1][operator]&quot;&gt;
+    &lt;option value=&quot;0&quot; selected=&quot;selected&quot;&gt;&lt;&lt;/option&gt;
+    &lt;option value=&quot;1&quot;&gt;&gt;&lt;/option&gt;
+    &lt;option value=&quot;2&quot;&gt;=&lt;/option&gt;
+  &lt;/select&gt;
+  &lt;input name=&quot;_condition[4][1][value]&quot; value=&quot;16&quot; type=&quot;text&quot; class=&quot;&quot; /&gt;
+  &lt;span class=&quot;input-checkbox condition-choice condition-Limited 4-2&quot; data-default=&quot;4&quot;&gt;
+    &lt;input ...&gt;  &lt;-- don&#39;t care, see data-default in above span instead
+  &lt;/span&gt;
+  &lt;select name=&quot;_condition[4][2][deviceSlaveId]&quot;&gt;
+    &lt;option value=&quot;xxx&quot; selected=&quot;selected&quot;&gt;Capteur Salon&lt;/option&gt;
+  &lt;/select&gt;
+  &lt;select name=&quot;_condition[4][2][operator]&quot;&gt;
+    &lt;option value=&quot;0&quot;&gt;&lt;&lt;/option&gt;
+    &lt;option value=&quot;1&quot; selected=&quot;selected&quot;&gt;&gt;&lt;/option&gt;
+    &lt;option value=&quot;2&quot;&gt;=&lt;/option&gt;
+  &lt;/select&gt;
+  &lt;input name=&quot;_condition[4][2][value]&quot; value=&quot;14&quot; type=&quot;text&quot; class=&quot;&quot; /&gt;
+
+Lightning conditions:
+  &lt;span class=&quot;input-checkbox condition-choice condition-Limited 5-1&quot; data-default=&quot;5&quot;&gt;
+    &lt;input ...&gt;  &lt;-- don&#39;t care, see data-default in above span instead
+  &lt;/span&gt;
+  &lt;select name=&quot;_condition[5][1][deviceSlaveId]&quot;&gt;
+    &lt;option value=&quot;xxx&quot;&gt;Capteur SdB&lt;/option&gt;
+  &lt;/select&gt;
+  &lt;select name=&quot;_condition[5][1][operator]&quot;&gt;
+    &lt;option value=&quot;0&quot; selected=&quot;selected&quot;&gt;&lt;&lt;/option&gt;
+    &lt;option value=&quot;1&quot;&gt;&gt;&lt;/option&gt;
+    &lt;option value=&quot;2&quot;&gt;=&lt;/option&gt;
+  &lt;/select&gt;
+  &lt;select name=&quot;_condition[5][1][value]&quot;&gt;
+    &lt;option value=&quot;1&quot;&gt;Pleine lumière&lt;/option&gt;
+    ...
+    &lt;option value=&quot;6&quot;&gt;Obscurité&lt;/option&gt;
+  &lt;/select&gt;
+  &lt;span class=&quot;input-checkbox condition-choice condition-Limited 5-2&quot; data-default=&quot;5&quot;&gt;
+    &lt;input ...&gt;  &lt;-- don&#39;t care, see data-default in above span instead
+  &lt;/span&gt;
+  &lt;select name=&quot;_condition[5][2][deviceSlaveId]&quot;&gt;
+    &lt;option value=&quot;xxx&quot;&gt;Capteur SdB&lt;/option&gt;
+  &lt;/select&gt;
+  &lt;select name=&quot;_condition[5][2][operator]&quot;&gt;
+    &lt;option value=&quot;0&quot; selected=&quot;selected&quot;&gt;&lt;&lt;/option&gt;
+    &lt;option value=&quot;1&quot;&gt;&gt;&lt;/option&gt;
+    &lt;option value=&quot;2&quot;&gt;=&lt;/option&gt;
+  &lt;/select&gt;
+  &lt;select name=&quot;_condition[5][2][value]&quot;&gt;
+    &lt;option value=&quot;1&quot;&gt;Pleine lumière&lt;/option&gt;
+    ...
+    &lt;option value=&quot;6&quot;&gt;Obscurité&lt;/option&gt;
+  &lt;/select&gt;</code></pre>
+<p>  </div>
+Submit:
+  <input type="submit" name="sbt" value="Étape suivante" /></p>
+<p>Parameters:</p>
+<ul>
+<li><strong>wrapperApi must be a MyfoxWrapperApiCommon.</strong><br/>(The Api instance, to throw events)</li>
+</ul>
+<p><strong>Returns a trumpet</strong><br/>(The trumpet parser to plug on the HTML stream.)</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">step3TempModificationParser</span> (<span class="hljs-params">wrapperApi</span>) </span>{
+  <span class="hljs-keyword">const</span> trumpetParser = trumpet()
+  trumpetParser.nextPayload = {}
+  trumpetParser.setMaxListeners(<span class="hljs-number">30</span>) <span class="hljs-comment">// We have a lot of stuff to analyze...</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>get scData ✔</p></div></div><div class="code"><div class="wrapper">  trumpetParser.select(
+    <span class="hljs-string">'form#scenarioForm input[name="scData"]'</span>,
+    trumpetAffectValue(trumpetParser.nextPayload)
+  )</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Alarm trigger ✔</p></div></div><div class="code"><div class="wrapper">  trumpetParser.selectAll(<span class="hljs-string">'form#scenarioForm input[type="checkbox"][name^="_trigger[3]"][checked="checked"]'</span>, trumpetAttr(<span class="hljs-string">'name'</span>, (name) =&gt; {
+    trumpetParser.nextPayload[name] = <span class="hljs-string">'1'</span>
+  }))</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Risks trigger ✔</p></div></div><div class="code"><div class="wrapper">  trumpetParser.select(
+    <span class="hljs-string">'form#scenarioForm input[type="radio"][name="_trigger[2]"][checked="checked"]'</span>,
+    trumpetAffectValue(trumpetParser.nextPayload)
+  )</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Sensor 4 trigger (temperatures) OR Sensor 5 trigger (lightning) -&gt; same structure ✔ ✔</p></div></div><div class="code"><div class="wrapper">  trumpetParser.select(<span class="hljs-string">'form#scenarioForm input[type="radio"][name="_trigger_type"][checked="checked"]'</span>, trumpetAttr(<span class="hljs-string">'value'</span>, (triggerType) =&gt; {
+    trumpetParser.nextPayload[<span class="hljs-string">'_trigger_type'</span>] = triggerType</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>tab is selected, add more parsers</p></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>get scenario ✔</p></div></div><div class="code"><div class="wrapper">    trumpetParser.select(
+      <span class="hljs-string">`form#scenarioForm select[name="_trigger[<span class="hljs-subst">${triggerType}</span>][1][deviceSlaveId]"] option[selected="selected"]`</span>,
+      trumpetAffectValue(trumpetParser.nextPayload, <span class="hljs-string">`_trigger[<span class="hljs-subst">${triggerType}</span>][1][deviceSlaveId]`</span>)
+    )</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>get temperature value ✔</p></div></div><div class="code"><div class="wrapper">    trumpetParser.select(
+      <span class="hljs-string">`form#scenarioForm input[name="_trigger[<span class="hljs-subst">${triggerType}</span>][1][value]"]`</span>,
+      trumpetAffectValue(trumpetParser.nextPayload, <span class="hljs-string">`_trigger[<span class="hljs-subst">${triggerType}</span>][1][value]`</span>)
+    )</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>get lightning value ✔</p></div></div><div class="code"><div class="wrapper">    trumpetParser.select(
+      <span class="hljs-string">`form#scenarioForm select[name="_trigger[<span class="hljs-subst">${triggerType}</span>][1][value]"] option[selected="selected"]`</span>,
+      trumpetAffectValue(trumpetParser.nextPayload, <span class="hljs-string">`_trigger[<span class="hljs-subst">${triggerType}</span>][1][value]`</span>)
+    )</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>get operator ✔</p></div></div><div class="code"><div class="wrapper">    trumpetParser.select(
+      <span class="hljs-string">`form#scenarioForm input[name="_trigger[<span class="hljs-subst">${triggerType}</span>][1][operator]"][checked="checked"]`</span>,
+      trumpetAffectValue(trumpetParser.nextPayload, <span class="hljs-string">`_trigger[<span class="hljs-subst">${triggerType}</span>][1][operator]`</span>)
+    )
+  }))</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Sensor 7 trigger (intrusion) ✔</p></div></div><div class="code"><div class="wrapper">  trumpetParser.select(<span class="hljs-string">'form#scenarioForm input[type="radio"][name="_trigger_type"][value="7"]'</span>, trumpetAttr(<span class="hljs-string">'checked'</span>, (checked) =&gt; {
+    <span class="hljs-keyword">if</span> (checked === <span class="hljs-string">'checked'</span>) {
+      trumpetParser.nextPayload[<span class="hljs-string">'_trigger_type'</span>] = <span class="hljs-string">'7'</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>tab is selected, add more parsers</p></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>sensor ID</p></div></div><div class="code"><div class="wrapper">      trumpetParser.select(
+        <span class="hljs-string">'form#scenarioForm select[name="_trigger[7]"] option[selected="selected"]'</span>,
+        trumpetAffectValue(trumpetParser.nextPayload, <span class="hljs-string">'_trigger[7]'</span>)
+      )
+    }
+  }))</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Condition: Alarm level ✔</p></div></div><div class="code"><div class="wrapper">  trumpetParser.select(<span class="hljs-string">'form#scenarioForm div.conditions span.input-checkbox.condition-choice.condition-3-choice[data-default="3"]'</span>, (element) =&gt; {
+    trumpetParser.nextPayload[<span class="hljs-string">'_condition_3'</span>] = <span class="hljs-string">'3'</span>
+    trumpetParser.select(
+      <span class="hljs-string">'form#scenarioForm div.conditions input[type="radio"][name^="_condition[3]"][checked="checked"]'</span>,
+      trumpetAttr(<span class="hljs-string">'name'</span>, (name) =&gt; {
+        trumpetParser.nextPayload[name] = <span class="hljs-string">'1'</span>
+      })
+    )
+  })</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Condition: time ✔</p></div></div><div class="code"><div class="wrapper">  trumpetParser.select(<span class="hljs-string">'form#scenarioForm div.conditions span.input-checkbox.condition-choice.condition-1-choice[data-default="1"]'</span>, (element) =&gt; {
+    trumpetParser.nextPayload[<span class="hljs-string">'_condition_1'</span>] = <span class="hljs-string">'1'</span>
+    trumpetParser.select(
+      <span class="hljs-string">'form#scenarioForm div.conditions input[type="hidden"][name="_condition[1]"]'</span>,
+      trumpetAffectValue(trumpetParser.nextPayload)
+    )
+  })</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Condition: temperatures ✔</p></div></div><div class="code"><div class="wrapper">  trumpetParser.select(<span class="hljs-string">'form#scenarioForm div.conditions span.input-checkbox.condition-choice.condition-Limited.4-1[data-default="4"]'</span>, (element) =&gt; {
+    trumpetParser.nextPayload[<span class="hljs-string">'_condition_4_1'</span>] = <span class="hljs-string">'4'</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>checked, add more parsers</p></div></div><div class="code"><div class="wrapper">    trumpetParser.select(
+      <span class="hljs-string">'form#scenarioForm div.conditions select[name="_condition[4][1][deviceSlaveId]"] option[selected="selected"]'</span>,
+      trumpetAffectValue(trumpetParser.nextPayload, <span class="hljs-string">'_condition[4][1][deviceSlaveId]'</span>)
+    )
+    trumpetParser.select(
+      <span class="hljs-string">'form#scenarioForm div.conditions select[name="_condition[4][1][operator]"] option[selected="selected"]'</span>,
+      trumpetAffectValue(trumpetParser.nextPayload, <span class="hljs-string">'_condition[4][1][operator]'</span>)
+    )
+    trumpetParser.select(
+      <span class="hljs-string">'form#scenarioForm div.conditions input[name="_condition[4][1][value]"]'</span>,
+      trumpetAffectValue(trumpetParser.nextPayload)
+    )
+
+    trumpetParser.select(<span class="hljs-string">'form#scenarioForm div.conditions span.input-checkbox.condition-choice.condition-Limited.4-2[data-default="4"]'</span>, (element) =&gt; {
+      trumpetParser.nextPayload[<span class="hljs-string">'_condition_4_2'</span>] = <span class="hljs-string">'4'</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>checked, add more parsers</p></div></div><div class="code"><div class="wrapper">      trumpetParser.select(
+        <span class="hljs-string">'form#scenarioForm div.conditions select[name="_condition[4][2][deviceSlaveId]"] option[selected="selected"]'</span>,
+        trumpetAffectValue(trumpetParser.nextPayload, <span class="hljs-string">'_condition[4][2][deviceSlaveId]'</span>)
+      )
+      trumpetParser.select(
+        <span class="hljs-string">'form#scenarioForm div.conditions select[name="_condition[4][2][operator]"] option[selected="selected"]'</span>,
+        trumpetAffectValue(trumpetParser.nextPayload, <span class="hljs-string">'_condition[4][2][operator]'</span>)
+      )
+      trumpetParser.select(
+        <span class="hljs-string">'form#scenarioForm div.conditions input[name="_condition[4][2][value]"]'</span>,
+        trumpetAffectValue(trumpetParser.nextPayload)
+      )
+    })
+  })</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Condition: lightnings ✔</p></div></div><div class="code"><div class="wrapper">  trumpetParser.select(<span class="hljs-string">'form#scenarioForm div.conditions span.input-checkbox.condition-choice.condition-Limited.5-1[data-default="5"]'</span>, (element) =&gt; {
+    trumpetParser.nextPayload[<span class="hljs-string">'_condition_5_1'</span>] = <span class="hljs-string">'5'</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>checked, add more parsers</p></div></div><div class="code"><div class="wrapper">    trumpetParser.select(
+      <span class="hljs-string">'form#scenarioForm div.conditions select[name="_condition[5][1][deviceSlaveId]"] option[selected="selected"]'</span>,
+      trumpetAffectValue(trumpetParser.nextPayload, <span class="hljs-string">'_condition[5][1][deviceSlaveId]'</span>)
+    )
+    trumpetParser.select(
+      <span class="hljs-string">'form#scenarioForm div.conditions select[name="_condition[5][1][operator]"] option[selected="selected"]'</span>,
+      trumpetAffectValue(trumpetParser.nextPayload, <span class="hljs-string">'_condition[5][1][operator]'</span>)
+    )
+    trumpetParser.select(
+      <span class="hljs-string">'form#scenarioForm div.conditions select[name="_condition[5][1][value]"] option[selected="selected"]'</span>,
+      trumpetAffectValue(trumpetParser.nextPayload, <span class="hljs-string">'_condition[5][1][value]'</span>)
+    )
+
+    trumpetParser.select(<span class="hljs-string">'form#scenarioForm div.conditions span.input-checkbox.condition-choice.condition-Limited.5-2[data-default="5"]'</span>, (element) =&gt; {
+      trumpetParser.nextPayload[<span class="hljs-string">'_condition_5_2'</span>] = <span class="hljs-string">'5'</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>checked, add more parsers</p></div></div><div class="code"><div class="wrapper">      trumpetParser.select(
+        <span class="hljs-string">'form#scenarioForm div.conditions select[name="_condition[5][2][deviceSlaveId]"] option[selected="selected"]'</span>,
+        trumpetAffectValue(trumpetParser.nextPayload, <span class="hljs-string">'_condition[5][2][deviceSlaveId]'</span>)
+      )
+      trumpetParser.select(
+        <span class="hljs-string">'form#scenarioForm div.conditions select[name="_condition[5][2][operator]"] option[selected="selected"]'</span>,
+        trumpetAffectValue(trumpetParser.nextPayload, <span class="hljs-string">'_condition[5][2][operator]'</span>)
+      )
+      trumpetParser.select(
+        <span class="hljs-string">'form#scenarioForm div.conditions select[name="_condition[5][2][value]"] option[selected="selected"]'</span>,
+        trumpetAffectValue(trumpetParser.nextPayload, <span class="hljs-string">'_condition[5][2][value]'</span>)
+      )
+    })
+  })
+
+  <span class="hljs-keyword">return</span> trumpetParser
+}</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Returns a trumpet parser that will inspect form structure to post with no modification</p>
+<p>POST <a href="https://myfox.me/scenario/{homeId}/manage/{scenarioId}/4">https://myfox.me/scenario/{homeId}/manage/{scenarioId}/4</a>
+   with all data obtained by this.step3TempModificationParser() in the payload
+=&gt; <form id="scenarioForm" action="https://myfox.me/scenario/7718/manage/183349/5" method="post">
+     <input type="hidden" name="scData" value="...">
+     <h2>...</h2>
+     <div class="tabs-contents" style="min-height: 209px;"></p>
+<pre><code>   &lt;div class=&quot;tab-content tab-security&quot; style=&quot;display: block;&quot;&gt;
+     &lt;div class=&quot;item security-level&quot;&gt;
+       &lt;input type=&quot;radio&quot; name=&quot;_action[securityLevel]&quot; value=&quot;4&quot; disabled=&quot;disabled&quot;&gt;
+       &lt;input type=&quot;radio&quot; name=&quot;_action[securityLevel]&quot; value=&quot;2&quot; disabled=&quot;disabled&quot;&gt;
+       &lt;input type=&quot;radio&quot; name=&quot;_action[securityLevel]&quot; value=&quot;1&quot; disabled=&quot;disabled&quot;&gt;
+     &lt;/div&gt;
+   &lt;/div&gt;
+
+   &lt;div class=&quot;tab-content tab-domotic&quot;&gt;
+     &lt;input type=&quot;checkbox&quot; name=&quot;_cbx161355&quot; value=&quot;1&quot; disabled=&quot;disabled&quot;&gt;
+     &lt;input type=&quot;hidden&quot; name=&quot;_action[g][2856]&quot; value=&quot;&quot; disabled=&quot;disabled&quot;&gt;
+     &lt;input type=&quot;checkbox&quot; name=&quot;_cbx825488&quot; value=&quot;1&quot; disabled=&quot;disabled&quot;&gt;
+     &lt;input type=&quot;hidden&quot; name=&quot;_action[d][71394]&quot; value=&quot;&quot; disabled=&quot;disabled&quot;&gt;
+   &lt;/div&gt;</code></pre>
+<p>Probleme, je n&#39;ai pas d&#39;exemple ici:
+       <div class="tab-content tab-video">
+         <div class="item">Vous n&#39;avez aucune caméra installée.</div>
+       </div>
+       <div class="tab-content tab-automatism">
+         <div class="item">Vous n&#39;avez aucun automatisme installé.</div>
+       </div></p>
+<pre><code>   &lt;div class=&quot;tab-content tab-scenario&quot;&gt;
+
+     &lt;!-- Jouer une sonnerie à l&#39;exécution du scénario --&gt;
+     &lt;input type=&quot;checkbox&quot; name=&quot;ringtone&quot; value=&quot;1&quot; disabled=&quot;disabled&quot;&gt;
+
+     &lt;!-- Différer l&#39;exécution du scénario --&gt;
+     &lt;input type=&quot;checkbox&quot; name=&quot;_cbx836372&quot; value=&quot;1&quot; disabled=&quot;disabled&quot;&gt;
+     de
+     &lt;input type=&quot;text&quot; name=&quot;delayPlay&quot; value=&quot;30&quot; class=&quot;seconds&quot; disabled=&quot;disabled&quot;&gt;
+     secondes
+
+     &lt;!-- Lancer le scénario inverse --&gt;
+     &lt;input type=&quot;checkbox&quot; name=&quot;_cbx866445&quot; value=&quot;1&quot; disabled=&quot;disabled&quot;&gt;
+     après
+     &lt;input type=&quot;text&quot; name=&quot;delayReverse&quot; value=&quot;30&quot; class=&quot;seconds&quot; disabled=&quot;disabled&quot;&gt;
+     secondes
+
+     &lt;!-- Lancer un autre scénario --&gt;
+     &lt;input type=&quot;checkbox&quot; name=&quot;_cbx294634&quot; value=&quot;1&quot; checked=&quot;checked&quot;&gt;
+     &lt;select name=&quot;_action[runScenarioId]&quot;&gt;
+       &lt;option value=&quot;&quot;&gt;Choisissez un de vos scénarios à la demande&lt;/option&gt;
+       &lt;option value=&quot;143997&quot; selected=&quot;selected&quot;&gt;AA test rien&lt;/option&gt;
+       &lt;option value=&quot;39004&quot;&gt;Ch Chbres Confort 2h&lt;/option&gt;
+     &lt;/select&gt;
+
+   &lt;/div&gt;
+
+ &lt;/div&gt;
+ &lt;div class=&quot;form-buttons&quot;&gt;
+   &lt;a href=&quot;#&quot; class=&quot;btn-previousStep&quot;&gt;&lt;span class=&quot;arrow&quot;&gt;&lt;/span&gt;&lt;input type=&quot;submit&quot; name=&quot;sbt&quot; value=&quot;Étape précédente&quot;&gt;&lt;span class=&quot;text&quot;&gt;Étape précédente&lt;/span&gt;&lt;/a&gt;
+   &lt;a href=&quot;#&quot; class=&quot;btn-nextStep&quot;&gt;&lt;input type=&quot;submit&quot; name=&quot;sbt&quot; value=&quot;Étape suivante&quot;&gt;&lt;span class=&quot;text&quot;&gt;Étape suivante&lt;/span&gt;&lt;span class=&quot;arrow&quot;&gt;&lt;/span&gt;&lt;/a&gt;
+ &lt;/div&gt;</code></pre>
+<p>   </form></p>
+<p>=======================================</p>
+<h1 id="form-elements-are-classified-like-this">Form elements are classified like this:</h1>
+<input type="hidden" name="scData" value="...">
+
+<p>Alarm levels:
+  <input type="radio" name="_action[securityLevel]" value="4" disabled="disabled">
+  <input type="radio" name="_action[securityLevel]" value="2" disabled="disabled">
+  <input type="radio" name="_action[securityLevel]" value="1" disabled="disabled"></p>
+<p>Domotic/groups/other commands ON/OFF
+  <div class="tab-content tab-domotic">
+    <span class="input-checkbox action-choice" data-default="1">  &lt;-- if data-default is == &quot;1&quot;, then checked
+      <input type="checkbox" name="_cbxXXXXX" value="1">  &lt;-- don&#39;t care
+    </span>
+    <input type="hidden" name="_action[g][XXXXX]" value="">  &lt;-- to take only if data-default == &quot;1&quot; above</p>
+<pre><code>&lt;span class=&quot;input-checkbox action-choice&quot; data-default=&quot;&quot;&gt;  &lt;-- example unchecked
+  &lt;input type=&quot;checkbox&quot; name=&quot;_cbxXXXXX&quot; value=&quot;1&quot;&gt;  &lt;-- don&#39;t care
+&lt;/span&gt;
+&lt;input type=&quot;hidden&quot; name=&quot;_action[d][XXXXX]&quot; value=&quot;&quot;&gt;  &lt;-- do not take it (unchecked)</code></pre>
+<p>  </div></p>
+<p>Camera, automatism: PROBLEM, I HAVE NO SAMPLE !
+  <div class="tab-content tab-video">
+    <div class="item">Vous n&#39;avez aucune caméra installée.</div>
+  </div>
+  <div class="tab-content tab-automatism">
+    <div class="item">Vous n&#39;avez aucun automatisme installé.</div>
+  </div>
+==&gt; To do, one day maybe...</p>
+<p>Ringtone:
+  <span class="input-checkbox action-choice" data-default="1">  &lt;-- if data-default is == &quot;1&quot;, then checked
+    <input type="checkbox" name="ringtone" value="1">  &lt;-- don&#39;t care
+  </span></p>
+<p>Scenario play:
+  <span class="input-checkbox action-choice" data-default="1">  &lt;-- if data-default is == &quot;1&quot;, then checked
+    <input type="checkbox" name="_cbxXXXXX" value="1">  &lt;-- don&#39;t care
+  </span> de
+  <input type="text" name="delayPlay" value="30" class="seconds" disabled="disabled">  &lt;-- to take only if data-default == &quot;1&quot; above</p>
+<p>  <span class="input-checkbox action-choice" data-default="1">  &lt;-- if data-default is == &quot;1&quot;, then checked
+    <input type="checkbox" name="_cbxXXXXX" value="1">  &lt;-- don&#39;t care
+  </span> après
+  <input type="text" name="delayReverse" value="30" class="seconds" disabled="disabled">  &lt;-- to take only if data-default == &quot;1&quot; above</p>
+<p>  <span class="input-checkbox action-choice" data-default="1">  &lt;-- if data-default is == &quot;1&quot;, then checked
+    <input type="checkbox" name="_cbxXXXXX" value="1">  &lt;-- don&#39;t care
+  </span>
+  <select name="_action[runScenarioId]">
+    <option value="">Choisissez un de vos scénarios à la demande</option>
+    <option value="xxxxx" selected="selected">AA test rien</option>
+    <option value="xxxxxx">Ch Chbres Confort 2h</option>
+  </select></p>
+<p>Parameters:</p>
+<ul>
+<li><strong>wrapperApi must be a MyfoxWrapperApiCommon.</strong><br/>(The Api instance, to throw events)</li>
+</ul>
+<p><strong>Returns a trumpet</strong><br/>(The trumpet parser to plug on the HTML stream.)</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">step4Parser</span> (<span class="hljs-params">wrapperApi</span>) </span>{
+  <span class="hljs-keyword">const</span> trumpetParser = trumpet()
+  trumpetParser.nextPayload = {}
+  trumpetParser.setMaxListeners(<span class="hljs-number">10</span>) <span class="hljs-comment">// We have a lot of stuff to analyze...</span></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>get scData ✔</p></div></div><div class="code"><div class="wrapper">  trumpetParser.select(
+    <span class="hljs-string">'form#scenarioForm input[name="scData"]'</span>,
+    trumpetAffectValue(trumpetParser.nextPayload)
+  )</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Alarm levels</p></div></div><div class="code"><div class="wrapper">  trumpetParser.select(
+    <span class="hljs-string">'form#scenarioForm input[type="radio"][name="_action[securityLevel]"][checked="checked"]'</span>,
+    trumpetAffectValue(trumpetParser.nextPayload)
+  )</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Domotic/groups/other commands ON/OFF</p></div></div><div class="code"><div class="wrapper">  <span class="hljs-keyword">let</span> nextInputForDomotic = <span class="hljs-literal">false</span>
+  trumpetParser.selectAll(
+    <span class="hljs-string">'form#scenarioForm div.tab-domotic span.input-checkbox.action-choice'</span>,
+    trumpetAttr(<span class="hljs-string">'data-default'</span>, (dataDefault) =&gt; {
+      nextInputForDomotic = (dataDefault === <span class="hljs-string">'1'</span>)
+    })
+  )
+  trumpetParser.selectAll(
+    <span class="hljs-string">'form#scenarioForm div.tab-domotic input[type="hidden"][name^="_action"]'</span>,
+    (element) =&gt; {
+      element.getAttributes((attributes) =&gt; {
+        <span class="hljs-keyword">if</span> (nextInputForDomotic &amp;&amp; attributes[<span class="hljs-string">'value'</span>] &amp;&amp; attributes[<span class="hljs-string">'value'</span>] !== <span class="hljs-string">''</span>) {
+          trumpetParser.nextPayload[attributes[<span class="hljs-string">'name'</span>]] = attributes[<span class="hljs-string">'value'</span>]
+        }
+      })
+    }
+  )</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Camera, automatism
+To do later, when sample available!</p></div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>Scenario play</p></div></div><div class="code"><div class="wrapper">  <span class="hljs-keyword">let</span> nextInputForScenarioPlay = <span class="hljs-literal">false</span>
+  trumpetParser.selectAll(
+    <span class="hljs-string">'form#scenarioForm div.tab-scenario span.input-checkbox'</span>,
+    trumpetAttr(<span class="hljs-string">'data-default'</span>, (dataDefault) =&gt; {
+      nextInputForScenarioPlay = (dataDefault === <span class="hljs-string">'1'</span>)
+    })
+  )
+  trumpetParser.select(
+    <span class="hljs-string">'form#scenarioForm div.tab-scenario input[type="checkbox"][name="ringtone"]'</span>,
+    (element) =&gt; {
+      element.getAttributes((attributes) =&gt; {
+        <span class="hljs-keyword">if</span> (nextInputForScenarioPlay) {
+          trumpetParser.nextPayload[<span class="hljs-string">'ringtone'</span>] = <span class="hljs-literal">true</span>
+        }
+      })
+    }
+  )
+  trumpetParser.select(
+    <span class="hljs-string">'form#scenarioForm div.tab-scenario input[type="text"][name="delayPlay"]'</span>,
+    (element) =&gt; {
+      element.getAttributes((attributes) =&gt; {
+        <span class="hljs-keyword">if</span> (nextInputForScenarioPlay &amp;&amp; attributes[<span class="hljs-string">'value'</span>] &amp;&amp; attributes[<span class="hljs-string">'value'</span>] !== <span class="hljs-string">''</span>) {
+          trumpetParser.nextPayload[<span class="hljs-string">'delayPlay'</span>] = attributes[<span class="hljs-string">'value'</span>]
+        }
+      })
+    }
+  )
+  trumpetParser.select(
+    <span class="hljs-string">'form#scenarioForm div.tab-scenario input[type="text"][name="delayReverse"]'</span>,
+    (element) =&gt; {
+      element.getAttributes((attributes) =&gt; {
+        <span class="hljs-keyword">if</span> (nextInputForScenarioPlay &amp;&amp; attributes[<span class="hljs-string">'value'</span>] &amp;&amp; attributes[<span class="hljs-string">'value'</span>] !== <span class="hljs-string">''</span>) {
+          trumpetParser.nextPayload[<span class="hljs-string">'delayReverse'</span>] = attributes[<span class="hljs-string">'value'</span>]
+        }
+      })
+    }
+  )
+  trumpetParser.select(
+    <span class="hljs-string">'form#scenarioForm div.tab-scenario select[name="_action[runScenarioId]"] option[selected="selected"]'</span>,
+    (element) =&gt; {
+      element.getAttributes((attributes) =&gt; {
+        <span class="hljs-keyword">if</span> (nextInputForScenarioPlay &amp;&amp; attributes[<span class="hljs-string">'value'</span>] &amp;&amp; attributes[<span class="hljs-string">'value'</span>] !== <span class="hljs-string">''</span>) {
+          trumpetParser.nextPayload[<span class="hljs-string">'_action[runScenarioId]'</span>] = attributes[<span class="hljs-string">'value'</span>]
+        }
+      })
+    }
+  )
+
+  <span class="hljs-keyword">return</span> trumpetParser
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">step5Parser</span> (<span class="hljs-params">wrapperApi</span>) </span>{
+  <span class="hljs-keyword">const</span> trumpetParser = trumpet()
+  trumpetParser.data = {status: <span class="hljs-string">'ko'</span>}
+
+  trumpetParser.select(<span class="hljs-string">'div.ended p.message-normal'</span>, () =&gt; {
+    trumpetParser.data.status = <span class="hljs-string">'ok'</span>
+    trumpetParser.end()
+  })
+
+  <span class="hljs-keyword">return</span> trumpetParser
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">step3TempFixer</span> (<span class="hljs-params">payload, settings</span>) </span>{</div></div></div><div class="segment"><div class="comments "><div class="wrapper"><p>operators trigger<em>4: up_to:1, down_to:0
+operators condition_4</em>*: &lt;:0, &gt;:1, =:2
+DELTA to apply: operator 0 : -0.5°  ;  operator 1 : +0.5°  ;  operator 2 : +0°</p></div></div><div class="code"><div class="wrapper">  settings.forEach((setting) =&gt; {
+    <span class="hljs-keyword">const</span> {toTemperature, controls} = setting
+    controls.forEach((control) =&gt; {
+      <span class="hljs-keyword">let</span> delta = <span class="hljs-number">0</span>
+      <span class="hljs-keyword">switch</span> (control.condition) {
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'trigger_4'</span>:
+          <span class="hljs-keyword">if</span> (payload[<span class="hljs-string">'_trigger[4][1][deviceSlaveId]'</span>] !== control.deviceSlaveId) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Scenario settings mismatch.'</span>)
+          }
+          delta = (payload[<span class="hljs-string">'_trigger[4][1][operator]'</span>] === <span class="hljs-string">'1'</span>) ? <span class="hljs-number">0.5</span> : -<span class="hljs-number">0.5</span>
+          payload[<span class="hljs-string">'_trigger[4][1][value]'</span>] = <span class="hljs-built_in">Number</span>(toTemperature) + delta + <span class="hljs-string">''</span>
+          <span class="hljs-keyword">break</span>
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'condition_4_1'</span>:
+          <span class="hljs-keyword">if</span> (payload[<span class="hljs-string">'_condition[4][1][deviceSlaveId]'</span>] !== control.deviceSlaveId) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Scenario settings mismatch.'</span>)
+          }
+          delta = (payload[<span class="hljs-string">'_condition[4][1][operator]'</span>] === <span class="hljs-string">'1'</span>)
+              ? <span class="hljs-number">0.5</span> : ((payload[<span class="hljs-string">'_condition[4][1][operator]'</span>] === <span class="hljs-string">'0'</span>) ? -<span class="hljs-number">0.5</span> : <span class="hljs-number">0</span>)
+          payload[<span class="hljs-string">'_condition[4][1][value]'</span>] = <span class="hljs-built_in">Number</span>(toTemperature) + delta + <span class="hljs-string">''</span>
+          <span class="hljs-keyword">break</span>
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'condition_4_2'</span>:
+          <span class="hljs-keyword">if</span> (payload[<span class="hljs-string">'_condition[4][2][deviceSlaveId]'</span>] !== control.deviceSlaveId) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Scenario settings mismatch.'</span>)
+          }
+          delta = (payload[<span class="hljs-string">'_condition[4][2][operator]'</span>] === <span class="hljs-string">'1'</span>)
+              ? <span class="hljs-number">0.5</span> : ((payload[<span class="hljs-string">'_condition[4][2][operator]'</span>] === <span class="hljs-string">'0'</span>) ? -<span class="hljs-number">0.5</span> : <span class="hljs-number">0</span>)
+          payload[<span class="hljs-string">'_condition[4][2][value]'</span>] = <span class="hljs-built_in">Number</span>(toTemperature) + delta + <span class="hljs-string">''</span>
+          <span class="hljs-keyword">break</span>
+        <span class="hljs-keyword">default</span>:
+          <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Unknown condition to control.'</span>)
+      }
+    })
+  })
+  <span class="hljs-keyword">return</span> payload
 }</div></div></div></div></body></html>

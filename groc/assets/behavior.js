@@ -260,7 +260,25 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 "title": "scenario_edition"
               },
               "depth": 3,
-              "outline": []
+              "outline": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 1,
+                    "title": "Form elements are classified like this:",
+                    "slug": "form-elements-are-classified-like-this"
+                  },
+                  "depth": 1
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 1,
+                    "title": "Form elements are classified like this:",
+                    "slug": "form-elements-are-classified-like-this"
+                  },
+                  "depth": 1
+                }
+              ]
             }, {
               "type": "file",
               "data": {

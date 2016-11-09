@@ -161,6 +161,30 @@
         })
       }
     }
+  },
+  <span class="hljs-string">'update_scenario_temperature'</span>: {
+    <span class="hljs-string">'path'</span>: {
+      <span class="hljs-string">'express'</span>: <span class="hljs-string">'/scenario_edition/update_temperatures/:id'</span>,
+      <span class="hljs-string">'hapi'</span>: <span class="hljs-string">'/scenario_edition/update_temperatures/{id}'</span>
+    },
+    <span class="hljs-string">'put'</span>: {
+      <span class="hljs-string">'express'</span>: (req, res, api) =&gt; {
+        api.updateScenarioTemperatureSettings(req.params.id, req.payload, (err, result) =&gt; {
+          <span class="hljs-keyword">if</span> (err) {
+            <span class="hljs-keyword">return</span> res.status(err.status).send(err.toString())
+          }
+          res.send(result)
+        })
+      },
+      <span class="hljs-string">'hapi'</span>: (req, reply, api) =&gt; {
+        api.updateScenarioTemperatureSettings(req.params.id, req.payload, (err, result) =&gt; {
+          <span class="hljs-keyword">if</span> (err) {
+            <span class="hljs-keyword">return</span> reply(err.toString()).code(err.status)
+          }
+          reply(result)
+        })
+      }
+    }
   }
 }
 

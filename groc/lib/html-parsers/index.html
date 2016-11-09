@@ -154,4 +154,30 @@ If HTTP error case, no need to parse the body</p></div></div><div class="code"><
       callback(attributeValue)
     })
   }
+}</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Returns a function to affect an object attribute with the &#39;value&#39; attribute of the found element.</p>
+<p>Parameters:</p>
+<ul>
+<li><p><strong>affectInto must be an Object.</strong><br/>(The object to affect the found value.)</p>
+</li>
+<li><p><strong>affectName must be a string.</strong><br/>(The name of the attribute in the affectInto object.)</p>
+</li>
+<li><p><strong>skipDisabled must be a boolean.</strong><br/>(True to skip affectation if an attribute &#39;disabled=&quot;disabled&quot;&#39; is found.)</p>
+</li>
+</ul>
+<p><strong>Returns a function</strong><br/>(A function that will affect an object attribute with the &#39;value&#39; attribute of the found element.)</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">trumpetAffectValue</span> (<span class="hljs-params">affectInto, affectName, skipDisabled = true</span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">element</span>) </span>{
+    element.getAttributes((attributes) =&gt; {
+      <span class="hljs-keyword">if</span> (!attributes[<span class="hljs-string">'value'</span>] || attributes[<span class="hljs-string">'value'</span>] === <span class="hljs-string">''</span>) {
+        <span class="hljs-keyword">return</span>
+      }
+      <span class="hljs-keyword">if</span> (skipDisabled &amp;&amp; attributes[<span class="hljs-string">'disabled'</span>] &amp;&amp; attributes[<span class="hljs-string">'disabled'</span>] === <span class="hljs-string">'disabled'</span>) {
+        <span class="hljs-keyword">return</span>
+      }
+      <span class="hljs-keyword">if</span> (affectName) {
+        affectInto[affectName] = attributes[<span class="hljs-string">'value'</span>]
+      } <span class="hljs-keyword">else</span> {
+        affectInto[attributes[<span class="hljs-string">'name'</span>]] = attributes[<span class="hljs-string">'value'</span>]
+      }
+    })
+  }
 }</div></div></div></div></body></html>

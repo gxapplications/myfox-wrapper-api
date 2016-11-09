@@ -381,6 +381,23 @@ The possible action depends on the action type (on demand or not).</p>
 </li>
 </ul></div></div><div class="code"><div class="wrapper">  inspectScenarioTemperatureSettings (scenarioId, callback) {
     _notImplemented.bind(<span class="hljs-keyword">this</span>)(<span class="hljs-string">'inspectScenarioTemperatureSettings'</span>, callback)
+  }</div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Uses edition mode to inspect and modify a scenario, in order to change temperature conditions values (HTML strategy only)</p>
+<p>The temperature conditions are hard coded and supports 3 conditions, described by their HTML names here:</p>
+<ul>
+<li>trigger_4: the main trigger of the scenario: you can find it in the tabs of events that will execute the scenario</li>
+<li>condition_4_1: the first condition that you can add after the main trigger: you can find it in a list of checkable conditions.</li>
+<li>condition_4_2: the second sub-condition that appears when the condition_4_1 is already checked and set.</li>
+</ul>
+<p>Parameters:</p>
+<ul>
+<li><p><strong>scenarioId must be a string.</strong><br/>(The ID of the scenario to modify. The scenario edition WILL modify parameters depending on the settings given.)</p>
+</li>
+<li><p><strong>settings must be an Array of Objects.</strong><br/>(An array of temperature values to modify, associated to the conditions to look in.)</p>
+</li>
+<li><p><strong>callback must be a function.</strong><br/>(The function to call with all data.)</p>
+</li>
+</ul></div></div><div class="code"><div class="wrapper">  updateScenarioTemperatureSettings (scenarioId, settings, callback) {
+    _notImplemented.bind(<span class="hljs-keyword">this</span>)(<span class="hljs-string">'updateScenarioTemperatureSettings'</span>, callback)
   }
 }
 
