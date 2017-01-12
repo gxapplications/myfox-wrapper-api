@@ -467,7 +467,7 @@ describe('HTML-api library', () => {
       const callback = (a, b) => {
         sinon.assert.notCalled(api.notifyMacroListeners)
         sinon.assert.calledOnce(api.callApi)
-        sinon.assert.calledWithMatch(api.callApi, /widget\/\{siteId\}\/protection\/seclev\/1/, /GET/)
+        sinon.assert.calledWithMatch(api.callApi, /widget\/\{siteId\}\/protection\/seclev\/1/, /POST/)
 
         expect(a).to.be.null
         // The id is not domotic ID, but the macro ID! And null because no need to have one, if just 1 step without delay.
@@ -484,7 +484,7 @@ describe('HTML-api library', () => {
       const callback = (a, b) => {
         sinon.assert.notCalled(api.notifyMacroListeners)
         sinon.assert.calledOnce(api.callApi)
-        sinon.assert.calledWithMatch(api.callApi, /widget\/\{siteId\}\/protection\/seclev\/2/, /GET/)
+        sinon.assert.calledWithMatch(api.callApi, /widget\/\{siteId\}\/protection\/seclev\/2/, /POST/)
 
         expect(a).to.be.null
         // The id is not domotic ID, but the macro ID! And null because no need to have one, if just 1 step without delay.
@@ -501,7 +501,7 @@ describe('HTML-api library', () => {
       const callback = (a, b) => {
         sinon.assert.notCalled(api.notifyMacroListeners)
         sinon.assert.calledOnce(api.callApi)
-        sinon.assert.calledWithMatch(api.callApi, /widget\/\{siteId\}\/protection\/seclev\/4/, /GET/)
+        sinon.assert.calledWithMatch(api.callApi, /widget\/\{siteId\}\/protection\/seclev\/4/, /POST/)
 
         expect(a).to.be.null
         // The id is not domotic ID, but the macro ID! And null because no need to have one, if just 1 step without delay.
@@ -518,7 +518,7 @@ describe('HTML-api library', () => {
       const callback = (a, b) => {
         sinon.assert.notCalled(api.notifyMacroListeners)
         sinon.assert.calledOnce(api.callApi)
-        sinon.assert.calledWithMatch(api.callApi, /widget\/\{siteId\}\/protection\/seclev\/4/, /GET/)
+        sinon.assert.calledWithMatch(api.callApi, /widget\/\{siteId\}\/protection\/seclev\/4/, /POST/)
 
         expect(a).to.be.null
         // The id is not domotic ID, but the macro ID! And null because no need to have one, if just 1 step without delay.
@@ -548,7 +548,7 @@ describe('HTML-api library', () => {
       const callback = (a, b) => {
         sinon.assert.notCalled(api.notifyMacroListeners)
         sinon.assert.calledOnce(api.callApi)
-        sinon.assert.calledWithMatch(api.callApi, /widget\/\{siteId\}\/protection\/seclev\/4/, /GET/)
+        sinon.assert.calledWithMatch(api.callApi, /widget\/\{siteId\}\/protection\/seclev\/4/, /POST/)
 
         expect(a).to.be.not.null
         done()
